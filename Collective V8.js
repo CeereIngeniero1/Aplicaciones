@@ -573,6 +573,15 @@ function Mineria(browser,  Pin) {
                     0
                 );
             } 
+            else  if (Band == 21) {
+                MonitorearAreas(
+                    "504177",
+                    1,
+                    "",
+                    ["18N05E04D06H, 18N05E04D06I, 18N05E04D06J"],
+                    0
+                );
+            }
 
 
 
@@ -637,7 +646,7 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 21) {
+                if (Band == 22) {
                     Band = 1;
                 }
 
