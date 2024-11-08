@@ -329,7 +329,7 @@ function Mineria(browser, Pin) {
             // }
 
 
-            if (Band == 1) {
+            if (Band == 10) {
                 MonitorearAreas(
                     "500946_1",//Nombre del area
                     1, // aviso
@@ -372,7 +372,7 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-            else  if (Band == 6) {
+            else  if (Band == 1) {
                 MonitorearAreas(
                     "504177",
                     1,
@@ -442,7 +442,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 7) {
+                if (Band == 2) {
                     Band = 1;
                 }
 
