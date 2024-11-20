@@ -147,17 +147,6 @@ function Mineria(browser,  Pin) {
         console.log(Pin);
 
         /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-            // // Capturar el texto del valor seleccionado
-            // const selectedText = await page.evaluate(select => {
-            //     const selectedOption = select.selectedOptions[0]; // Obtiene la opción seleccionada
-            //     return selectedOption.textContent; // Retorna el texto de la opción seleccionada
-            // }, selectPin);
-
-            // // console.log('Texto seleccionado:', selectedText);
-
-            // const input = selectedText;
-
-
             // Capturar todas las opciones de un select
             const allOptions = await page.evaluate(select => {
                 const options = Array.from(select.options); // Convierte las opciones a un array
@@ -166,39 +155,51 @@ function Mineria(browser,  Pin) {
 
             console.log('Todas las opciones:', allOptions);
 
-            // Capturar todas las opciones del select
             const closestDateOption = await page.evaluate(() => {
-                // Obtiene el select por su id o referencia
-                const select = document.querySelector('select'); 
-
-                // Convierte todas las opciones a un array
-                const options = Array.from(select.options);
-
-                // Mapea las opciones para obtener el texto y extraer la fecha
-                const dates = options.map(option => {
-                    const text = option.textContent; // El texto es del formato '20240925141435, 25/OCT/2024'
-                    
-                    // Extraer la parte de la fecha que nos interesa (por ejemplo, '25/OCT/2024')
-                    const dateText = text.split(', ')[1];
-                    
-                    // Convertir la fecha al formato ISO (YYYY-MM-DD) para facilitar la comparación
-                    const [day, month, year] = dateText.split('/');
+                const select = document.querySelector('select');
+            
+                const monthMap = {
+                    "ENE": "01",
+                    "FEB": "02",
+                    "MAR": "03",
+                    "ABR": "04",
+                    "MAY": "05",
+                    "JUN": "06",
+                    "JUL": "07",
+                    "AGO": "08",
+                    "SEP": "09",
+                    "OCT": "10",
+                    "NOV": "11",
+                    "DIC": "12"
+                };
+            
+                const options = Array.from(select.options).map(option => {
+                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
+                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
+            
+                    const [day, monthName, year] = dateText.split('/');
+                    const month = monthMap[monthName];
                     const formattedDate = new Date(`${year}-${month}-${day}`);
-                    
+            
                     return { text, date: formattedDate };
                 });
-
-                // Obtener la fecha actual
+            
                 const now = new Date();
-
-                // Buscar la fecha más cercana a la fecha actual
-                const closest = dates.reduce((prev, curr) => {
+            
+                const differences = options.map(option => {
+                    const diff = Math.abs(option.date - now);
+                    return { text: option.text, diff }; // Retornar la diferencia y el texto
+                });
+            
+                console.log('Diferencias calculadas:', differences);
+            
+                // Reducir para encontrar la fecha más cercana
+                const closest = options.reduce((prev, curr) => {
                     return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
                 });
-
-                // Retornar la opción cuyo texto contiene la fecha más cercana
+            
                 return closest.text;
-            });
+            });            
 
             console.log('Opción más cercana a la fecha actual:', closestDateOption);
             const input = closestDateOption;
