@@ -351,7 +351,7 @@ function Mineria(browser, Pin) {
                     "509188",
                     1,
                     "",
-                    [""],
+                    [" "],
                     0
                 );
             }
