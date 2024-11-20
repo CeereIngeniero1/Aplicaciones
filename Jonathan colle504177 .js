@@ -1014,7 +1014,14 @@ function Mineria(browser, Pin) {
             let ArchivoAmbiental ;
             if(IdArea = '509188'){
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.PDF`;
-            }else{
+            }else if(IdArea = '504177'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.PDF`;
+
+            } else if(IdArea = '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.PDF`;
+
+            }
+            else{
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
