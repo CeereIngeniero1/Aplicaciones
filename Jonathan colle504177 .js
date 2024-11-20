@@ -1011,7 +1011,7 @@ function Mineria(browser, Pin) {
 
         try {
 
-            let ArchivoAmbiental 
+            let ArchivoAmbiental ;
             if(IdArea = '509188'){
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.PDF`;
             }else{
