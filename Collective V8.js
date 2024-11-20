@@ -591,7 +591,17 @@ function Mineria(browser,  Pin) {
                     [" 18N05A24Q23G, 18N05A24Q18W, 18N05A24Q18Y, 18N05A24Q23F, 18N05A24Q23A, 18N05A24Q23B, 18N05A24Q18X, 18N05A24Q23D, 18N05A24Q17Z, 18N05A24Q22J, 18N05A24Q18V, 18N05A24Q23H, 18N05A24Q23I, 18N05A24Q22E, 18N05A24Q23C"],
                     0
                 );
+            }  
+            else  if (Band == 23) {
+                MonitorearAreas(
+                    "503239",
+                    1,
+                    "",
+                    ["18N05A24P09F, 18N05A24P08U, 18N05A24P04V, 18N05A24P09L, 18N05A24P09B, 18N05A24P04R, 18N05A24P04W, 18N05A24P09A, 18N05A24P04Q, 18N05A24P09R, 18N05A24P09K, 18N05A24P09G, 18N05A24P09Q"],
+                    0
+                );
             }
+            
 
 
 
@@ -656,7 +666,7 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1
-                if (Band == 23) {
+                if (Band == 24) {
                     Band = 1;
                 }
 
