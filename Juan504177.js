@@ -6,9 +6,9 @@ const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 // Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
-var pass1 = 'CollectiveM_2024*';
-var user2 = '85127';
-var pass2 = 'J1026161053*';
+var pass1 = 'Collective10+';
+var user2 = '88272';
+var pass2 = 'Camilo$0307';
 var Agente = 1;
 var contreapertura = 0;
 var ContadorVueltas = 0;
@@ -25,7 +25,7 @@ async function Pagina() {
         }
     });
     for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'Co:') {
+        if (Pines.substring(i + 1, i + 4) == 'C2:') {
             console.log(Pines.substring(i + 1, i + 4));
             Pin = Pines.substring(i + 4, i + 31);
             break
@@ -416,7 +416,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 4) {
+                if (Band == 2) {
                     Band = 1;
                 }
 
