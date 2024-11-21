@@ -1263,12 +1263,12 @@ function Mineria(browser,  Pin) {
             
             let ArchivoAmbiental ;
             if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.PDF`;
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
             }else if(IdArea == '504177'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.PDF`;
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
 
             } else if(IdArea == '503239'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.PDF`;
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
             }
             else{
