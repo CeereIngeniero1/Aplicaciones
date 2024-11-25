@@ -1118,71 +1118,122 @@ function Mineria(browser, Pin) {
         }
 
 
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        const continPag = await page.$x('//span[contains(.,"Continuar")]');
-        await continPag[1].click();
-        await page.waitForNavigation({
-            waitUntil: 'networkidle0',
-        });
-        console.log(" si navego ");
-
-        try {
+         //CAPTURA DE PANTALLA
+         await CapturaPantalla(page);
+         const continPag = await page.$x('//span[contains(.,"Continuar")]');
+         await continPag[1].click();
+         await page.waitForNavigation({
+             waitUntil: 'networkidle0',
+         });
+         console.log(" si navego ");
+ 
+         try {
              // Bajar hasta el final del scroll
              await page.evaluate(async () => {
-                await new Promise((resolve, reject) => {
-                    let totalHeight = 0;
-                    let distance = 100; // Ajusta la distancia de desplazamiento
-                    const timer = setInterval(() => {
-                        let scrollHeight = document.body.scrollHeight;
-                        window.scrollBy(0, distance);
-                        totalHeight += distance;
-
-                        if (totalHeight >= scrollHeight) {
-                            clearInterval(timer);
-                            resolve();
-                        }
-                    }, 100); // Ajusta el tiempo de espera entre desplazamientos
-                });
-            });
-        } catch (error) {
-            console.log(error);
-        }
-       
-
-        //CAPTURA DE PANTALLA
-        clearTimeout(Radisegundo);
-
-        let RadiTercero = setTimeout(() => {
-
-            console.log("ENTRO EN EL Radisegundo");
-            //page.close();
-            Mineria(browser, Pin);
-        }, 60000);
-
-
-
-        console.log('51. Bóton Radicar');
-
-        const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
-        console.log("Este es el boton radicar : " + btnRadicar1);
-
-        //await page.waitForTimeout(4000);
-        console.log("Le di click");
-
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        //CORREO RADICACION
-        Correo(2, IdArea, Celda);
-        clearTimeout(Radisegundo);
-        await page.waitForTimeout(180000);
-        Mineria(browser, Pin);
-
-
-
-
-
-
+                 await new Promise((resolve, reject) => {
+                     let totalHeight = 0;
+                     let distance = 100; // Ajusta la distancia de desplazamiento
+                     const timer = setInterval(() => {
+                         let scrollHeight = document.body.scrollHeight;
+                         window.scrollBy(0, distance);
+                         totalHeight += distance;
+ 
+                         if (totalHeight >= scrollHeight) {
+                             clearInterval(timer);
+                             resolve();
+                         }
+                     }, 100); // Ajusta el tiempo de espera entre desplazamientos
+                 });
+             });
+         } catch (error) {
+             console.log(error);
+         }
+ 
+ 
+ 
+         //CAPTURA DE PANTALLA
+         clearTimeout(Radisegundo);
+ 
+         let RadiTercero = setTimeout(() => {
+ 
+             console.log("ENTRO EN EL Radisegundo");
+             //page.close();
+             Mineria(browser, Pin);
+         }, 60000);
+ 
+ 
+         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
+         await HacerClicEnSpanDocumentacionDeSoporte[0].click();
+         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
+         if (AparecioCaptcha) {
+             console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
+             await page.waitForTimeout(500);
+         } else {
+             console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
+         }
+ 
+ 
+         await keyboard.pressKey(Key.Tab);
+         console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN `);
+ 
+         await keyboard.pressKey(Key.Enter);
+ 
+         // await page.waitForTimeout(1000000);
+ 
+         while (true) {
+             await page.waitForTimeout(800);
+             console.log("Chequeando si el captcha está resuelto...");
+ 
+             const isCaptchaResolved = await page.evaluate(() => {
+                 const responseField = document.querySelector('#g-recaptcha-response');
+                 return responseField && responseField.value.length > 0;
+             });
+ 
+             if (isCaptchaResolved) {
+                 console.log('El captcha ha sido resuelto.');
+                 clearTimeout(RadiTercero);
+                 break;
+             } else {
+                 console.log('El captcha no ha sido resuelto aún.');
+             }
+         }
+ 
+ 
+ 
+         console.log('51. Bóton Radicar');
+ 
+         const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
+         console.log("Este es el boton radicar : " + btnRadicar1);
+ 
+         //await page.waitForTimeout(4000);
+         console.log("Le di click");
+ 
+         try {
+             await btnRadicar1[0].click();
+         } catch (exepcion) {
+             console.log("La pos 0 No fue ")
+         }
+         try {
+ 
+             await btnRadicar1[1].click();
+         } catch (exepcion) {
+             console.log("La 1 tampoco Y_Y")
+         }
+ 
+         //CAPTURA DE PANTALLA
+         await CapturaPantalla(page);
+         //CORREO RADICACION
+         Correo(2, IdArea, Celda);
+         clearTimeout(Radisegundo);
+         await page.waitForTimeout(180000);
+         Mineria(browser, Pin);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
     })();
 }
@@ -1304,8 +1355,8 @@ function Correo(Tipo, Area, Celda) {
 
     var mailOptions = {
         from: msg + '"Ceere" <pruebacitas@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
+        //to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
+         to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
         subject: Subject,
         text: Text,
         html: ContenidoHTMLDelCorreo
