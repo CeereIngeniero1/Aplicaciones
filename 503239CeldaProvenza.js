@@ -1057,7 +1057,7 @@ function Mineria(browser,  Pin) {
             
             let ArchivoAmbiental ;
             
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Doc.pdf`;
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Malos\\503239.pdf`;
 
            
            
@@ -1120,7 +1120,7 @@ function Mineria(browser,  Pin) {
                 for (let i = 0; i < ElementosFile.length; i++) {
                     try {
                         await page.waitForSelector(`#${ElementosFile[i]}`);
-                        const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
+                        const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\Malos\\${Documentos[i]}`;
                         const ElementoControladorDeCarga = await page.$(`#${ElementosFile[i]}`);
                         await ElementoControladorDeCarga.uploadFile(RutaDelArchivo);
 

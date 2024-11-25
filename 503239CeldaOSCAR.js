@@ -1019,22 +1019,9 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-
             let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '504177'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
+            ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Malos\\503239.pdf`;
 
-            } else if(IdArea == '503239'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
-
-            }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
-
-            }
-           
 
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
@@ -1095,7 +1082,7 @@ function Mineria(browser, Pin) {
                 for (let i = 0; i < ElementosFile.length; i++) {
                     try {
                         await page.waitForSelector(`#${ElementosFile[i]}`);
-                        const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
+                        const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\Malos\\${Documentos[i]}`;
                         const ElementoControladorDeCarga = await page.$(`#${ElementosFile[i]}`);
                         await ElementoControladorDeCarga.uploadFile(RutaDelArchivo);
 
