@@ -1,14 +1,14 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
-const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js'); 
- // Actualizado
+const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+// Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
-var pass1 = 'Collective10+';
-var user2 = '88272';
-var pass2 = 'Camilo$0307';
-var Agente = 1;
+var pass1 = 'CollectiveM_2024**';
+var user2 = '83949';
+var pass2 = '*Jcrmh2022#';
+var Agente = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
@@ -32,12 +32,12 @@ async function Pagina() {
     }
 
 
-    
+
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
-   
+
 
     const browser = await puppeteer.launch({
-        // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
         // Reemplaza con la ruta real a tu Google Chrome
         headless: false,
@@ -49,28 +49,35 @@ async function Pagina() {
     });
 
         Mineria(browser, Pin);
+
 }
 
 
- 
+
 
 function Mineria(browser,  Pin) {
     (async () => {
-        
-            console.log("Esta es la vuelta " + ContadorVueltas);
 
-            const page = await browser.newPage();
-            let Primerpaso = setTimeout(() => {
-                console.log("ENTRO EN EL PRIMERPASO")
-                page.close();
-                Mineria(browser,  Pin); 
-            }, 20000);
-            await page.setViewport({ width: 1368, height: 620 });
-            await page.goto('https://annamineria.anm.gov.co/sigm/');
-            
+        console.log("Esta es la vuelta " + ContadorVueltas);
+        const page = await browser.newPage();
 
-            let user = (Agente == 0) ? user1 : user2;
-            let pass = (Agente == 0) ? pass1 : pass2;
+        let Primerpaso = setTimeout(() => {
+            console.log("ENTRO EN EL PRIMERPASO")
+
+            page.close();
+            Mineria(browser,  Pin);
+
+        }, 20000);
+
+
+
+
+
+        await page.setViewport({ width: 1368, height: 620 });
+        await page.goto('https://annamineria.anm.gov.co/sigm/');
+
+        let user = (Agente == 0) ? user1 : user2;
+        let pass = (Agente == 0) ? pass1 : pass2;
 
             try {
 
@@ -86,32 +93,30 @@ function Mineria(browser,  Pin) {
                 console.log("Entro en el catch");
             }
 
-            page.setDefaultTimeout(0);
-            try {
-                await page.waitForNavigation({
-                    waitUntil: 'networkidle0',
-                    timeout: 5000 // 5 segundos en milisegundos
-                });
-            } catch (error) {
-                if (error instanceof puppeteer.errors.TimeoutError) {
-                    console.log('La navegación tardó más de 5 segundos.');
-                    // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-                } else {
-                    throw error; // Lanzar el error si no es un TimeoutError
-                }
+        page.setDefaultTimeout(0);
+        try {
+            await page.waitForNavigation({
+                waitUntil: 'networkidle0',
+                timeout: 5000 // 5 segundos en milisegundos
+            });
+        } catch (error) {
+            if (error instanceof puppeteer.errors.TimeoutError) {
+                console.log('La navegación tardó más de 5 segundos.');
+                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+            } else {
+                throw error; // Lanzar el error si no es un TimeoutError
             }
-            validador = 0;
-           
-        
+        }
+        validador = 0;
+        clearTimeout(Primerpaso);
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
             Mineria(browser,  Pin);
-            clearTimeout(Segundopaso);
-        }, 20000);
+        }, 35000);
 
 
-        clearTimeout(Primerpaso);
+
 
 
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
@@ -148,6 +153,65 @@ function Mineria(browser,  Pin) {
         await selectPin.type(Pin);
         console.log(Pin);
 
+        /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
+            // Capturar todas las opciones de un select
+            const allOptions = await page.evaluate(select => {
+                const options = Array.from(select.options); // Convierte las opciones a un array
+                return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
+            }, selectPin);
+
+            console.log('Todas las opciones:', allOptions);
+
+            const closestDateOption = await page.evaluate(() => {
+                const select = document.querySelector('select');
+
+                const monthMap = {
+                    "ENE": "01",
+                    "FEB": "02",
+                    "MAR": "03",
+                    "ABR": "04",
+                    "MAY": "05",
+                    "JUN": "06",
+                    "JUL": "07",
+                    "AGO": "08",
+                    "SEP": "09",
+                    "OCT": "10",
+                    "NOV": "11",
+                    "DIC": "12"
+                };
+
+                const options = Array.from(select.options).map(option => {
+                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
+                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
+
+                    const [day, monthName, year] = dateText.split('/');
+                    const month = monthMap[monthName];
+                    const formattedDate = new Date(`${year}-${month}-${day}`);
+
+                    return { text, date: formattedDate };
+                });
+
+                const now = new Date();
+
+                const differences = options.map(option => {
+                    const diff = Math.abs(option.date - now);
+                    return { text: option.text, diff }; // Retornar la diferencia y el texto
+                });
+
+                console.log('Diferencias calculadas:', differences);
+
+                // Reducir para encontrar la fecha más cercana
+                const closest = options.reduce((prev, curr) => {
+                    return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
+                });
+
+                return closest.text;
+            });
+
+            console.log('Opción más cercana a la fecha actual:', closestDateOption);
+            const input = closestDateOption;
+        /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
+
         await page.waitForXPath('//span[contains(.,"Continuar")]');
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
@@ -180,7 +244,7 @@ function Mineria(browser,  Pin) {
             /*
                         //await page.waitForTimeout(1000)
                         Primero();
-            
+
                         browser.close();*/
 
         }
@@ -266,13 +330,14 @@ function Mineria(browser,  Pin) {
         let ComasTotalesPorArea = {};
         while (Band != 99) {
 
+            // VerificarVencimientoPin(selectedText, input);
+            VerificarVencimientoPin(closestDateOption, input);
+
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
                 Mineria(browser,  Pin);
-                clearTimeout(TimeArea);
-
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -322,15 +387,18 @@ function Mineria(browser,  Pin) {
             // }
 
 
-            if (Band == 1) {
+            if (Band == 1) { //importante
                 MonitorearAreas(
-                    "503239SinA",
+                    "503239",
                     1,
                     "",
-                    ["18N05A24P09F, 18N05A24P08U, 18N05A24P04V, 18N05A24P09L, 18N05A24P04R, 18N05A24P04W, 18N05A24P09A, 18N05A24P04Q, 18N05A24P09R, 18N05A24P09K, 18N05A24P09G, 18N05A24P09Q"],
+                    ["18N05A24P09F, 18N05A24P08U, 18N05A24P04V, 18N05A24P09L, 18N05A24P09B, 18N05A24P04R, 18N05A24P04W, 18N05A24P09A, 18N05A24P04Q, 18N05A24P09R, 18N05A24P09K, 18N05A24P09G, 18N05A24P09Q"],
                     0
                 );
-            } 
+            }
+            
+
+
 
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
@@ -360,7 +428,7 @@ function Mineria(browser,  Pin) {
                 links.map(link => link.textContent)
             );
             var Reapertura = 0;
-            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
+            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
             for (let i = 0; i < FechaReapertura.length; i++) {
@@ -383,7 +451,7 @@ function Mineria(browser,  Pin) {
 
             }
 
-           
+
 
 
             if (cont == "0") {
@@ -392,8 +460,8 @@ function Mineria(browser,  Pin) {
                     document.querySelector('[id="cellIdsTxtId"]').value = "";
                 });
                 Band++;
-                //Este es la cantidad de areas mas 1 
-                if (Band == 6) {
+                //Este es la cantidad de areas mas 1
+                if (Band == 24) {
                     Band = 1;
                 }
 
@@ -408,14 +476,12 @@ function Mineria(browser,  Pin) {
 
         console.log("ahhh se salio Y_Y ");
         var bandera = 0;
-       
+
         let TimeNOpaso = setTimeout(() => {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
             Mineria(browser,  Pin);
-            clearTimeout(TimeNOpaso);
-            
         }, 20000);
 
         console.log(page.url());
@@ -428,18 +494,9 @@ function Mineria(browser,  Pin) {
             console.log(page.url());
             if (page.url() == 'https://annamineria.anm.gov.co/sigm/index.html#/p_CaaIataInputTechnicalEconomicalDetails') {
                 bandera = 99;
-                
+
                 console.log("Si cargo la pagina  ");
                 clearTimeout(TimeNOpaso);
-                RadiPrimero = setTimeout(() => {
-
-                    // console.log("ENTRO EN EL RadiPrimero");
-                    // page.close();
-                    // Mineria(browser,  Pin);
-                    // clearTimeout(RadiPrimero);
-        
-        
-                }, 30000);
             } else {
 
                 console.log("Nada no la carga ");
@@ -448,6 +505,17 @@ function Mineria(browser,  Pin) {
 
 
         }
+
+
+
+        clearTimeout(TimeNOpaso);
+
+
+
+
+
+
+
 
 
         const continDetallesdelArea2 = await page.$x('//a[contains(.,"área")]');
@@ -462,7 +530,17 @@ function Mineria(browser,  Pin) {
 
         //CORREO LIBERADA
         Correo(1, IdArea, Celda);
-        
+
+
+        let RadiPrimero = setTimeout(() => {
+
+            // console.log("ENTRO EN EL RadiPrimero");
+            // page.close();
+            // Mineria(browser,  Pin);
+
+
+        }, 30000);
+
         await page.evaluate(() => {
 
             document.querySelector('[id="yearOfExecutionId0"]').value = 'number:1'
@@ -477,7 +555,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId0')).triggerHandler('change');
 
-            //Contactos con la comunidad y enfoque social 
+            //Contactos con la comunidad y enfoque social
 
             document.querySelector('[id="yearOfExecutionId1"]').value = 'number:1'
 
@@ -491,7 +569,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId1')).triggerHandler('change');
 
-            //Base topográfica del área 	
+            //Base topográfica del área
 
             document.querySelector('[id="yearOfExecutionId2"]').value = 'number:1'
 
@@ -505,7 +583,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId2')).triggerHandler('change');
 
-            //Cartografía geológica 	
+            //Cartografía geológica
 
             document.querySelector('[id="yearOfExecutionId3"]').value = 'number:1'
 
@@ -519,7 +597,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId3')).triggerHandler('change');
 
-            //Excavación de trincheras y apiques 	
+            //Excavación de trincheras y apiques
 
             document.querySelector('[id="yearOfExecutionId4"]').value = 'number:2'
 
@@ -533,7 +611,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId4')).triggerHandler('change');
 
-            //Geoquímica y otros análisis 	
+            //Geoquímica y otros análisis
 
             document.querySelector('[id="yearOfExecutionId5"]').value = 'number:2'
 
@@ -547,7 +625,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId5')).triggerHandler('change');
 
-            //Geofísica 
+            //Geofísica
 
             document.querySelector('[id="yearOfExecutionId6"]').value = 'number:2'
 
@@ -561,7 +639,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId6')).triggerHandler('change');
 
-            //Estudio de dinámica fluvial del cauce	
+            //Estudio de dinámica fluvial del cauce
 
             document.querySelector('[id="yearOfExecutionId7"]').value = 'number:2'
 
@@ -575,7 +653,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId7')).triggerHandler('change');
 
-            // Características hidrológicas y sedimentológicas del cauce	
+            // Características hidrológicas y sedimentológicas del cauce
 
             document.querySelector('[id="yearOfExecutionId8"]').value = 'number:2'
 
@@ -589,7 +667,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId8')).triggerHandler('change');
 
-            //Pozos y Galerías Exploratorias	
+            //Pozos y Galerías Exploratorias
 
             document.querySelector('[id="yearOfExecutionId9"]').value = 'number:2'
 
@@ -603,7 +681,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId9')).triggerHandler('change');
 
-            //Perforaciones profundas 	
+            //Perforaciones profundas
 
             document.querySelector('[id="yearOfExecutionId10"]').value = 'number:2'
 
@@ -617,7 +695,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId10')).triggerHandler('change');
 
-            //Muestreo y análisis de calidad 	
+            //Muestreo y análisis de calidad
 
             document.querySelector('[id="yearOfExecutionId11"]').value = 'number:2'
 
@@ -631,7 +709,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId11')).triggerHandler('change');
 
-            //Estudio geotécnico 	
+            //Estudio geotécnico
 
             document.querySelector('[id="yearOfExecutionId12"]').value = 'number:2'
 
@@ -645,7 +723,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId12')).triggerHandler('change');
 
-            //Estudio Hidrológico 	
+            //Estudio Hidrológico
 
             document.querySelector('[id="yearOfExecutionId13"]').value = 'number:2'
 
@@ -659,7 +737,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId13')).triggerHandler('change');
 
-            //Estudio Hidrogeológico 	
+            //Estudio Hidrogeológico
 
             document.querySelector('[id="yearOfExecutionId14"]').value = 'number:2'
 
@@ -673,7 +751,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId14')).triggerHandler('change');
 
-            //Evaluación del modelo geológico 	
+            //Evaluación del modelo geológico
 
             document.querySelector('[id="yearOfExecutionId15"]').value = 'number:3'
 
@@ -687,7 +765,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('laborSuitabilityId15')).triggerHandler('change');
 
-            //Actividades exploratorias adicionales (Se describe en el anexo Tecnico que se allegue)	
+            //Actividades exploratorias adicionales (Se describe en el anexo Tecnico que se allegue)
 
             document.querySelector('[id="yearOfExecutionId16"]').value = 'number:3'
 
@@ -706,7 +784,7 @@ function Mineria(browser,  Pin) {
             // Actividades Ambientales etapa de exploración
 
 
-            //Selección optima de Sitios de Campamentos y Helipuertos 	
+            //Selección optima de Sitios de Campamentos y Helipuertos
 
             angular.element(document.getElementById('envYearOfDeliveryId0')).triggerHandler('change');
 
@@ -714,7 +792,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId0')).triggerHandler('change');
 
-            //Manejo de Aguas Lluvias 	
+            //Manejo de Aguas Lluvias
 
 
             angular.element(document.getElementById('envYearOfDeliveryId1')).triggerHandler('change');
@@ -723,7 +801,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId1')).triggerHandler('change');
 
-            //Manejo de Aguas Residuales Domesticas 	
+            //Manejo de Aguas Residuales Domesticas
 
 
             angular.element(document.getElementById('envYearOfDeliveryId2')).triggerHandler('change');
@@ -732,7 +810,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId2')).triggerHandler('change');
 
-            //Manejo de Cuerpos de Agua 	
+            //Manejo de Cuerpos de Agua
 
             angular.element(document.getElementById('envYearOfDeliveryId3')).triggerHandler('change');
 
@@ -740,7 +818,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId3')).triggerHandler('change');
 
-            //Manejo de Material Particulado y Gases 	
+            //Manejo de Material Particulado y Gases
 
 
             angular.element(document.getElementById('envYearOfDeliveryId4')).triggerHandler('change');
@@ -749,7 +827,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId4')).triggerHandler('change');
 
-            //Manejo del Ruido 	
+            //Manejo del Ruido
 
 
             angular.element(document.getElementById('envYearOfDeliveryId5')).triggerHandler('change');
@@ -758,7 +836,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId5')).triggerHandler('change');
 
-            // Manejo de Combustibles 	
+            // Manejo de Combustibles
 
             angular.element(document.getElementById('envYearOfDeliveryId6')).triggerHandler('change');
 
@@ -766,7 +844,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId6')).triggerHandler('change');
 
-            //Manejo de Taludes 	
+            //Manejo de Taludes
 
 
             angular.element(document.getElementById('envYearOfDeliveryId7')).triggerHandler('change');
@@ -775,7 +853,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId7')).triggerHandler('change');
 
-            //Manejo de Accesos 	
+            //Manejo de Accesos
 
 
             angular.element(document.getElementById('envYearOfDeliveryId8')).triggerHandler('change');
@@ -784,7 +862,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId8')).triggerHandler('change');
 
-            // Manejo de Residuos Solidos 	
+            // Manejo de Residuos Solidos
 
             angular.element(document.getElementById('envYearOfDeliveryId9')).triggerHandler('change');
 
@@ -792,7 +870,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId9')).triggerHandler('change');
 
-            //Adecuación y Recuperación de Sitios de Uso Temporal 	
+            //Adecuación y Recuperación de Sitios de Uso Temporal
 
 
             angular.element(document.getElementById('envYearOfDeliveryId10')).triggerHandler('change');
@@ -801,7 +879,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId10')).triggerHandler('change');
 
-            //Manejo de Fauna y Flora 	
+            //Manejo de Fauna y Flora
 
 
             angular.element(document.getElementById('envYearOfDeliveryId11')).triggerHandler('change');
@@ -810,7 +888,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId11')).triggerHandler('change');
 
-            //Plan de Gestión Social 	
+            //Plan de Gestión Social
 
 
             angular.element(document.getElementById('envYearOfDeliveryId12')).triggerHandler('change');
@@ -819,7 +897,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId12')).triggerHandler('change');
 
-            //capacitación de Personal 	
+            //capacitación de Personal
 
 
             angular.element(document.getElementById('envYearOfDeliveryId13')).triggerHandler('change');
@@ -828,7 +906,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId13')).triggerHandler('change');
 
-            //Contratación de Mano de Obra no Calificada 	
+            //Contratación de Mano de Obra no Calificada
 
 
             angular.element(document.getElementById('envYearOfDeliveryId14')).triggerHandler('change');
@@ -837,7 +915,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId14')).triggerHandler('change');
 
-            //Rescate Arqueológico 	
+            //Rescate Arqueológico
 
 
             angular.element(document.getElementById('envYearOfDeliveryId15')).triggerHandler('change');
@@ -846,7 +924,7 @@ function Mineria(browser,  Pin) {
 
             angular.element(document.getElementById('envLaborSuitabilityId15')).triggerHandler('change');
 
-            //Manejo de Hundimientos	
+            //Manejo de Hundimientos
 
 
             angular.element(document.getElementById('envYearOfDeliveryId16')).triggerHandler('change');
@@ -858,7 +936,7 @@ function Mineria(browser,  Pin) {
 
         });
 
-        // SELECCIÓN DE PROFESIONALES => CONTADOR(ES), GEÓLOGO(S), INGENIERO(S) GEÓLOGO(S), INGENIERO(S) DE MINAS        
+        // SELECCIÓN DE PROFESIONALES => CONTADOR(ES), GEÓLOGO(S), INGENIERO(S) GEÓLOGO(S), INGENIERO(S) DE MINAS
         // ==============================================================================
         console.log("INICIA LA SELECCIÓN DE LOS PROFESIONALES");
         console.log('================================================================');
@@ -908,7 +986,6 @@ function Mineria(browser,  Pin) {
             // Check
             // document.querySelector('Input[id="declareIndId0"]').click();
 
-
             //Valores
             // document.getElementById('currentAssetId0').value = '42539369275' // OLD
             document.getElementById('activoCorrienteId0').value = '1725073000';
@@ -949,7 +1026,6 @@ function Mineria(browser,  Pin) {
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
             Mineria(browser,  Pin);
-            clearTimeout(Radisegundo);
 
 
         }, 30000);
@@ -979,8 +1055,22 @@ function Mineria(browser,  Pin) {
 
         try {
 
-            let ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+            
+            let ArchivoAmbiental ;
+            if(IdArea == '509188'){
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            }else if(IdArea == '504177'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
 
+            } else if(IdArea == '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
+
+            }
+            else{
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+
+            }
+           
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1077,7 +1167,7 @@ function Mineria(browser,  Pin) {
             waitUntil: 'networkidle0',
         });
         console.log(" si navego ");
- 
+
 
 
         //CAPTURA DE PANTALLA
@@ -1087,10 +1177,11 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin); 
+            Mineria(browser,  Pin);
         }, 60000);
 
-        
+
+
         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
         await HacerClicEnSpanDocumentacionDeSoporte[0].click();
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
@@ -1110,6 +1201,7 @@ function Mineria(browser,  Pin) {
         await keyboard.pressKey(Key.Enter);
 
         // await page.waitForTimeout(1000000);
+
 
         while (true) {
             await page.waitForTimeout(1000);
@@ -1163,6 +1255,8 @@ function Mineria(browser,  Pin) {
 
 
 
+
+
     })();
 }
 
@@ -1187,7 +1281,9 @@ function Correo(Tipo, Area, Celda) {
         Color = "#2196F3";
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
-        msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
+        msg = `Proximo Pin A Vencerse -> ${Area}`;
+        Color = "#FE7401";
+        Texto = "PIN PRÓXIMO A VENCERSE";
     }
 
     var nodemailer = require('nodemailer');
@@ -1204,72 +1300,94 @@ function Correo(Tipo, Area, Celda) {
             pass: '1998Ceere*'
         }
     });
-    var mensaje = msg;
+
+    var Subject = "";
+    var Text = "";
+
+    if (Tipo !== 4) {
+        Subject = `LA AREA ES -> ${Area}`;
+        Text = `LA AREA ES -> ${Area} CELDA -> ${Celda}`;
+    } else {
+        Subject = `¡¡PIN PRÓXIMO A VENCERSE!! EN EMPRESA -> ${Empresa}`;
+        Text = `EL PIN ES -> ${Area}`;
+    }
+
+    var ContenidoHTMLDelCorreo = `
+        <html>
+        <head>
+            <style>
+                .container {
+                    font-family: Arial, sans-serif;
+                    max-width: 600px;
+                    margin: auto;
+                    padding: 20px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    background-color: #f9f9f9;
+                }
+                .header {
+                    background-color: ${Color};
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                    border-radius: 5px 5px 0 0;
+                }
+                .content {
+                    margin: 20px 0;
+                }
+                .footer {
+                    text-align: center;
+                    padding: 10px;
+                    font-size: 12px;
+                    color: #777;
+                    border-top: 1px solid #ddd;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h3> ${Texto} </h3>
+                </div>
+                <div class="content">
+                    <p><strong>Detalles:</strong></p>
+                    <ul>`;
+                    if (Tipo !==4) {
+                        ContenidoHTMLDelCorreo += `
+                            <li><strong>Empresa: </strong><br>${Empresa}</li>
+                            <li><strong>Area:</strong><br>${Area}</li>
+                            <li><strong>Celda:</strong><br>${Celda}</li>
+                        `;
+                    } else {
+                        ContenidoHTMLDelCorreo += `
+                            <li><strong>Pin:</strong><br>${Area}</li>
+                            <li><strong>Descripción: </strong><br>${Celda}</li>
+                        `;
+                    }
+                    ContenidoHTMLDelCorreo += `
+                    </ul>
+                </div>
+                <div class="footer">
+                    <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
+                </div>
+            </div>
+        </body>
+    </html>
+    `;
+
     var mailOptions = {
-        from: msg + '"Ceere" <pruebacitas@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
+        from: msg + '"Ceere" <pruebacitas@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
         to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: '  Fernando.pala.99@gmail.com',
-        subject: 'LA AREA ES-> ' + Area,
-        text: 'LA AREA ES->  ' + Area + "  " + Celda,
-        html: `
-            <html>
-                <head>
-                    <style>
-                        .container {
-                            font-family: Arial, sans-serif;
-                            max-width: 600px;
-                            margin: auto;
-                            padding: 20px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                            background-color: #f9f9f9;
-                        }
-                        .header {
-                            background-color: ${Color};
-                            color: white;
-                            padding: 10px;
-                            text-align: center;
-                            border-radius: 5px 5px 0 0;
-                        }
-                        .content {
-                            margin: 20px 0;
-                        }
-                        .footer {
-                            text-align: center;
-                            padding: 10px;
-                            font-size: 12px;
-                            color: #777;
-                            border-top: 1px solid #ddd;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h3> ${Texto} </h3>
-                        </div>
-                        <div class="content">
-                            <p><strong>Detalles:</strong></p>
-                            <ul>
-                                <li><strong>Empresa: </strong><br>${Empresa}</li>
-                                <li><strong>Area:</strong><br>${Area}</li>
-                                <li><strong>Celda:</strong><br>${Celda}</li>
-                            </ul>
-                        </div>
-                        <div class="footer">
-                            <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
-                        </div>
-                    </div>
-                </body>
-            </html>
-        `
+        //to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
+        subject: Subject,
+        text: Text,
+        html: ContenidoHTMLDelCorreo
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             return console.log(error);
         }
-
         console.log('Message sent: ' + info.response);
     });
 }
@@ -1388,5 +1506,65 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
             }
 
         }
+    }
+}
+
+var CorreoEnviado = false;
+var PrimerCorreoEnviado = false;
+// FUNCIÓN PARA VERIFICAR VENCIMIENTO DE PIN Y ENVIAR RECORDATORIO
+function VerificarVencimientoPin(selectedText, TextoDeOpcionSeleccionadaEnCampoPin) {
+
+    const input = TextoDeOpcionSeleccionadaEnCampoPin;
+
+    // Separar la fecha después de la coma
+    const dateString = input.split(',')[1].trim();
+
+    // Crear un objeto de fecha a partir de la cadena
+    const targetDate = new Date(dateString);
+
+    // Obtener la fecha actual
+    const currentDate = new Date();
+
+    // Calcular la diferencia en milisegundos
+    const diffInMs = targetDate - currentDate;
+
+    // Convertir la diferencia en días
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+    const diaSemana = targetDate.toLocaleString('es-Es', { weekday: 'long' });
+    console.log(`¡¡¡ DIFERENCIA EN DÍAS PIN: ${diffInDays}`);
+    const Description = `El pin vence en ${diffInDays} días, es decir, tiene vigencia hasta el día ${diaSemana} - ${dateString}`;
+
+    // Se captura la hora del día actual
+    const HoraActual = currentDate.getHours();
+
+    // Se captura el minuto actual
+    const MinutoActual = currentDate.getMinutes();
+
+    // Se captura el segundo actual
+    const SegundoActual = currentDate.getSeconds();
+
+    // Se verifica si la diferencia de días es igual a 5 y si la hora actual contiene 7 de la mañana ó contiene 3 de la tarde. Para hacer 2 envíos de recordatorio el día que se cumplan todas las condiciones
+
+    // Primer envío: 07:00 am
+    if ((diffInDays === 5) && ([7].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false) && !PrimerCorreoEnviado) {
+        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL PRIMER CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
+        Correo(4, selectedText, Description);
+        CorreoEnviado = true;
+        PrimerCorreoEnviado = true;
+    }
+
+    // Resetear el flag solo una vez después del primer correo
+    if ((diffInDays === 5) && ((HoraActual > 7) && (HoraActual < 15)) && (MinutoActual === 0) && PrimerCorreoEnviado && CorreoEnviado) {
+        CorreoEnviado = false;
+        console.log("LA VARIABLE DE CORREO ENVIADO SE HIZO FALSA");
+    }
+
+    // Segundo envío: 03:00 pm
+    if ((diffInDays === 5) && ([15].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false)) {
+        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL SEGUNDO CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
+        Correo(4, selectedText, Description);
+        CorreoEnviado = true;
+        PrimerCorreoEnviado = false;
     }
 }
