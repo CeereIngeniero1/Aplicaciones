@@ -1,19 +1,21 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
-const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js'); 
 // Actualizado
-var Empresa = 'Provenza';
-var user1 = '74025';
-var pass1 = 'MineralesP_2024**';
-var user2 = '83949';
-var pass2 = '*Jcrmh2022#';
-var Agente = 0;
+var Empresa = 'Collective';
+var user1 = '76966';
+var pass1 = 'Collective10+';
+var user2 = '83955';
+var pass2 = 'wX2*dQ3*cS';
+// var user2 = '84927';
+// var pass2 = 'A1001359681*';
+var Agente = 1;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
 var Cag = false;
-
+var Caggrande = false;
 Pagina();
 async function Pagina() {
     var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
@@ -33,11 +35,12 @@ async function Pagina() {
 
 
 
+
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
 
 
     const browser = await puppeteer.launch({
-        //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
         // Reemplaza con la ruta real a tu Google Chrome
         headless: false,
@@ -48,8 +51,7 @@ async function Pagina() {
         devtools: false
     });
 
-        Mineria(browser, Pin);
-
+        Mineria(browser,   Pin);
 }
 
 
@@ -58,26 +60,21 @@ async function Pagina() {
 function Mineria(browser,  Pin) {
     (async () => {
 
-        console.log("Esta es la vuelta " + ContadorVueltas);
-        const page = await browser.newPage();
 
-        let Primerpaso = setTimeout(() => {
-            console.log("ENTRO EN EL PRIMERPASO")
+            console.log("Esta es la vuelta " + ContadorVueltas);
 
-            page.close();
-            Mineria(browser,  Pin);
-
-        }, 20000);
-
-
-
+            const page = await browser.newPage();
+            let Primerpaso = setTimeout(() => {
+                console.log("ENTRO EN EL PRIMERPASO")
+                page.close();
+                Mineria(browser,  Pin);
+            }, 20000);
+            await page.setViewport({ width: 1368, height: 620 });
+            await page.goto('https://annamineria.anm.gov.co/sigm/');
 
 
-        await page.setViewport({ width: 1368, height: 620 });
-        await page.goto('https://annamineria.anm.gov.co/sigm/');
-
-        let user = (Agente == 0) ? user1 : user2;
-        let pass = (Agente == 0) ? pass1 : pass2;
+            let user = (Agente == 0) ? user1 : user2;
+            let pass = (Agente == 0) ? pass1 : pass2;
 
             try {
 
@@ -93,28 +90,30 @@ function Mineria(browser,  Pin) {
                 console.log("Entro en el catch");
             }
 
-        page.setDefaultTimeout(0);
-        try {
-            await page.waitForNavigation({
-                waitUntil: 'networkidle0',
-                timeout: 5000 // 5 segundos en milisegundos
-            });
-        } catch (error) {
-            if (error instanceof puppeteer.errors.TimeoutError) {
-                console.log('La navegación tardó más de 5 segundos.');
-                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-            } else {
-                throw error; // Lanzar el error si no es un TimeoutError
+            page.setDefaultTimeout(0);
+            try {
+                await page.waitForNavigation({
+                    waitUntil: 'networkidle0',
+                    timeout: 5000 // 5 segundos en milisegundos
+                });
+            } catch (error) {
+                if (error instanceof puppeteer.errors.TimeoutError) {
+                    console.log('La navegación tardó más de 5 segundos.');
+                    // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+                } else {
+                    throw error; // Lanzar el error si no es un TimeoutError
+                }
             }
-        }
-        validador = 0;
-        clearTimeout(Primerpaso);
+            validador = 0;
+
+
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
             Mineria(browser,  Pin);
-        }, 35000);
-
+            clearTimeout(Segundopaso);
+        }, 20000);
+        clearTimeout(Primerpaso);
 
 
 
@@ -152,65 +151,6 @@ function Mineria(browser,  Pin) {
         const selectPin = await page.$('select[id="pinSlctId"]');
         await selectPin.type(Pin);
         console.log(Pin);
-
-        /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-            // Capturar todas las opciones de un select
-            const allOptions = await page.evaluate(select => {
-                const options = Array.from(select.options); // Convierte las opciones a un array
-                return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
-            }, selectPin);
-
-            console.log('Todas las opciones:', allOptions);
-
-            const closestDateOption = await page.evaluate(() => {
-                const select = document.querySelector('select');
-
-                const monthMap = {
-                    "ENE": "01",
-                    "FEB": "02",
-                    "MAR": "03",
-                    "ABR": "04",
-                    "MAY": "05",
-                    "JUN": "06",
-                    "JUL": "07",
-                    "AGO": "08",
-                    "SEP": "09",
-                    "OCT": "10",
-                    "NOV": "11",
-                    "DIC": "12"
-                };
-
-                const options = Array.from(select.options).map(option => {
-                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
-                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
-
-                    const [day, monthName, year] = dateText.split('/');
-                    const month = monthMap[monthName];
-                    const formattedDate = new Date(`${year}-${month}-${day}`);
-
-                    return { text, date: formattedDate };
-                });
-
-                const now = new Date();
-
-                const differences = options.map(option => {
-                    const diff = Math.abs(option.date - now);
-                    return { text: option.text, diff }; // Retornar la diferencia y el texto
-                });
-
-                console.log('Diferencias calculadas:', differences);
-
-                // Reducir para encontrar la fecha más cercana
-                const closest = options.reduce((prev, curr) => {
-                    return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
-                });
-
-                return closest.text;
-            });
-
-            console.log('Opción más cercana a la fecha actual:', closestDateOption);
-            const input = closestDateOption;
-        /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
 
         await page.waitForXPath('//span[contains(.,"Continuar")]');
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
@@ -330,14 +270,13 @@ function Mineria(browser,  Pin) {
         let ComasTotalesPorArea = {};
         while (Band != 99) {
 
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
-
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
-                page.close();
+                // page.close();
                 Mineria(browser,  Pin);
+                clearTimeout(TimeArea);
+
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -387,7 +326,7 @@ function Mineria(browser,  Pin) {
             // }
 
 
-             if (Band == 1) {
+            if (Band == 1) {
                 MonitorearAreas(
                     "503239Celda",
                     1,
@@ -395,9 +334,7 @@ function Mineria(browser,  Pin) {
                     ['18N05A24P09B'],
                     77
                 );
-            }            
-
-
+            }   
 
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
@@ -471,18 +408,20 @@ function Mineria(browser,  Pin) {
             clearTimeout(TimeArea);
         }
 
-
-
-        console.log("ahhh se salio Y_Y ");
-        var bandera = 0;
-
         let TimeNOpaso = setTimeout(() => {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
             Mineria(browser,  Pin);
+            clearTimeout(TimeNOpaso);
+
         }, 20000);
 
+
+        console.log("ahhh se salio Y_Y ");
+        var bandera = 0;
+
+        
         console.log(page.url());
 
         while (bandera != 99) {
@@ -496,6 +435,7 @@ function Mineria(browser,  Pin) {
 
                 console.log("Si cargo la pagina  ");
                 clearTimeout(TimeNOpaso);
+             
             } else {
 
                 console.log("Nada no la carga ");
@@ -507,7 +447,7 @@ function Mineria(browser,  Pin) {
 
 
 
-        clearTimeout(TimeNOpaso);
+
 
 
 
@@ -529,16 +469,17 @@ function Mineria(browser,  Pin) {
 
         //CORREO LIBERADA
         Correo(1, IdArea, Celda);
+        RadiPrimero = setTimeout(() => {
 
-
-        let RadiPrimero = setTimeout(() => {
-
-            // console.log("ENTRO EN EL RadiPrimero");
-            // page.close();
-            // Mineria(browser,  Pin);
+            console.log("ENTRO EN EL RadiPrimero");
+            page.close();
+            Mineria(browser,  Pin);
+            clearTimeout(RadiPrimero);
 
 
         }, 30000);
+
+
 
         await page.evaluate(() => {
 
@@ -985,6 +926,7 @@ function Mineria(browser,  Pin) {
             // Check
             // document.querySelector('Input[id="declareIndId0"]').click();
 
+
             //Valores
             // document.getElementById('currentAssetId0').value = '42539369275' // OLD
             document.getElementById('activoCorrienteId0').value = '1725073000';
@@ -1025,6 +967,7 @@ function Mineria(browser,  Pin) {
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
             Mineria(browser,  Pin);
+            clearTimeout(Radisegundo);
 
 
         }, 30000);
@@ -1054,22 +997,8 @@ function Mineria(browser,  Pin) {
 
         try {
 
-            
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '504177'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
+            let ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
-            } else if(IdArea == '503239'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
-
-            }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
-
-            }
-           
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1166,6 +1095,21 @@ function Mineria(browser,  Pin) {
             waitUntil: 'networkidle0',
         });
         console.log(" si navego ");
+        // await page.waitForSelector('#recaptchaContainer');
+        // console.log("lo encontro");
+        // await page.waitForTimeout(2000);
+        // // Obtener todos los iframes en la página
+        // const frames = await page.frames();
+
+        // // Encontrar el iframe que contiene el recaptcha
+        // const recaptchaFrame = frames.find(frame => frame.url().includes('recaptcha'));
+
+        // // Esperar a que el elemento con la clase 'recaptcha-checkbox-border' esté presente
+        // // await page.waitForSelector('#recaptcha-anchor');
+        // const recaptchaCheckbox = await recaptchaFrame.waitForSelector('#recaptcha-anchor');
+
+        // // Hacer clic en el checkbox del recaptcha
+        // await recaptchaCheckbox.click();
 
 
 
@@ -1179,8 +1123,7 @@ function Mineria(browser,  Pin) {
             Mineria(browser,  Pin);
         }, 60000);
 
-
-
+        
         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
         await HacerClicEnSpanDocumentacionDeSoporte[0].click();
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
@@ -1200,7 +1143,6 @@ function Mineria(browser,  Pin) {
         await keyboard.pressKey(Key.Enter);
 
         // await page.waitForTimeout(1000000);
-
 
         while (true) {
             await page.waitForTimeout(1000);
@@ -1254,8 +1196,6 @@ function Mineria(browser,  Pin) {
 
 
 
-
-
     })();
 }
 
@@ -1280,9 +1220,7 @@ function Correo(Tipo, Area, Celda) {
         Color = "#2196F3";
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
-        msg = `Proximo Pin A Vencerse -> ${Area}`;
-        Color = "#FE7401";
-        Texto = "PIN PRÓXIMO A VENCERSE";
+        msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
     }
 
     var nodemailer = require('nodemailer');
@@ -1299,94 +1237,72 @@ function Correo(Tipo, Area, Celda) {
             pass: '1998Ceere*'
         }
     });
-
-    var Subject = "";
-    var Text = "";
-
-    if (Tipo !== 4) {
-        Subject = `LA AREA ES -> ${Area}`;
-        Text = `LA AREA ES -> ${Area} CELDA -> ${Celda}`;
-    } else {
-        Subject = `¡¡PIN PRÓXIMO A VENCERSE!! EN EMPRESA -> ${Empresa}`;
-        Text = `EL PIN ES -> ${Area}`;
-    }
-
-    var ContenidoHTMLDelCorreo = `
-        <html>
-        <head>
-            <style>
-                .container {
-                    font-family: Arial, sans-serif;
-                    max-width: 600px;
-                    margin: auto;
-                    padding: 20px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    background-color: #f9f9f9;
-                }
-                .header {
-                    background-color: ${Color};
-                    color: white;
-                    padding: 10px;
-                    text-align: center;
-                    border-radius: 5px 5px 0 0;
-                }
-                .content {
-                    margin: 20px 0;
-                }
-                .footer {
-                    text-align: center;
-                    padding: 10px;
-                    font-size: 12px;
-                    color: #777;
-                    border-top: 1px solid #ddd;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h3> ${Texto} </h3>
-                </div>
-                <div class="content">
-                    <p><strong>Detalles:</strong></p>
-                    <ul>`;
-                    if (Tipo !==4) {
-                        ContenidoHTMLDelCorreo += `
-                            <li><strong>Empresa: </strong><br>${Empresa}</li>
-                            <li><strong>Area:</strong><br>${Area}</li>
-                            <li><strong>Celda:</strong><br>${Celda}</li>
-                        `;
-                    } else {
-                        ContenidoHTMLDelCorreo += `
-                            <li><strong>Pin:</strong><br>${Area}</li>
-                            <li><strong>Descripción: </strong><br>${Celda}</li>
-                        `;
-                    }
-                    ContenidoHTMLDelCorreo += `
-                    </ul>
-                </div>
-                <div class="footer">
-                    <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
-                </div>
-            </div>
-        </body>
-    </html>
-    `;
-
+    var mensaje = msg;
     var mailOptions = {
         from: msg + '"Ceere" <pruebacitas@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
         to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
-        subject: Subject,
-        text: Text,
-        html: ContenidoHTMLDelCorreo
+        //to: '  Fernando.pala.99@gmail.com',
+        subject: 'LA AREA ES-> ' + Area,
+        text: 'LA AREA ES->  ' + Area + "  " + Celda,
+        html: `
+            <html>
+                <head>
+                    <style>
+                        .container {
+                            font-family: Arial, sans-serif;
+                            max-width: 600px;
+                            margin: auto;
+                            padding: 20px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            background-color: #f9f9f9;
+                        }
+                        .header {
+                            background-color: ${Color};
+                            color: white;
+                            padding: 10px;
+                            text-align: center;
+                            border-radius: 5px 5px 0 0;
+                        }
+                        .content {
+                            margin: 20px 0;
+                        }
+                        .footer {
+                            text-align: center;
+                            padding: 10px;
+                            font-size: 12px;
+                            color: #777;
+                            border-top: 1px solid #ddd;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h3> ${Texto} </h3>
+                        </div>
+                        <div class="content">
+                            <p><strong>Detalles:</strong></p>
+                            <ul>
+                                <li><strong>Empresa: </strong><br>${Empresa}</li>
+                                <li><strong>Area:</strong><br>${Area}</li>
+                                <li><strong>Celda:</strong><br>${Celda}</li>
+                            </ul>
+                        </div>
+                        <div class="footer">
+                            <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             return console.log(error);
         }
+
         console.log('Message sent: ' + info.response);
     });
 }
@@ -1505,65 +1421,5 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
             }
 
         }
-    }
-}
-
-var CorreoEnviado = false;
-var PrimerCorreoEnviado = false;
-// FUNCIÓN PARA VERIFICAR VENCIMIENTO DE PIN Y ENVIAR RECORDATORIO
-function VerificarVencimientoPin(selectedText, TextoDeOpcionSeleccionadaEnCampoPin) {
-
-    const input = TextoDeOpcionSeleccionadaEnCampoPin;
-
-    // Separar la fecha después de la coma
-    const dateString = input.split(',')[1].trim();
-
-    // Crear un objeto de fecha a partir de la cadena
-    const targetDate = new Date(dateString);
-
-    // Obtener la fecha actual
-    const currentDate = new Date();
-
-    // Calcular la diferencia en milisegundos
-    const diffInMs = targetDate - currentDate;
-
-    // Convertir la diferencia en días
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-
-    const diaSemana = targetDate.toLocaleString('es-Es', { weekday: 'long' });
-    console.log(`¡¡¡ DIFERENCIA EN DÍAS PIN: ${diffInDays}`);
-    const Description = `El pin vence en ${diffInDays} días, es decir, tiene vigencia hasta el día ${diaSemana} - ${dateString}`;
-
-    // Se captura la hora del día actual
-    const HoraActual = currentDate.getHours();
-
-    // Se captura el minuto actual
-    const MinutoActual = currentDate.getMinutes();
-
-    // Se captura el segundo actual
-    const SegundoActual = currentDate.getSeconds();
-
-    // Se verifica si la diferencia de días es igual a 5 y si la hora actual contiene 7 de la mañana ó contiene 3 de la tarde. Para hacer 2 envíos de recordatorio el día que se cumplan todas las condiciones
-
-    // Primer envío: 07:00 am
-    if ((diffInDays === 5) && ([7].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false) && !PrimerCorreoEnviado) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL PRIMER CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = true;
-    }
-
-    // Resetear el flag solo una vez después del primer correo
-    if ((diffInDays === 5) && ((HoraActual > 7) && (HoraActual < 15)) && (MinutoActual === 0) && PrimerCorreoEnviado && CorreoEnviado) {
-        CorreoEnviado = false;
-        console.log("LA VARIABLE DE CORREO ENVIADO SE HIZO FALSA");
-    }
-
-    // Segundo envío: 03:00 pm
-    if ((diffInDays === 5) && ([15].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false)) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL SEGUNDO CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = false;
     }
 }
