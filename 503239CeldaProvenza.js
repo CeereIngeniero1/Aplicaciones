@@ -1083,19 +1083,19 @@ function Mineria(browser,  Pin) {
             console.log('================================================================');
 
             let Documentos = [
-                "Doc.pdf",//1
-                "Doc.pdf",//2
-                "Doc.pdf",//3
-                "Doc.pdf",//4
-                "Doc.pdf",//5
-                "Doc.pdf",//6
-                "Doc.pdf",//7
-                "Doc.pdf",//8
-                "Doc.pdf",//9
-                "Doc.pdf",//10
-                "Doc.pdf",//11
-                "Doc.pdf",//12
-                "Doc.pdf",//13
+                "1. Aceptacion Del Profesional Para Refrendar Documentos Tecnicos.pdf",//1
+                "2. Fotocopia Tarjeta Profesional.pdf",//2
+                "4. Declaracion De Renta Proponente 1 Anio 1.pdf",//3
+                "5. Declaracion De Renta Proponente 1 Anio 2.pdf",//4
+                "6. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 1.pdf",//5
+                "7. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 2.pdf",//6
+                "8. Extractos Bancarios Proponente 1.pdf",//7
+                "9. RUT.pdf",//8
+                "10. Fotocopia Documento De Identificacion.pdf",//9
+                "11. Certificado De Composicion Accionaria De La Sociedad.pdf",//10
+                "12. Certificado De Existencia Y Representacion Legal.pdf",//11
+                "13. Certificado Vigente De Antecedentes Disciplinarios.pdf",//12
+                "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf",//13
 
             ];
 
