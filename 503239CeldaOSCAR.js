@@ -357,7 +357,7 @@ function Mineria(browser, Pin) {
             }
             else  if (Band == 1) { //importante
                 MonitorearAreas(
-                    "503239",
+                    "503239Celda",
                     1,
                     "",
                     [" 18N05A24P09B"],
