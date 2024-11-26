@@ -461,7 +461,7 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1
-                if (Band == 24) {
+                if (Band == 2) {
                     Band = 1;
                 }
 
