@@ -1076,8 +1076,8 @@ function Mineria(browser, Pin) {
                 "p_CaaCataMandatoryDocumentToAttachId8",//8
                 "p_CaaCataMandatoryDocumentToAttachId9",//9
                 "p_CaaCataMandatoryDocumentToAttachId10",//10
-                  "p_CaaCataMandatoryDocumentToAttachId11",//11
-                 "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId11",//11
+                "p_CaaCataMandatoryDocumentToAttachId12",//12
                 "p_CaaCataMandatoryDocumentToAttachId13",//13
                 // "p_CaaCataMandatoryDocumentToAttachId14"//14
             ];
