@@ -143,21 +143,6 @@ async function AreaEspecial() {
         northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
     });
 
-    // await page.waitForSelector('input[id="0applicantCoordinateEastingTxtId"]');
-    // await page.type('input[id="0applicantCoordinateEastingTxtId"]', '-75,193');
-    // await page.waitForTimeout(3000);
-    // // Repetir para el otro input
-    // await page.waitForSelector('input[id="0applicantCoordinateNorthingTxtId"]');
-    // await page.type('input[id="0applicantCoordinateNorthingTxtId"]', '4,211');
-    // await page.waitForTimeout(3000);
-
-    // await page.waitForSelector('input[id="1applicantCoordinateEastingTxtId"]');
-    // await page.type('input[id="1applicantCoordinateEastingTxtId"]', '-75,193');
-    // await page.waitForTimeout(3000);
-    // // Repetir para el otro input
-    // await page.waitForSelector('input[id="1applicantCoordinateNorthingTxtId"]');
-    // await page.type('input[id="1applicantCoordinateNorthingTxtId"]', '4,21176');
-
     await page.waitForTimeout(5050);
     await page.type('#selectedCellInputMethodSlctId', '');
     console.log("prueba");
