@@ -2,14 +2,14 @@ const puppeteer = require('puppeteer');
 
 
 const user = '83949';
-const pass = 'wX2*dQ3*cS';
+const pass = '*Jcrmh2022#';
 
 
 
 AreaEspecial();
 
 async function AreaEspecial() {
-    console.log("modas");
+
 
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
 
@@ -139,76 +139,99 @@ async function AreaEspecial() {
 
     const selectporCeldas = await page.$('select[id="selectedCellInputMethodSlctId"]');
     await selectporCeldas.type('U');
+
+
+
+    const continPin2 = await page.$x('//span[contains(.,"Continuar")]');
+
+
     var band = 0;
     while (true) {
+        await page.waitForTimeout(1000);
         band++;
-        if (band == 3) {
-            break
-        }
-      
+       
 
-
-
-
-
-
-
-
-
-        const continPin2 = await page.$x('//span[contains(.,"Continuar")]');
-        //await continPin[1].click();
-        console.log(continPin2);
-        await page.waitForTimeout(2000000);
 
         if (band == 1) {
-              // Establecer el valor directamente en el input
-        await page.evaluate(() => {
-            const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-            eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
-            eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
+            // Establecer el valor directamente en el input
+            await page.evaluate(() => {
+                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
+                eastingInput.value = '-75,64088'; // Usar el valor con punto decimal
+                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
-            const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-            northingInput.value = '4,21175';
-            northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-        });
+                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
+                northingInput.value = '5,51686';
+                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
+            });
 
-        // Repetir para los otros inputs
-        await page.evaluate(() => {
-            const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-            eastingInput2.value = '-75,1938';
-            eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+            // Repetir para los otros inputs
+            await page.evaluate(() => {
+                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
+                eastingInput2.value = '-75,64088';
+                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
-            const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-            northingInput2.value = '4,21175';
-            northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-        });
-            MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
+                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
+                northingInput2.value = '5,51686';
+                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            MonitorearAreas("AreaDePrueba", ["18N05A24P07U"]);
 
-            await page.waitForTimeout(2000);
+           
 
         } else if (band == 2) {
-              // Establecer el valor directamente en el input
-        await page.evaluate(() => {
-            const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-            eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
-            eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
+            // Establecer el valor directamente en el input
+            await page.evaluate(() => {
+                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
+                eastingInput.value = '-75,64088'; // Usar el valor con punto decimal
+                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
-            const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-            northingInput.value = '4,21175';
-            northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-        });
+                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
+                northingInput.value = '5,51686';
+                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
+            });
 
-        // Repetir para los otros inputs
-        await page.evaluate(() => {
-            const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-            eastingInput2.value = '-75,1938';
-            eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+            // Repetir para los otros inputs
+            await page.evaluate(() => {
+                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
+                eastingInput2.value = '-75,64088';
+                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
-            const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-            northingInput2.value = '4,21175';
-            northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-        });
+                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
+                northingInput2.value = '5,51686';
+                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            MonitorearAreas("AreaDePrueba", ["18N05A24P07U"]);
+
+        } else if (band == 3) {
+            // Establecer el valor directamente en el input
+            await page.evaluate(() => {
+                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
+                eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
+                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
+
+                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
+                northingInput.value = '4,21175';
+                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+
+            // Repetir para los otros inputs
+            await page.evaluate(() => {
+                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
+                eastingInput2.value = '-75,1938';
+                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+
+                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
+                northingInput2.value = '4,21175';
+                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+            });
             MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
+        }
+        await page.waitForTimeout(1000);
+
+        await continPin2[1].click();
+
+        if (band == 3) {
+            break
         }
 
     }
