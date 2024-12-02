@@ -151,6 +151,21 @@ async function AreaEspecial() {
         band++;
        
 
+        function MonitorearAreas(IdArea, Area) {
+            page.evaluate(({ Area }) => {
+                document.querySelector('[id="cellIdsInptId"]').value = Area.join('');
+                angular.element(document.getElementById('cellIdsInptId')).triggerHandler('change');
+            }, { Area });
+        
+            DetallesCompletos = {
+                IdArea: IdArea,
+        
+                Area: Area,
+        
+            }
+        
+            return DetallesCompletos;
+        }
 
         if (band == 1) {
             // Establecer el valor directamente en el input
@@ -226,7 +241,7 @@ async function AreaEspecial() {
             });
             MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
         }
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(2500);
 
         await continPin2[1].click();
 
@@ -235,27 +250,12 @@ async function AreaEspecial() {
         }
 
     }
-
+    await page.waitForTimeout(25000);
 
 
 }
 
 
-function MonitorearAreas(IdArea, Area) {
-    page.evaluate(({ Area }) => {
-        document.querySelector('[id="cellIdsInptId"]').value = Area.join('');
-        angular.element(document.getElementById('cellIdsInptId')).triggerHandler('change');
-    }, { Area });
-
-    DetallesCompletos = {
-        IdArea: IdArea,
-
-        Area: Area,
-
-    }
-
-    return DetallesCompletos;
-}
 
 
 
