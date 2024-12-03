@@ -172,7 +172,7 @@ async function AreaEspecial(browser) {
     const continPin2 = await page.$x('//span[contains(.,"Continuar")]');
 
     clearTimeout(Tercerpaso);
-    var band = 0;
+    var band = 1;
     while (true) {
 
         let ciclo = setTimeout(() => {
@@ -237,18 +237,21 @@ async function AreaEspecial(browser) {
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
         );
-        let cont = 1;
-        for (let i = 0; i < Todoslosparametros.length; i++) {
-            const elemento = Todoslosparametros[i];
-            console.log(elemento);
-            if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
-                cont = 0;
-            }
 
-        }
+        console.log(Todoslosparametros);
+        // let cont = 1;
+        // for (let i = 0; i < Todoslosparametros.length; i++) {
+        //     const elemento = Todoslosparametros[i];
+        //     console.log(elemento);
+        //     if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
+        //         cont = 0;
+        //     }
+
+        // }
 
 
         clearTimeout(ciclo);
+        console.log("Termiamos vlaida orfa");
         await page.waitForTimeout(250000);
         if (cont == "0") {
             console.log("Limpio El campo del area");
