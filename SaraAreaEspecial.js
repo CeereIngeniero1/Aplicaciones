@@ -77,9 +77,7 @@ async function AreaEspecial(browser) {
 
     } catch (error) {
         console.log("ERROR DONDE LE DA CONTINUAR");
-        page.close();
-        AreaEspecial(browser);
-        clearTimeout(Segundopaso);
+       
     }
 
     
