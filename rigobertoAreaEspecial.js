@@ -1,16 +1,11 @@
 const puppeteer = require('puppeteer');
 
 
-const user = '96443';
-const pass = 'Rigomazo2024*';
+const user = '96458';
+const pass = 'Sarita2024*';
 
-
-
-AreaEspecial();
-
-async function AreaEspecial() {
-
-
+Navegador ();
+async function Navegador (){
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
 
 
@@ -26,6 +21,14 @@ async function AreaEspecial() {
         devtools: false
     });
 
+    AreaEspecial(browser);
+}
+
+
+async function AreaEspecial(browser) {
+
+
+   
     const page = await browser.newPage();
     await page.setViewport({ width: 1368, height: 620 });
     await page.goto('https://annamineria.anm.gov.co/sigm/');
@@ -37,63 +40,65 @@ async function AreaEspecial() {
 
 
         page.close();
-        AreaEspecial();
-    }, 20000);
+
+        AreaEspecial(browser);
+        return "error";
+    }, 10000);
     try {
         await page.type('#username', user);
         await page.type('#password', pass);
         page.click("#loginButton");
-    } catch (error) {
-        console.log("Entro en el catch LOGIN");
-    }
-
-
-    try {
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
             timeout: 5000 // 5 segundos en milisegundos
         });
     } catch (error) {
-        clearTimeout(Primerpaso);
-        page.close();
-        AreaEspecial();
+        console.log("Entro en el catch LOGIN");
     }
+
     clearTimeout(Primerpaso);
 
     let Segundopaso = setTimeout(() => {
         console.log("ENTRO EN EL Segundopaso")
         page.close();
-        AreaEspecial();
+        AreaEspecial(browser);
+        return "error";
     }, 10000);
+    
+    try {
+        const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
+        await solicitudes[1].click();
 
-    const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
-    await solicitudes[1].click();
+        const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
+        await lblRadicar[0].click();
+        await page.waitForTimeout(2000);
 
-    const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
-    await lblRadicar[0].click();
-    await page.waitForTimeout(2000);
+        const continPin = await page.$x('//span[contains(.,"Continuar")]');
+        await continPin[1].click();
 
-    const continPin = await page.$x('//span[contains(.,"Continuar")]');
-    await continPin[1].click();
+    } catch (error) {
+        console.log("ERROR DONDE LE DA CONTINUAR");
+    }
 
     try {
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
-            timeout: 5000 
+            timeout: 5000
         });
     } catch (error) {
         if (error instanceof puppeteer.errors.TimeoutError) {
             console.log('La navegación tardó más de 5 segundos.');
-            
+
         } else {
-            throw error; 
+            throw error;
         }
     }
     clearTimeout(Segundopaso);
     let Tercerpaso = setTimeout(() => {
         console.log("ENTRO EN EL Tercerpaso")
         page.close();
-        AreaEspecial();
+        AreaEspecial(browser);
+        return "error";
     }, 20000);
 
 
@@ -190,7 +195,8 @@ async function AreaEspecial() {
         let ciclo = setTimeout(() => {
             console.log("ENTRO EN EL Tercerpaso")
             page.close();
-            AreaEspecial();
+            AreaEspecial(browser);
+            return "error";
         }, 15000);
         await page.waitForTimeout(1000);
 
