@@ -29,9 +29,24 @@ async function AreaEspecial() {
     const page = await browser.newPage();
     await page.setViewport({ width: 1368, height: 620 });
     await page.goto('https://annamineria.anm.gov.co/sigm/');
-    await page.type('#username', user);
-    await page.type('#password', pass);
-    page.click("#loginButton");
+
+
+
+    let Primerpaso = setTimeout(() => {
+        console.log("ENTRO EN EL PRIMERPASO")
+
+
+        page.close();
+        AreaEspecial();
+    }, 20000);
+    try {
+        await page.type('#username', user);
+        await page.type('#password', pass);
+        page.click("#loginButton");
+    } catch (error) {
+        console.log("Entro en el catch LOGIN");
+    }
+
 
     try {
         await page.waitForNavigation({
@@ -46,6 +61,13 @@ async function AreaEspecial() {
             throw error; // Lanzar el error si no es un TimeoutError
         }
     }
+    clearTimeout(Primerpaso);
+
+    let Segundopaso = setTimeout(() => {
+        console.log("ENTRO EN EL Segundopaso")
+        page.close();
+        AreaEspecial();
+    }, 20000);
 
     const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
     await solicitudes[1].click();
@@ -57,7 +79,26 @@ async function AreaEspecial() {
     const continPin = await page.$x('//span[contains(.,"Continuar")]');
     await continPin[1].click();
 
-    await page.waitForTimeout(3000);
+    try {
+        await page.waitForNavigation({
+            waitUntil: 'networkidle0',
+            timeout: 5000 // 5 segundos en milisegundos
+        });
+    } catch (error) {
+        if (error instanceof puppeteer.errors.TimeoutError) {
+            console.log('La navegación tardó más de 5 segundos.');
+            // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+        } else {
+            throw error; // Lanzar el error si no es un TimeoutError
+        }
+    }
+    clearTimeout(Segundopaso);
+    let Tercerpaso = setTimeout(() => {
+        console.log("ENTRO EN EL Tercerpaso")
+        page.close();
+        AreaEspecial();
+    }, 20000);
+
 
     await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
     page.evaluate(() => {
@@ -145,26 +186,32 @@ async function AreaEspecial() {
 
     const continPin2 = await page.$x('//span[contains(.,"Continuar")]');
 
-
+    clearTimeout(Tercerpaso);
     var band = 0;
     while (true) {
+
+        let ciclo = setTimeout(() => {
+            console.log("ENTRO EN EL Tercerpaso")
+            page.close();
+            AreaEspecial();
+        }, 15000);
         await page.waitForTimeout(1000);
-        
-       
+
+
 
         function MonitorearAreas(IdArea, Area) {
             page.evaluate(({ Area }) => {
                 document.querySelector('[id="cellIdsInptId"]').value = Area.join('');
                 angular.element(document.getElementById('cellIdsInptId')).triggerHandler('change');
             }, { Area });
-        
+
             DetallesCompletos = {
                 IdArea: IdArea,
-        
+
                 Area: Area,
-        
+
             }
-        
+
             return DetallesCompletos;
         }
 
@@ -192,9 +239,9 @@ async function AreaEspecial() {
             });
             MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
 
-        }   
+        }
 
-       
+
         await page.waitForTimeout(1000);
 
         await continPin2[1].click();
@@ -214,7 +261,7 @@ async function AreaEspecial() {
         }
 
 
-
+        clearTimeout(ciclo);
         if (cont == "0") {
             console.log("Limpio El campo del area");
             page.evaluate(() => {
@@ -227,11 +274,11 @@ async function AreaEspecial() {
             }
 
         } else {
-        break;
+            break;
         }
 
     }
-    
+    console.log("Sali !!!!!!!!!!!!!!!!!!");
     await page.waitForTimeout(250000);
 
 
