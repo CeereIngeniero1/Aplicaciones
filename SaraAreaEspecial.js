@@ -295,6 +295,21 @@ async function AreaEspecial(browser) {
 
     }
     console.log("Sali !!!!!!!!!!!!!!!!!!");
+    const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
+    if (AparecioCaptcha) {
+        console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
+        await page.waitForTimeout(500);
+    } else {
+        console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
+    }
+
+    for (let i = 0; i < 1; i+=1) {
+        // await page.keyboard.press('Tab');
+        await keyboard.pressKey(Key.Tab);
+        console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
+    }
+
+    await keyboard.pressKey(Key.Enter);
     await page.waitForTimeout(250000);
 
 }
