@@ -67,7 +67,7 @@ async function AreaEspecial() {
         console.log("ENTRO EN EL Segundopaso")
         page.close();
         AreaEspecial();
-    }, 20000);
+    }, 10000);
 
     const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
     await solicitudes[1].click();
@@ -82,14 +82,14 @@ async function AreaEspecial() {
     try {
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
-            timeout: 5000 // 5 segundos en milisegundos
+            timeout: 5000 
         });
     } catch (error) {
         if (error instanceof puppeteer.errors.TimeoutError) {
             console.log('La navegación tardó más de 5 segundos.');
-            // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+            
         } else {
-            throw error; // Lanzar el error si no es un TimeoutError
+            throw error; 
         }
     }
     clearTimeout(Segundopaso);
