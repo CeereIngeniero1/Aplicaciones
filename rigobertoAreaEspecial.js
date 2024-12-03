@@ -251,9 +251,10 @@ async function AreaEspecial() {
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
         );
-        var cont = 1;
+        let cont = 1;
         for (let i = 0; i < Todoslosparametros.length; i++) {
             const elemento = Todoslosparametros[i];
+            console.log(elemento);
             if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
                 cont = 0;
             }
@@ -262,6 +263,7 @@ async function AreaEspecial() {
 
 
         clearTimeout(ciclo);
+        await page.waitForTimeout(250000);
         if (cont == "0") {
             console.log("Limpio El campo del area");
             page.evaluate(() => {
