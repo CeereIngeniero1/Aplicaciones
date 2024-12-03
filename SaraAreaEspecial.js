@@ -59,6 +59,7 @@ async function AreaEspecial(browser) {
     }, 20000);
     clearTimeout(Primerpaso);
 
+   
     try {
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
         await solicitudes[1].click();
@@ -259,9 +260,9 @@ async function AreaEspecial2(browser) {
     // await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
 
     // await page.type('#selectedApplicantInputId', '83949');
-    await page.type('#selectedApplicantInputId', '76966');
+    await page.type('#selectedApplicantInputId', '96458');
 
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(3000);
 
     await page.keyboard.press("Enter");
 
