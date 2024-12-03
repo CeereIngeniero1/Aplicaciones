@@ -387,15 +387,15 @@ function Mineria(browser,  Pin) {
             // }
 
 
-             if (Band == 1) {
+            if (Band == 1) { // importante
                 MonitorearAreas(
-                    "503239Celda",
+                    "504177",
                     1,
-                    "18N05A24P09B",
-                    ['18N05A24P09B'],
-                    77
+                    "",
+                    ["18N05E04D06H"],
+                    0
                 );
-            }            
+            }          
 
 
 
@@ -1056,10 +1056,19 @@ function Mineria(browser,  Pin) {
 
             
             let ArchivoAmbiental ;
-            
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Malos\\503239.pdf`;
+            if(IdArea == '509188'){
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            }else if(IdArea == '504177'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
 
-           
+            } else if(IdArea == '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
+
+            }
+            else{
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+
+            }
            
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;

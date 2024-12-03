@@ -1,14 +1,14 @@
 const puppeteer = require('puppeteer');
+const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
+const user = '96443';
+const pass = 'Rigomazo2024*';
+var Agente = 0;
 
-const user = '96458';
-const pass = 'Sarita2024*';
+Pagina();
+async function Pagina() {
 
-Navegador ();
-async function Navegador (){
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
-
-
     const browser = await puppeteer.launch({
         // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
@@ -23,48 +23,44 @@ async function Navegador (){
 
     AreaEspecial(browser);
 }
-
-
 async function AreaEspecial(browser) {
-
-
-   
     const page = await browser.newPage();
+    let Primerpaso = setTimeout(() => {
+        console.log("ENTRO EN EL PRIMERPASO")
+        page.close();
+        AreaEspecial(browser);
+    }, 20000);
     await page.setViewport({ width: 1368, height: 620 });
     await page.goto('https://annamineria.anm.gov.co/sigm/');
 
 
-
-    let Primerpaso = setTimeout(() => {
-        console.log("ENTRO EN EL PRIMERPASO")
-
-
-        page.close();
-
-        AreaEspecial(browser);
-        return "error";
-    }, 10000);
     try {
+
+        console.log(user);
+        console.log(pass);
         await page.type('#username', user);
         await page.type('#password', pass);
+
         page.click("#loginButton");
+
+        page.setDefaultTimeout(0);
+
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
             timeout: 5000 // 5 segundos en milisegundos
         });
-    } catch (error) {
+    } catch (ex) {
         console.log("Entro en el catch LOGIN");
     }
-
-    clearTimeout(Primerpaso);
-
     let Segundopaso = setTimeout(() => {
         console.log("ENTRO EN EL Segundopaso")
         page.close();
         AreaEspecial(browser);
-        return "error";
-    }, 10000);
-    
+        clearTimeout(Segundopaso);
+    }, 20000);
+    clearTimeout(Primerpaso);
+
+
     try {
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
         await solicitudes[1].click();
@@ -73,33 +69,36 @@ async function AreaEspecial(browser) {
         await lblRadicar[0].click();
         await page.waitForTimeout(2000);
 
+        if (Agente == 1) {
+            await page.waitForTimeout(2000);
+
+            await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
+
+
+
+            await page.type('#submitterPersonOrganizationNameId', '96458');
+
+            await page.waitForTimeout(3000);
+
+            await page.keyboard.press("Enter");
+
+            await page.waitForTimeout(550);
+        }
+
+
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
 
-    } catch (error) {
-        console.log("ERROR DONDE LE DA CONTINUAR");
-    }
-
-    try {
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
             timeout: 5000
         });
-    } catch (error) {
-        if (error instanceof puppeteer.errors.TimeoutError) {
-            console.log('La navegación tardó más de 5 segundos.');
 
-        } else {
-            throw error;
-        }
+    } catch (error) {
+        console.log("ERROR DONDE LE DA CONTINUAR");
+
     }
-    clearTimeout(Segundopaso);
-    let Tercerpaso = setTimeout(() => {
-        console.log("ENTRO EN EL Tercerpaso")
-        page.close();
-        AreaEspecial(browser);
-        return "error";
-    }, 20000);
+
 
 
     await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
@@ -108,38 +107,33 @@ async function AreaEspecial(browser) {
         /* SELECCIONAR MINERALES POR NOMBRE */
         document.querySelector('[ng-class="settings.buttonClasses"]').click();
 
-        // SE OBTIENEN LOS ELEMENTOS QUE TIENEN LA CLASE 'ng-binding ng-scope'
         var elementos = document.getElementsByClassName('ng-binding ng-scope');
 
         let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
         let elementosConMinerales = [];
 
-        // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
         for (let i = 0; i < elementos.length; i++) {
             let elemento = elementos[i];
             let agregarElemento = false;
 
-            // ITERA SOBRE TODOS LOS VALORES DE LA LISTA MINERALES
             for (let c = 0; c < Minerales.length; c++) {
 
-                // VERIFICA SI EL TEXTO DEL ELEMENTO CONTIENE EXACTAMENTE EL MINERAL EN PROCESO DE LA LISTA DE MINERALES
                 if (elemento.textContent.includes(Minerales[c]) && elemento.textContent.split(/\s+/).includes(Minerales[c])) {
                     agregarElemento = true;
                     break;
                 }
             }
 
-            // SI SE CUMPLE AGREGARELEMENTO === TRUE, SE AGREGA EL ELEMENTO A LA LISTA ELEMENTOSCONMINERALES
             if (agregarElemento) {
                 elementosConMinerales.push(elemento);
             }
         }
 
-        // SE HACE CLIC SOBRE TODOS LOS VALORES CONTENIEDOS EN LA LISTA ELEMENTOSCONMINERALES
+
         for (let i = 0; i < elementosConMinerales.length; i++) {
             elementosConMinerales[i].click();
         }
-        /* FIN FIN FIN */
+
         document.querySelector('[ng-class="settings.buttonClasses"]').click();
     });
 
@@ -147,14 +141,21 @@ async function AreaEspecial(browser) {
     const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
     await selectArea.type('Otro tipo de terreno');
 
+    await page.waitForTimeout(1500);
+
+    clearTimeout(Segundopaso);
+    let Tercerpaso = setTimeout(() => {
+        console.log("ENTRO EN EL Segundopaso")
+        page.close();
+        AreaEspecial(browser);
+        clearTimeout(Segundopaso);
+    }, 20000);
+    console.log("LLegue hasta aca");
+
+
+    await page.type('#selectedApplicantInputId', '96458');
+
     await page.waitForTimeout(3000);
-
-    // await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
-
-    // await page.type('#selectedApplicantInputId', '83949');
-    await page.type('#selectedApplicantInputId', '76966');
-
-    await page.waitForTimeout(4000);
 
     await page.keyboard.press("Enter");
 
@@ -189,7 +190,7 @@ async function AreaEspecial(browser) {
     const continPin2 = await page.$x('//span[contains(.,"Continuar")]');
 
     clearTimeout(Tercerpaso);
-    var band = 0;
+    var band = 1;
     while (true) {
 
         let ciclo = setTimeout(() => {
@@ -242,6 +243,29 @@ async function AreaEspecial(browser) {
             });
             MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
 
+        } else if (band == 2) {
+            // Establecer el valor directamente en el input
+            await page.evaluate(() => {
+                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
+                eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
+                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
+
+                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
+                northingInput.value = '4,21175';
+                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+
+            // Repetir para los otros inputs
+            await page.evaluate(() => {
+                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
+                eastingInput2.value = '-75,1938';
+                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+
+                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
+                northingInput2.value = '4,21175';
+                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
         }
 
 
@@ -254,11 +278,15 @@ async function AreaEspecial(browser) {
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
         );
+
+        //console.log(Todoslosparametros);
         let cont = 1;
         for (let i = 0; i < Todoslosparametros.length; i++) {
             const elemento = Todoslosparametros[i];
-            console.log(elemento);
-            if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
+
+            if (elemento == "Vea los errores a continuación:") {
+                console.log(i);
+                console.log(elemento);
                 cont = 0;
             }
 
@@ -266,7 +294,8 @@ async function AreaEspecial(browser) {
 
 
         clearTimeout(ciclo);
-        await page.waitForTimeout(250000);
+        // console.log("Termiamos vlaida orfa");
+        // await page.waitForTimeout(250000);
         if (cont == "0") {
             console.log("Limpio El campo del area");
             page.evaluate(() => {
@@ -274,7 +303,7 @@ async function AreaEspecial(browser) {
             });
             band++;
             //Este es la cantidad de areas mas 1 
-            if (band == 2) {
+            if (band == 3) {
                 band = 1;
             }
 
@@ -284,10 +313,66 @@ async function AreaEspecial(browser) {
 
     }
     console.log("Sali !!!!!!!!!!!!!!!!!!");
+
+
+var contador = 0;
+    while (true) {
+        try {
+           
+                // const TextRECAPTCHA =  page.$x('//h2[contains(.,"RECAPTCHA")]');
+                const TextRECAPTCHA =  page.$x('//*[@id="wid-id-0"]/header/h2');
+
+
+                if (TextRECAPTCHA.length > 0) {
+                     TextRECAPTCHA[0].click();
+                    console.log("Hice clic en el text TextRECAPTCHA");
+                } else {
+                    console.log("No se encontró el texto RECAPTCHA");
+                }
+                const HacerClicEnDiv = await page.$('div[id="p_PsraRsraDocumentTypeId5"]');
+                await HacerClicEnDiv.click();
+                if (HacerClicEnDiv) {
+                    console.log("CLICK!!!");
+                }else {
+                    console.log("NDAAA");
+                }
+            
+
+            // const CUALQUIERCOSA = await page.$x('//span[contains(.,"RECAPTCHA")]');
+            // await CUALQUIERCOSA[contador].click();
+            //  await page.click('.widget-icon');
+            await page.waitForTimeout(1000);
+            const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
+            if (AparecioCaptcha) {
+                console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
+
+            } else {
+                console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
+            }
+
+            for (let i = 0; i < 1; i += 1) {
+                // await page.keyboard.press('Tab');
+                await keyboard.pressKey(Key.Tab);
+                console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
+            }
+
+           // await keyboard.pressKey(Key.Enter);
+            break;
+        } catch (error) {
+            contador++;
+            //console.error("Falle dandole click", error);
+            console.error("Prueba", error)
+            if(contador==2){
+                break;
+            }
+        }
+    }
+
     await page.waitForTimeout(250000);
 
-
 }
+
+
 
 
 

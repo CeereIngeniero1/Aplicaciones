@@ -3,7 +3,7 @@ const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
 const user = '96458';
 const pass = 'Sarita2024*';
-
+var Agente = 0;
 Pagina();
 async function Pagina() {
 
@@ -67,6 +67,23 @@ async function AreaEspecial(browser) {
         const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
         await lblRadicar[0].click();
         await page.waitForTimeout(2000);
+
+        if (Agente == 1) {
+            await page.waitForTimeout(2000);
+
+            await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
+
+
+
+            await page.type('#submitterPersonOrganizationNameId', '96458');
+
+            await page.waitForTimeout(3000);
+
+            await page.keyboard.press("Enter");
+
+            await page.waitForTimeout(550);
+        }
+
 
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
@@ -343,7 +360,7 @@ var contador = 0;
         } catch (error) {
             contador++;
             //console.error("Falle dandole click", error);
-            console.error("Monda", error)
+            console.error("Prueba", error)
             if(contador==2){
                 break;
             }
