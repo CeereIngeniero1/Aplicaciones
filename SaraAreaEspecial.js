@@ -70,6 +70,11 @@ async function AreaEspecial(browser) {
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
 
+        await page.waitForNavigation({
+            waitUntil: 'networkidle0',
+            timeout: 5000
+        });
+
     } catch (error) {
         console.log("ERROR DONDE LE DA CONTINUAR");
         page.close();
@@ -77,6 +82,49 @@ async function AreaEspecial(browser) {
         clearTimeout(Segundopaso);
     }
 
+    
+
+    await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
+    page.evaluate(() => {
+
+        /* SELECCIONAR MINERALES POR NOMBRE */
+        document.querySelector('[ng-class="settings.buttonClasses"]').click();
+
+        var elementos = document.getElementsByClassName('ng-binding ng-scope');
+
+        let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
+        let elementosConMinerales = [];
+
+        for (let i = 0; i < elementos.length; i++) {
+            let elemento = elementos[i];
+            let agregarElemento = false;
+
+            for (let c = 0; c < Minerales.length; c++) {
+
+                if (elemento.textContent.includes(Minerales[c]) && elemento.textContent.split(/\s+/).includes(Minerales[c])) {
+                    agregarElemento = true;
+                    break;
+                }
+            }
+
+            if (agregarElemento) {
+                elementosConMinerales.push(elemento);
+            }
+        }
+
+        
+        for (let i = 0; i < elementosConMinerales.length; i++) {
+            elementosConMinerales[i].click();
+        }
+        
+        document.querySelector('[ng-class="settings.buttonClasses"]').click();
+    });
+
+
+    const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
+    await selectArea.type('Otro tipo de terreno');
+
+    await page.waitForTimeout(3000);
 
     //clearTimeout(Segundopaso);
     console.log("LLegue hasta aca");
@@ -134,6 +182,8 @@ async function AreaEspecial2(browser) {
 
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
+
+        
 
     } catch (error) {
         console.log("ERROR DONDE LE DA CONTINUAR");
