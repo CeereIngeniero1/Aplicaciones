@@ -225,275 +225,29 @@ async function AreaEspecial(browser) {
             });
             MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
 
-        }
-
-
-        await page.waitForTimeout(1000);
-
-        await continPin2[1].click();
-
-        await page.waitForTimeout(3000);
-
-        const Todoslosparametros = await page.$$eval("span", links =>
-            links.map(link => link.textContent)
-        );
-
-        console.log(Todoslosparametros);
-        // let cont = 1;
-        // for (let i = 0; i < Todoslosparametros.length; i++) {
-        //     const elemento = Todoslosparametros[i];
-        //     console.log(elemento);
-        //     if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
-        //         cont = 0;
-        //     }
-
-        // }
-
-
-        clearTimeout(ciclo);
-        console.log("Termiamos vlaida orfa");
-        await page.waitForTimeout(250000);
-        if (cont == "0") {
-            console.log("Limpio El campo del area");
-            page.evaluate(() => {
-                document.querySelector('[id="cellIdsTxtId"]').value = "";
-            });
-            band++;
-            //Este es la cantidad de areas mas 1 
-            if (band == 2) {
-                band = 1;
-            }
-
-        } else {
-            break;
-        }
-
-    }
-    console.log("Sali !!!!!!!!!!!!!!!!!!");
-    await page.waitForTimeout(250000);
-
-}
-
-async function AreaEspecial2(browser) {
-
-
-
-
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1368, height: 620 });
-    await page.goto('https://annamineria.anm.gov.co/sigm/');
-
-
-
-    let Primerpaso = setTimeout(() => {
-        console.log("ENTRO EN EL PRIMERPASO")
-
-
-        page.close();
-
-        AreaEspecial(browser);
-        return "error";
-    }, 10000);
-    try {
-        await page.type('#username', user);
-        await page.type('#password', pass);
-        page.click("#loginButton");
-        await page.waitForNavigation({
-            waitUntil: 'networkidle0',
-            timeout: 5000 // 5 segundos en milisegundos
-        });
-    } catch (error) {
-        console.log("Entro en el catch LOGIN");
-    }
-
-    clearTimeout(Primerpaso);
-
-    let Segundopaso = setTimeout(() => {
-        console.log("ENTRO EN EL Segundopaso")
-        page.close();
-        AreaEspecial(browser);
-        return "error";
-    }, 10000);
-
-    try {
-        const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
-        await solicitudes[1].click();
-
-        const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
-        await lblRadicar[0].click();
-        await page.waitForTimeout(2000);
-
-        const continPin = await page.$x('//span[contains(.,"Continuar")]');
-        await continPin[1].click();
-
-        
-
-    } catch (error) {
-        console.log("ERROR DONDE LE DA CONTINUAR");
-    }
-
-    try {
-        await page.waitForNavigation({
-            waitUntil: 'networkidle0',
-            timeout: 5000
-        });
-    } catch (error) {
-        if (error instanceof puppeteer.errors.TimeoutError) {
-            console.log('La navegación tardó más de 5 segundos.');
-
-        } else {
-            throw error;
-        }
-    }
-    clearTimeout(Segundopaso);
-    let Tercerpaso = setTimeout(() => {
-        console.log("ENTRO EN EL Tercerpaso")
-        page.close();
-        AreaEspecial(browser);
-        return "error";
-    }, 20000);
-
-
-    await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
-    page.evaluate(() => {
-
-        /* SELECCIONAR MINERALES POR NOMBRE */
-        document.querySelector('[ng-class="settings.buttonClasses"]').click();
-
-        // SE OBTIENEN LOS ELEMENTOS QUE TIENEN LA CLASE 'ng-binding ng-scope'
-        var elementos = document.getElementsByClassName('ng-binding ng-scope');
-
-        let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
-        let elementosConMinerales = [];
-
-        // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
-        for (let i = 0; i < elementos.length; i++) {
-            let elemento = elementos[i];
-            let agregarElemento = false;
-
-            // ITERA SOBRE TODOS LOS VALORES DE LA LISTA MINERALES
-            for (let c = 0; c < Minerales.length; c++) {
-
-                // VERIFICA SI EL TEXTO DEL ELEMENTO CONTIENE EXACTAMENTE EL MINERAL EN PROCESO DE LA LISTA DE MINERALES
-                if (elemento.textContent.includes(Minerales[c]) && elemento.textContent.split(/\s+/).includes(Minerales[c])) {
-                    agregarElemento = true;
-                    break;
-                }
-            }
-
-            // SI SE CUMPLE AGREGARELEMENTO === TRUE, SE AGREGA EL ELEMENTO A LA LISTA ELEMENTOSCONMINERALES
-            if (agregarElemento) {
-                elementosConMinerales.push(elemento);
-            }
-        }
-
-        // SE HACE CLIC SOBRE TODOS LOS VALORES CONTENIEDOS EN LA LISTA ELEMENTOSCONMINERALES
-        for (let i = 0; i < elementosConMinerales.length; i++) {
-            elementosConMinerales[i].click();
-        }
-        /* FIN FIN FIN */
-        document.querySelector('[ng-class="settings.buttonClasses"]').click();
-    });
-
-
-    const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
-    await selectArea.type('Otro tipo de terreno');
-
-    await page.waitForTimeout(3000);
-
-    // await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
-
-    // await page.type('#selectedApplicantInputId', '83949');
-    await page.type('#selectedApplicantInputId', '96458');
-
-    await page.waitForTimeout(3000);
-
-    await page.keyboard.press("Enter");
-
-    await page.waitForTimeout(550);
-
-    const addProfesional = await page.$x('//span[contains(.,"Agregar")]');
-    await addProfesional[0].click();
-
-    await page.waitForTimeout(3000);
-
-    let ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\Collective\\CertificadoAmbiental\\DocumentoRequerido.pdf`;
-
-    await page.waitForSelector(`#p_PsraRsraMandatoryDocumentToAttachId0`);
-    const RutaDelArchivoo = ArchivoAmbiental;
-    for (let i = 0; i < 5; i++) {
-        let id = `#p_PsraRsraMandatoryDocumentToAttachId${i}`
-        let ElementoControladorDeCargaaa = await page.$(id);
-        await ElementoControladorDeCargaaa.uploadFile(RutaDelArchivoo);
-
-    }
-
-
-    await page.waitForTimeout(2000);
-    await page.type('#selectedCellInputMethodSlctId', '');
-    console.log("prueba");
-
-    const selectporCeldas = await page.$('select[id="selectedCellInputMethodSlctId"]');
-    await selectporCeldas.type('U');
-
-
-
-    const continPin2 = await page.$x('//span[contains(.,"Continuar")]');
-
-    clearTimeout(Tercerpaso);
-    var band = 0;
-    while (true) {
-
-        let ciclo = setTimeout(() => {
-            console.log("ENTRO EN EL Tercerpaso")
-            page.close();
-            AreaEspecial(browser);
-            return "error";
-        }, 15000);
-        await page.waitForTimeout(1000);
-
-
-
-        function MonitorearAreas(IdArea, Area) {
-            page.evaluate(({ Area }) => {
-                document.querySelector('[id="cellIdsInptId"]').value = Area.join('');
-                angular.element(document.getElementById('cellIdsInptId')).triggerHandler('change');
-            }, { Area });
-
-            DetallesCompletos = {
-                IdArea: IdArea,
-
-                Area: Area,
-
-            }
-
-            return DetallesCompletos;
-        }
-
-        if (band == 1) {
+        }else if (band == 2) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-73,64974'; // Usar el valor con punto decimal
+                eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '7,22473';
+                northingInput.value = '4,21175';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-73,64974';
+                eastingInput2.value = '-75,1938';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '7,22473';
+                northingInput2.value = '4,21175';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
-            MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
-
+            MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
         }
 
 
@@ -506,11 +260,15 @@ async function AreaEspecial2(browser) {
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
         );
+
+        //console.log(Todoslosparametros);
         let cont = 1;
         for (let i = 0; i < Todoslosparametros.length; i++) {
             const elemento = Todoslosparametros[i];
-            console.log(elemento);
-            if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
+           
+            if (elemento == "Vea los errores a continuación:") {
+                console.log(i);
+                console.log(elemento);
                 cont = 0;
             }
 
@@ -518,7 +276,8 @@ async function AreaEspecial2(browser) {
 
 
         clearTimeout(ciclo);
-        await page.waitForTimeout(250000);
+        // console.log("Termiamos vlaida orfa");
+        // await page.waitForTimeout(250000);
         if (cont == "0") {
             console.log("Limpio El campo del area");
             page.evaluate(() => {
@@ -526,7 +285,7 @@ async function AreaEspecial2(browser) {
             });
             band++;
             //Este es la cantidad de areas mas 1 
-            if (band == 2) {
+            if (band == 3) {
                 band = 1;
             }
 
@@ -538,8 +297,9 @@ async function AreaEspecial2(browser) {
     console.log("Sali !!!!!!!!!!!!!!!!!!");
     await page.waitForTimeout(250000);
 
-
 }
+
+
 
 
 
