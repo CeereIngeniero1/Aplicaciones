@@ -54,12 +54,9 @@ async function AreaEspecial() {
             timeout: 5000 // 5 segundos en milisegundos
         });
     } catch (error) {
-        if (error instanceof puppeteer.errors.TimeoutError) {
-            console.log('La navegación tardó más de 5 segundos.');
-            // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-        } else {
-            throw error; // Lanzar el error si no es un TimeoutError
-        }
+        clearTimeout(Primerpaso);
+        page.close();
+        AreaEspecial();
     }
     clearTimeout(Primerpaso);
 
