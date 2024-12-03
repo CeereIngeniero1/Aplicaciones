@@ -74,7 +74,7 @@ async function AreaEspecial() {
 
     const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
     await lblRadicar[0].click();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(2000);
 
     const continPin = await page.$x('//span[contains(.,"Continuar")]');
     await continPin[1].click();
@@ -152,7 +152,7 @@ async function AreaEspecial() {
     // await page.type('#selectedApplicantInputId', '83949');
     await page.type('#selectedApplicantInputId', '76966');
 
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
 
     await page.keyboard.press("Enter");
 
