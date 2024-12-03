@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 
 
-const user = '83949';
-const pass = '*Jcrmh2022#';
+const user = '96443';
+const pass = 'Rigomazo2024*';
 
 
 
@@ -108,7 +108,8 @@ async function AreaEspecial() {
 
     // await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
 
-    await page.type('#selectedApplicantInputId', '83949');
+    // await page.type('#selectedApplicantInputId', '83949');
+    await page.type('#selectedApplicantInputId', '76966');
 
     await page.waitForTimeout(3000);
 
@@ -121,7 +122,7 @@ async function AreaEspecial() {
 
     await page.waitForTimeout(3000);
 
-    let ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\Collective\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+    let ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\Collective\\CertificadoAmbiental\\DocumentoRequerido.pdf`;
 
     await page.waitForSelector(`#p_PsraRsraMandatoryDocumentToAttachId0`);
     const RutaDelArchivoo = ArchivoAmbiental;
@@ -171,82 +172,89 @@ async function AreaEspecial() {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,64088'; // Usar el valor con punto decimal
+                eastingInput.value = '-73,64974'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '5,51686';
+                northingInput.value = '7,22473';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,64088';
+                eastingInput2.value = '-73,64974';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '5,51686';
+                northingInput2.value = '7,22473';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
-            MonitorearAreas("AreaDePrueba", ["18N05A24P07U"]);
+            MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
 
-           
+        }   
 
-        } else if (band == 2) {
-            // Establecer el valor directamente en el input
-            await page.evaluate(() => {
-                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,64088'; // Usar el valor con punto decimal
-                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
-
-                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '5,51686';
-                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-
-            // Repetir para los otros inputs
-            await page.evaluate(() => {
-                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,64088';
-                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-
-                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '5,51686';
-                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-            MonitorearAreas("AreaDePrueba", ["18N05A24P07U"]);
-
-        } else if (band == 3) {
-            // Establecer el valor directamente en el input
-            await page.evaluate(() => {
-                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
-                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
-
-                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '4,21175';
-                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-
-            // Repetir para los otros inputs
-            await page.evaluate(() => {
-                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,1938';
-                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-
-                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '4,21175';
-                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-            MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
-        }
-        await page.waitForTimeout(2500);
+       
+        await page.waitForTimeout(1000);
 
         await continPin2[1].click();
 
-        if (band == 3) {
-            break
+        await page.waitForTimeout(3000);
+
+        const Todoslosparametros = await page.$$eval("span", links =>
+            links.map(link => link.textContent)
+        );
+        var cont = 1;
+        for (let i = 0; i < Todoslosparametros.length; i++) {
+            const elemento = Todoslosparametros[i];
+            if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
+                cont = 0;
+            }
+
+        }
+        const FechaReapertura = await page.$$eval("a", links =>
+            links.map(link => link.textContent)
+        );
+        var Reapertura = 0;
+        //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
+        //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
+
+        for (let i = 0; i < FechaReapertura.length; i++) {
+
+
+            var Text = FechaReapertura[i].substring(24, 120);
+            if (Text == "Las siguientes celdas de selección no están disponibles ya que la fecha de reapertura es futura:") {
+                console.log("Lo encontre");
+                Reapertura = 1;
+                contreapertura++;
+                if (contreapertura < 2) {
+                    Correo(3, IdArea, Celda);
+                }
+
+
+                console.log(contreapertura);
+            } else {
+                var Text = FechaReapertura[i].substring(24, 140);
+            }
+
+        }
+
+       
+
+
+        if (cont == "0") {
+            console.log("Limpio El campo del area");
+            page.evaluate(() => {
+                document.querySelector('[id="cellIdsTxtId"]').value = "";
+            });
+            band++;
+            //Este es la cantidad de areas mas 1 
+            if (band == 2) {
+                band = 1;
+            }
+
+        } else {
+            band = 99;
         }
 
     }
