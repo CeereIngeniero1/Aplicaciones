@@ -4,6 +4,7 @@ const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 const user = '96458';
 const pass = 'Sarita2024*';
 var Agente = 0;
+
 Pagina();
 async function Pagina() {
 
@@ -67,7 +68,6 @@ async function AreaEspecial(browser) {
         const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
         await lblRadicar[0].click();
         await page.waitForTimeout(2000);
-
         if (Agente == 1) {
             await page.waitForTimeout(2000);
 
@@ -83,7 +83,6 @@ async function AreaEspecial(browser) {
 
             await page.waitForTimeout(550);
         }
-
 
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
@@ -316,18 +315,7 @@ async function AreaEspecial(browser) {
 
 var contador = 0;
     while (true) {
-        try {
-           
-                // const TextRECAPTCHA =  page.$x('//h2[contains(.,"RECAPTCHA")]');
-                const TextRECAPTCHA =  page.$x('//*[@id="wid-id-0"]/header/h2');
-
-
-                if (TextRECAPTCHA.length > 0) {
-                     TextRECAPTCHA[0].click();
-                    console.log("Hice clic en el text TextRECAPTCHA");
-                } else {
-                    console.log("No se encontró el texto RECAPTCHA");
-                }
+        try {        
                 const HacerClicEnDiv = await page.$('div[id="p_PsraRsraDocumentTypeId5"]');
                 await HacerClicEnDiv.click();
                 if (HacerClicEnDiv) {
@@ -348,19 +336,15 @@ var contador = 0;
             } else {
                 console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
             }
-
-            for (let i = 0; i < 1; i += 1) {
-                // await page.keyboard.press('Tab');
-                await keyboard.pressKey(Key.Tab);
-                console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
-            }
-
+            await keyboard.pressKey(Key.Tab);
+            console.log(`PRESIONÉ LA TABULADORA`);
             await keyboard.pressKey(Key.Enter);
+            console.log(`PRESIONÉ ENTER...`);
             break;
         } catch (error) {
             contador++;
             //console.error("Falle dandole click", error);
-            console.error("Prueba", error)
+            console.error("prueba", error)
             if(contador==2){
                 break;
             }
