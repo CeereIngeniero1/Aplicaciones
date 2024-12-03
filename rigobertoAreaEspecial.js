@@ -149,7 +149,7 @@ async function AreaEspecial() {
     var band = 0;
     while (true) {
         await page.waitForTimeout(1000);
-        band++;
+        
        
 
         function MonitorearAreas(IdArea, Area) {
@@ -212,34 +212,7 @@ async function AreaEspecial() {
             }
 
         }
-        const FechaReapertura = await page.$$eval("a", links =>
-            links.map(link => link.textContent)
-        );
-        var Reapertura = 0;
-        //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
-        //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-        for (let i = 0; i < FechaReapertura.length; i++) {
-
-
-            var Text = FechaReapertura[i].substring(24, 120);
-            if (Text == "Las siguientes celdas de selección no están disponibles ya que la fecha de reapertura es futura:") {
-                console.log("Lo encontre");
-                Reapertura = 1;
-                contreapertura++;
-                if (contreapertura < 2) {
-                    Correo(3, IdArea, Celda);
-                }
-
-
-                console.log(contreapertura);
-            } else {
-                var Text = FechaReapertura[i].substring(24, 140);
-            }
-
-        }
-
-       
 
 
         if (cont == "0") {
@@ -254,10 +227,11 @@ async function AreaEspecial() {
             }
 
         } else {
-            band = 99;
+        break;
         }
 
     }
+    
     await page.waitForTimeout(250000);
 
 
