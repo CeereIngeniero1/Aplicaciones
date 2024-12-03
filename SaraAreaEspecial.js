@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-
+const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
 const user = '96458';
 const pass = 'Sarita2024*';
@@ -59,7 +59,7 @@ async function AreaEspecial(browser) {
     }, 20000);
     clearTimeout(Primerpaso);
 
-   
+
     try {
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
         await solicitudes[1].click();
@@ -78,10 +78,10 @@ async function AreaEspecial(browser) {
 
     } catch (error) {
         console.log("ERROR DONDE LE DA CONTINUAR");
-       
+
     }
 
-    
+
 
     await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
     page.evaluate(() => {
@@ -111,11 +111,11 @@ async function AreaEspecial(browser) {
             }
         }
 
-        
+
         for (let i = 0; i < elementosConMinerales.length; i++) {
             elementosConMinerales[i].click();
         }
-        
+
         document.querySelector('[ng-class="settings.buttonClasses"]').click();
     });
 
@@ -225,7 +225,7 @@ async function AreaEspecial(browser) {
             });
             MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
 
-        }else if (band == 2) {
+        } else if (band == 2) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
@@ -265,7 +265,7 @@ async function AreaEspecial(browser) {
         let cont = 1;
         for (let i = 0; i < Todoslosparametros.length; i++) {
             const elemento = Todoslosparametros[i];
-           
+
             if (elemento == "Vea los errores a continuación:") {
                 console.log(i);
                 console.log(elemento);
@@ -295,21 +295,61 @@ async function AreaEspecial(browser) {
 
     }
     console.log("Sali !!!!!!!!!!!!!!!!!!");
-    const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
-    if (AparecioCaptcha) {
-        console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-        await page.waitForTimeout(500);
-    } else {
-        console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
+
+
+var contador = 0;
+    while (true) {
+        try {
+           
+                // const TextRECAPTCHA =  page.$x('//h2[contains(.,"RECAPTCHA")]');
+                const TextRECAPTCHA =  page.$x('//*[@id="wid-id-0"]/header/h2');
+
+
+                if (TextRECAPTCHA.length > 0) {
+                     TextRECAPTCHA[0].click();
+                    console.log("Hice clic en el text TextRECAPTCHA");
+                } else {
+                    console.log("No se encontró el texto RECAPTCHA");
+                }
+                const HacerClicEnDiv = await page.$('div[id="p_PsraRsraDocumentTypeId5"]');
+                await HacerClicEnDiv.click();
+                if (HacerClicEnDiv) {
+                    console.log("CLICK!!!");
+                }else {
+                    console.log("NDAAA");
+                }
+            
+
+            // const CUALQUIERCOSA = await page.$x('//span[contains(.,"RECAPTCHA")]');
+            // await CUALQUIERCOSA[contador].click();
+            //  await page.click('.widget-icon');
+            await page.waitForTimeout(1000);
+            const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
+            if (AparecioCaptcha) {
+                console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
+
+            } else {
+                console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
+            }
+
+            for (let i = 0; i < 1; i += 1) {
+                // await page.keyboard.press('Tab');
+                await keyboard.pressKey(Key.Tab);
+                console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
+            }
+
+            await keyboard.pressKey(Key.Enter);
+            break;
+        } catch (error) {
+            contador++;
+            //console.error("Falle dandole click", error);
+            console.error("Monda", error)
+            if(contador==2){
+                break;
+            }
+        }
     }
 
-    for (let i = 0; i < 1; i+=1) {
-        // await page.keyboard.press('Tab');
-        await keyboard.pressKey(Key.Tab);
-        console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
-    }
-
-    await keyboard.pressKey(Key.Enter);
     await page.waitForTimeout(250000);
 
 }
