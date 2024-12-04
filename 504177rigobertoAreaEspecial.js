@@ -241,7 +241,7 @@ async function AreaEspecial(browser) {
                 northingInput2.value = '5,49368';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
-            MonitorearAreas("AreaDePrueba", ["17N12H10P04Y"]);
+            MonitorearAreas("AreaDePrueba", ["18N05E04D06H"]);
         }
 
 
