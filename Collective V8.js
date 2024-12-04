@@ -1501,7 +1501,7 @@ function Correo(Tipo, Area, Celda) {
             ciphers: 'SSLv3'
         },
         auth: {
-            user: 'pruebacitas@ceere.net',
+            user: 'correomineria@ceere.net',
             pass: '1998Ceere*'
         }
     });
@@ -1581,7 +1581,7 @@ function Correo(Tipo, Area, Celda) {
     `;
 
     var mailOptions = {
-        from: msg + '"Ceere" <pruebacitas@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
+        from: msg + '"Ceere" <correomineria@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
         to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
         //to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
         subject: Subject,
