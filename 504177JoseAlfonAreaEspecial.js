@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
-const user = '96443';
-const pass = 'Rigomazo2024*';
+const user = '96458';
+const pass = 'Sarita2024*';
 var Agente = 1;
 
 Pagina();
@@ -219,50 +219,26 @@ async function AreaEspecial(browser) {
             return DetallesCompletos;
         }
 
-        if (band == 10) {
+        if (band == 1) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-73,64974'; // Usar el valor con punto decimal
+                eastingInput.value = '-75,6227'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '7,22473';
+                northingInput.value = '5,49368';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-73,64974';
+                eastingInput2.value = '-75,6227';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '7,22473';
-                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-            MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
-
-        } else if (band == 1) {
-            // Establecer el valor directamente en el input
-            await page.evaluate(() => {
-                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-78,03188'; // Usar el valor con punto decimal
-                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
-
-                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '1,32064';
-                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-
-            // Repetir para los otros inputs
-            await page.evaluate(() => {
-                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-78,03188';
-                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-
-                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '1,32064';
+                northingInput2.value = '5,49368';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
             MonitorearAreas("AreaDePrueba", ["17N12H10P04Y"]);
