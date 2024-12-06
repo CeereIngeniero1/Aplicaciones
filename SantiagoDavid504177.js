@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
-const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js'); 
+const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 // Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
@@ -33,9 +33,9 @@ async function Pagina() {
     }
 
 
-    
+
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
-   
+
 
     const browser = await puppeteer.launch({
         //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -49,7 +49,7 @@ async function Pagina() {
         devtools: false
     });
 
-        Mineria(browser, Pin);
+    Mineria(browser, Pin);
 }
 
 
@@ -59,14 +59,14 @@ function Mineria(browser, Pin) {
     (async () => {
 
         console.log("Esta es la vuelta " + ContadorVueltas);
-       
+
         const page = await browser.newPage();
         let Primerpaso = setTimeout(() => {
             console.log("ENTRO EN EL PRIMERPASO")
 
-        
+
             page.close();
-            Mineria(browser, Pin); 
+            Mineria(browser, Pin);
         }, 20000);
 
 
@@ -79,21 +79,21 @@ function Mineria(browser, Pin) {
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
 
-        
-            try {
-                console.log(user);
-                console.log(pass);
-                await page.type('#username', user);
-                await page.type('#password', pass);
 
-                page.click("#loginButton");
+        try {
+            console.log(user);
+            console.log(pass);
+            await page.type('#username', user);
+            await page.type('#password', pass);
+
+            page.click("#loginButton");
 
 
-            } catch (ex) {
-                console.log("Entro en el catch");
-            }
+        } catch (ex) {
+            console.log("Entro en el catch");
+        }
 
-     
+
 
 
 
@@ -111,12 +111,12 @@ function Mineria(browser, Pin) {
                 throw error; // Lanzar el error si no es un TimeoutError
             }
         }
-        
+
         clearTimeout(Primerpaso);
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
-            Mineria(browser, Pin); 
+            Mineria(browser, Pin);
         }, 35000);
 
 
@@ -279,7 +279,7 @@ function Mineria(browser, Pin) {
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser, Pin); 
+                Mineria(browser, Pin);
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -327,26 +327,7 @@ function Mineria(browser, Pin) {
             //         0
             //     );
             // }
-
-             if (Band == 1) { // importante
-                MonitorearAreas(
-                    "504177",
-                    1,
-                    "",
-                    ["18N05E04D06H, 18N05E04D06I, 18N05E04D06J"],
-                    0
-                );
-            }
-            else  if (Band == 2) { //importante
-                MonitorearAreas(
-                    "503239",
-                    1,
-                    "",
-                    ["18N05A24P09F, 18N05A24P08U, 18N05A24P04V, 18N05A24P09L, 18N05A24P09B, 18N05A24P04R, 18N05A24P04W, 18N05A24P09A, 18N05A24P04Q, 18N05A24P09R, 18N05A24P09K, 18N05A24P09G, 18N05A24P09Q"],
-                    0
-                );
-            }
-            else  if (Band == 3) {
+            if (Band == 1) {
                 MonitorearAreas(
                     "509188",
                     1,
@@ -355,7 +336,6 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
             Aviso = DetallesCompletos.Aviso;
@@ -406,7 +386,7 @@ function Mineria(browser, Pin) {
 
             }
 
-           
+
 
 
             if (cont == "0") {
@@ -431,12 +411,12 @@ function Mineria(browser, Pin) {
 
         console.log("ahhh se salio Y_Y ");
         var bandera = 0;
-       
+
         let TimeNOpaso = setTimeout(() => {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser, Pin); 
+            Mineria(browser, Pin);
         }, 20000);
 
         console.log(page.url());
@@ -449,7 +429,7 @@ function Mineria(browser, Pin) {
             console.log(page.url());
             if (page.url() == 'https://annamineria.anm.gov.co/sigm/index.html#/p_CaaIataInputTechnicalEconomicalDetails') {
                 bandera = 99;
-                
+
                 console.log("Si cargo la pagina  ");
                 clearTimeout(TimeNOpaso);
             } else {
@@ -494,7 +474,7 @@ function Mineria(browser, Pin) {
 
             console.log("ENTRO EN EL RadiPrimero");
             page.close();
-            Mineria(browser, Pin); 
+            Mineria(browser, Pin);
         }, 30000);
 
         await page.evaluate(() => {
@@ -934,7 +914,7 @@ function Mineria(browser, Pin) {
 
 
         // ==============================================================================
-                // SELECCIÓN DE LOS VALORES
+        // SELECCIÓN DE LOS VALORES
         // ==============================================================================
         await page.waitForSelector('#personClassificationId0');
         await page.select('#personClassificationId0', 'PJ');
@@ -983,7 +963,7 @@ function Mineria(browser, Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser, Pin); 
+            Mineria(browser, Pin);
         }, 30000);
 
 
@@ -1011,21 +991,21 @@ function Mineria(browser, Pin) {
 
         try {
 
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '504177'){
+            let ArchivoAmbiental;
+            if (IdArea == '509188') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            } else if (IdArea == '504177') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
 
-            } else if(IdArea == '503239'){
+            } else if (IdArea == '503239') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
             }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+            else {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
-           
+
 
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
@@ -1076,12 +1056,12 @@ function Mineria(browser, Pin) {
                 "p_CaaCataMandatoryDocumentToAttachId8",//8
                 "p_CaaCataMandatoryDocumentToAttachId9",//9
                 "p_CaaCataMandatoryDocumentToAttachId10",//10
-                  "p_CaaCataMandatoryDocumentToAttachId11",//11
-                 "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId11",//11
+                "p_CaaCataMandatoryDocumentToAttachId12",//12
                 "p_CaaCataMandatoryDocumentToAttachId13",//13
                 // "p_CaaCataMandatoryDocumentToAttachId14"//14
             ];
-                console.log(ElementosFile.length);
+            console.log(ElementosFile.length);
             try {
                 for (let i = 0; i < ElementosFile.length; i++) {
                     try {
@@ -1148,11 +1128,11 @@ function Mineria(browser, Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin); 
+            Mineria(browser, Pin);
         }, 60000);
 
 
-        
+
         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
         await HacerClicEnSpanDocumentacionDeSoporte[0].click();
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
@@ -1163,7 +1143,7 @@ function Mineria(browser, Pin) {
             console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
         }
 
-        for (let i = 0; i < 1; i+=1) {
+        for (let i = 0; i < 1; i += 1) {
             // await page.keyboard.press('Tab');
             await keyboard.pressKey(Key.Tab);
             console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
@@ -1219,7 +1199,7 @@ function Mineria(browser, Pin) {
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
-        Mineria(browser,  Pin);
+        Mineria(browser, Pin);
 
 
 
@@ -1419,34 +1399,34 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
                     await addProfesional[0].click();
                 } catch (error) {
                     console.log("ERR 0");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[1].click();
                 } catch (error) {
                     console.log("ERR 1");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[2].click();
 
                 } catch (error) {
                     console.log("ERR 2");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[3].click();
                 } catch (error) {
                     console.log("ERR 3");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[4].click();
                 } catch (error) {
                     console.log("ERR 4");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
             }
 
