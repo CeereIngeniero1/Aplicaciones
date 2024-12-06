@@ -577,14 +577,6 @@ function Mineria(browser,  Pin) {
             }
             else  if (Band == 21) {
                 MonitorearAreas(
-                    "504177",
-                    1,
-                    "",
-                    ["18N05E04D06H, 18N05E04D06I, 18N05E04D06J"],
-                    0
-                );
-            }else  if (Band == 22) {
-                MonitorearAreas(
                     "509188",
                     1,
                     "",
@@ -666,7 +658,7 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1
-                if (Band == 23) {
+                if (Band == 22) {
                     Band = 1;
                 }
 
@@ -1264,10 +1256,7 @@ function Mineria(browser,  Pin) {
             let ArchivoAmbiental ;
             if(IdArea == '509188'){
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '504177'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\504177.pdf`;
-
-            } else if(IdArea == '503239'){
+            }else if(IdArea == '503239'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
             }

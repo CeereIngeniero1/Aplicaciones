@@ -329,7 +329,7 @@ function Mineria(browser, Pin) {
             // }
 
 
-            if (Band == 10) {
+            if (Band == 1) {
                 MonitorearAreas(
                     "500946_1",//Nombre del area
                     1, // aviso
@@ -372,15 +372,7 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-            else  if (Band == 1) {
-                MonitorearAreas(
-                    "504177",
-                    1,
-                    "",
-                    ["18N05E04D06H, 18N05E04D06I, 18N05E04D06J"],
-                    0
-                );
-            }
+            
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
@@ -442,7 +434,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 2) {
+                if (Band == 6) {
                     Band = 1;
                 }
 
