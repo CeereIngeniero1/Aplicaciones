@@ -2,6 +2,23 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+
+const os = require('os');
+const NombreEquipo = os.hostname();
+const EquiposGenerales = {
+    'HPGRIS': "EQUIPO CREADOR",
+    'DESKTOP-6JICI9S': "ASUS OLD",
+    'DESKTOP-SNSPTLM': "DELLC3",
+    'LAPTOP-2VU2EBUO': "EQUIPO VALEN",
+    'HPRED240': "FER EQUIPO",
+    'LAPTOP-JL0BL28F': "JORGE EQUIPO",
+    'MERCADEO': "MERCADEO",
+    'DESKTOP-RF3NUO3': "PIXEL",
+    'HPRED241':"FERCHO ingeniero en sistemas best"
+}
+
+
+const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
@@ -1542,11 +1559,13 @@ function Correo(Tipo, Area, Celda) {
                             <li><strong>Empresa: </strong><br>${Empresa}</li>
                             <li><strong>Area:</strong><br>${Area}</li>
                             <li><strong>Celda:</strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                         `;
                     } else {
                         ContenidoHTMLDelCorreo += `
                             <li><strong>Pin:</strong><br>${Area}</li>
                             <li><strong>Descripción: </strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                         `;
                     }
                     ContenidoHTMLDelCorreo += `

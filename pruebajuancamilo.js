@@ -13,10 +13,10 @@ const EquiposGenerales = {
     'DESKTOP-RF3NUO3': "PIXEL",
     'HPRED241':"FERCHO ingeniero en sistemas best"
 }
-const Empresa = "Anuel";
+
 
 const EquipoActual = EquiposGenerales[NombreEquipo];
-
+const Empresa = "Anuel";
 Correo(1,'Prueba', 'jijiji', EquipoActual)
 
 
@@ -123,6 +123,7 @@ function Correo(Tipo, Area, Celda, EquipoActual) {
                         ContenidoHTMLDelCorreo += `
                             <li><strong>Pin:</strong><br>${Area}</li>
                             <li><strong>Descripción: </strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                         `;
                     }
                     ContenidoHTMLDelCorreo += `

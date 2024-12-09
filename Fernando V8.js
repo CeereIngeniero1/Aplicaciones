@@ -3,6 +3,22 @@ const fs = require('fs');
 const { Console } = require('console');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js'); 
 // Actualizado
+const os = require('os');
+const NombreEquipo = os.hostname();
+const EquiposGenerales = {
+    'HPGRIS': "EQUIPO CREADOR",
+    'DESKTOP-6JICI9S': "ASUS OLD",
+    'DESKTOP-SNSPTLM': "DELLC3",
+    'LAPTOP-2VU2EBUO': "EQUIPO VALEN",
+    'HPRED240': "FER EQUIPO",
+    'LAPTOP-JL0BL28F': "JORGE EQUIPO",
+    'MERCADEO': "MERCADEO",
+    'DESKTOP-RF3NUO3': "PIXEL",
+    'HPRED241':"FERCHO ingeniero en sistemas best"
+}
+
+
+const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Collective';
 var user1 = '76966';
 var pass1 = 'Collective10+';
@@ -1287,6 +1303,7 @@ function Correo(Tipo, Area, Celda) {
                                 <li><strong>Empresa: </strong><br>${Empresa}</li>
                                 <li><strong>Area:</strong><br>${Area}</li>
                                 <li><strong>Celda:</strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                             </ul>
                         </div>
                         <div class="footer">

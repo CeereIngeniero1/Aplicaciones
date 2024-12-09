@@ -1506,11 +1506,13 @@ function Correo(Tipo, Area, Celda) {
                             <li><strong>Empresa: </strong><br>${Empresa}</li>
                             <li><strong>Area:</strong><br>${Area}</li>
                             <li><strong>Celda:</strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                         `;
                     } else {
                         ContenidoHTMLDelCorreo += `
                             <li><strong>Pin:</strong><br>${Area}</li>
                             <li><strong>Descripción: </strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                         `;
                     }
                     ContenidoHTMLDelCorreo += `
