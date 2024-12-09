@@ -358,7 +358,7 @@ function Mineria(browser,  Pin) {
             let DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
-                if(Band == 1){
+                if(contador == 1){
                     page.evaluate(({ Area }) => {
                     document.querySelector('[id="cellIdsTxtId"]').value = Area.join('');
                     angular.element(document.getElementById('cellIdsTxtId')).triggerHandler('change');
@@ -618,7 +618,7 @@ function Mineria(browser,  Pin) {
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await continCeldas[1].click();
             console.log(IdArea);
-            await page.waitForTimeout(3000);
+            await page.waitForTimeout(1000);
 
             const Todoslosparametros = await page.$$eval("span", links =>
                 links.map(link => link.textContent)
@@ -662,10 +662,10 @@ function Mineria(browser,  Pin) {
 
 
             if (cont == "0") {
-                console.log("Limpio El campo del area");
-                page.evaluate(() => {
-                    document.querySelector('[id="cellIdsTxtId"]').value = "";
-                });
+                // console.log("Limpio El campo del area");
+                // page.evaluate(() => {
+                //     document.querySelector('[id="cellIdsTxtId"]').value = "";
+                // });
                 Band++;
                 //Este es la cantidad de areas mas 1 
                 if (Band == 2) {
