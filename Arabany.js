@@ -3,6 +3,9 @@ const fs = require('fs');
 const { Console } = require('console');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 // Actualizado
+
+const os = require('os');
+const NombreEquipo = os.hostname();
 const EquiposGenerales = {
     'HPGRIS': "EQUIPO CREADOR",
     'DESKTOP-6JICI9S': "ASUS OLD",
