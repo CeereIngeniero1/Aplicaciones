@@ -280,13 +280,17 @@ function Mineria(browser,  Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
+        let EnviarCorreosParaPestanas = 0;
         while (Band != 99) {
 
             const Pestanas = await browser.pages();
             console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
             if (Pestanas.length >= 8) {
-                // Se realiza envío de correo para alertar
-                Correo(5, '', '');
+                EnviarCorreosParaPestanas++;
+                if (EnviarCorreosParaPestanas <= 2) {
+                    // Se realiza envío de correo para alertar
+                    Correo(5, '', '');
+                }
             }
 
             console.log("Inicia el timer");
