@@ -1219,6 +1219,10 @@ function Correo(Tipo, Area, Celda) {
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
+    }else if ( Tipo == 5){
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+        Color = "#fe1426";
+        Texto = "Pestañas";
     }
 
     var nodemailer = require('nodemailer');
