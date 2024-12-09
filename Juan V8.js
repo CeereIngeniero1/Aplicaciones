@@ -282,6 +282,13 @@ function Mineria(browser,  Pin) {
         let ComasTotalesPorArea = {};
         while (Band != 99) {
 
+            const Pestanas = await browser.pages();
+            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
+            if (Pestanas.length >= 8) {
+                // Se realiza envío de correo para alertar
+                Correo(5, '', '');
+            }
+
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
