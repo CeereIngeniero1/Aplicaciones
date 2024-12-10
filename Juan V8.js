@@ -1210,15 +1210,15 @@ function Correo(Tipo, Area, Celda) {
     var Texto = "";
     //Area = "Tranquilos area de prueba";
     if (Tipo == 1) {
-        msg = "¡¡¡Posible Area Liberada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Liberada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#4CAF50";
         Texto = "POSIBLE AREA LIBERADA";
     } else if (Tipo == 2) {
-        msg = "¡¡¡Posible Area Radicada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Radicada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#D4AF37";
         Texto = "POSIBLE AREA RADICADA";
     } else if (Tipo == 3) {
-        msg = "¡¡¡Area Con fecha de Reapertura!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Area Con fecha de Reapertura!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#2196F3";
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {

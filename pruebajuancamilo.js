@@ -54,7 +54,7 @@ function Correo(Tipo, Area, Celda, EquipoActual) {
             ciphers: 'SSLv3'
         },
         auth: {
-            user: 'correomineria2@ceere.net',
+            user: 'correomineria@ceere.net',
             pass: '1998Ceere*'
         }
     });

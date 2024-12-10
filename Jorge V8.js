@@ -289,7 +289,18 @@ function Mineria(browser, Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
+        let EnviarCorreosParaPestanas = 0;
         while (Band != 99) {
+
+            const Pestanas = await browser.pages();
+            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
+            if (Pestanas.length >= 8) {
+                EnviarCorreosParaPestanas++;
+                if (EnviarCorreosParaPestanas <= 2) {
+                    // Se realiza envío de correo para alertar
+                    Correo(5, '', '');
+                }
+            }
 
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
@@ -1321,19 +1332,23 @@ function Correo(Tipo, Area, Celda) {
     var Texto = "";
     //Area = "Tranquilos area de prueba";
     if (Tipo == 1) {
-        msg = "¡¡¡Posible Area Liberada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Liberada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#4CAF50";
         Texto = "POSIBLE AREA LIBERADA";
     } else if (Tipo == 2) {
-        msg = "¡¡¡Posible Area Radicada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Radicada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#D4AF37";
         Texto = "POSIBLE AREA RADICADA";
     } else if (Tipo == 3) {
-        msg = "¡¡¡Area Con fecha de Reapertura!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Area Con fecha de Reapertura!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#2196F3";
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
+    }else if ( Tipo == 5){
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+        Color = "#fe1426";
+        Texto = "Pestañas";
     }
 
     var nodemailer = require('nodemailer');
