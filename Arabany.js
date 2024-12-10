@@ -350,7 +350,7 @@ function Mineria(browser, Pin) {
 
             const Pestanas = await browser.pages();
             console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            if (Pestanas.length >= 8) {
+            if (Pestanas.length >= 4) {
                 EnviarCorreosParaPestanas++;
                 if (EnviarCorreosParaPestanas <= 2) {
                     // Se realiza envío de correo para alertar
