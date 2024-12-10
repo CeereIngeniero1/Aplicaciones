@@ -29,6 +29,7 @@ var pass2 = 'wX2*dQ3*cS';
 var Agente = 1;
 var contreapertura = 0;
 var ContadorVueltas = 0;
+var EnviarCorreosParaPestanas = 0;
 var contComasceldas = 0;
 var Cag = false;
 var Caggrande = false;
@@ -284,14 +285,14 @@ function Mineria(browser,  Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
-        let EnviarCorreosParaPestanas = 0;
+        
         while (Band != 99) {
 
-            const Pestanas = await browser.pages();
+            let Pestanas = await browser.pages();
             console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
             if (Pestanas.length >= 4) {
                 EnviarCorreosParaPestanas++;
-                if (EnviarCorreosParaPestanas <= 2) {
+                if (EnviarCorreosParaPestanas < 3) {
                     // Se realiza envío de correo para alertar
                     Correo(5, '', '');
                 }

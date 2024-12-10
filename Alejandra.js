@@ -25,6 +25,7 @@ var pass1 = 'Simon1998.2022.';
 var user2 = '76467';
 var pass2 = 'Simon1998.2022.';
 var Agente = 1;
+var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
@@ -297,7 +298,7 @@ function Mineria(browser, Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
-        let EnviarCorreosParaPestanas = 0;
+        
         while (Band != 99) {
 
             const Pestanas = await browser.pages();

@@ -25,6 +25,7 @@ var pass1 = 'MineralesP_2024**';
 var user2 = '83949';
 var pass2 = '*Jcrmh2022#';
 var Agente = 0;
+var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
@@ -333,7 +334,7 @@ function Mineria(browser,  Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
-        let EnviarCorreosParaPestanas = 0;
+        
         while (Band != 99) {
 
             const Pestanas = await browser.pages();

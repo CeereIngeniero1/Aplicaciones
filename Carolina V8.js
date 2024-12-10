@@ -25,6 +25,7 @@ var pass1 = 'Collective10+';
 var user2 = '84928';
 var pass2 = 'C1000191991*';
 var Agente = 1;
+var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
@@ -288,7 +289,7 @@ function Mineria(browser,  Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
-        let EnviarCorreosParaPestanas = 0;
+        
         while (Band != 99) {
 
             const Pestanas = await browser.pages();
