@@ -1,36 +1,37 @@
+
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
-const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js'); 
-  // Actualizado
-  const os = require('os');
-  const NombreEquipo = os.hostname();
-  const EquiposGenerales = {
-      'HPGRIS': "EQUIPO CREADOR",
-      'DESKTOP-6JICI9S': "ASUS OLD",
-      'DESKTOP-SNSPTLM': "DELLC3",
-      'LAPTOP-2VU2EBUO': "EQUIPO VALEN",
-      'HPRED240': "FER EQUIPO",
-      'LAPTOP-JL0BL28F': "JORGE EQUIPO",
-      'MERCADEO': "MERCADEO",
-      'DESKTOP-RF3NUO3': "PIXEL",
-      'HPRED241':"FERCHO ingeniero en sistemas best"
-  }
-  
-  
-  const EquipoActual = EquiposGenerales[NombreEquipo];
-var Empresa = 'Provenza';
-var user1 = '74025';
-var pass1 = 'MineralesP_2024**';
-var user2 = '83949';
-var pass2 = '*Jcrmh2022#';
-var Agente = 0;
+const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+// Actualizado
+const os = require('os');
+const NombreEquipo = os.hostname();
+const EquiposGenerales = {
+    'HPGRIS': "EQUIPO CREADOR",
+    'DESKTOP-6JICI9S': "ASUS OLD",
+    'DESKTOP-SNSPTLM': "DELLC3",
+    'LAPTOP-2VU2EBUO': "EQUIPO VALEN",
+    'HPRED240': "FER EQUIPO",
+    'LAPTOP-JL0BL28F': "JORGE EQUIPO",
+    'MERCADEO': "MERCADEO",
+    'DESKTOP-RF3NUO3': "PIXEL",
+    'HPRED241':"FERCHO ingeniero en sistemas best"
+}
+
+
+const EquipoActual = EquiposGenerales[NombreEquipo];
+var Empresa = 'Collective';
+var user1 = '76966';
+var pass1 = 'CollectiveM_2024*';
+var user2 = '96233';
+var pass2 = 'SuperAgente86*';
+var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
 var Cag = false;
-
+var Caggrande = false;
 Pagina();
 async function Pagina() {
     var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
@@ -41,18 +42,20 @@ async function Pagina() {
         }
     });
     for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'Po:') {
+        if (Pines.substring(i + 1, i + 4) == 'Co:') {
             console.log(Pines.substring(i + 1, i + 4));
             Pin = Pines.substring(i + 4, i + 31);
             break
         }
     }
 
+
+
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
 
 
     const browser = await puppeteer.launch({
-        // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
         // Reemplaza con la ruta real a tu Google Chrome
         headless: false,
@@ -69,65 +72,72 @@ async function Pagina() {
 
 
 
-function Mineria(browser,  Pin) {
+function Mineria(browser, Pin) {
     (async () => {
 
-       
-            console.log("Esta es la vuelta " + ContadorVueltas);
+        console.log("Esta es la vuelta " + ContadorVueltas);
 
-            const page = await browser.newPage();
-            let Primerpaso = setTimeout(() => {
-                console.log("ENTRO EN EL PRIMERPASO")
-                page.close();
-                Mineria(browser,  Pin); 
-            }, 20000);
-            await page.setViewport({ width: 1368, height: 620 });
-            await page.goto('https://annamineria.anm.gov.co/sigm/');
-          
-
-            let user = (Agente == 0) ? user1 : user2;
-            let pass = (Agente == 0) ? pass1 : pass2;
-
-            try {
-
-                console.log(user);
-                console.log(pass);
-                await page.type('#username', user);
-                await page.type('#password', pass);
-
-                page.click("#loginButton");
+        const page = await browser.newPage();
+        let Primerpaso = setTimeout(() => {
+            console.log("ENTRO EN EL PRIMERPASO")
 
 
-            } catch (ex) {
-                console.log("Entro en el catch");
-            }
-
-            page.setDefaultTimeout(0);
-            try {
-                await page.waitForNavigation({
-                    waitUntil: 'networkidle0',
-                    timeout: 5000 // 5 segundos en milisegundos
-                });
-            } catch (error) {
-                if (error instanceof puppeteer.errors.TimeoutError) {
-                    console.log('La navegación tardó más de 5 segundos.');
-                    // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-                } else {
-                    throw error; // Lanzar el error si no es un TimeoutError
-                }
-            }
-            validador = 0;
-         
-       
-        let Segundopaso = setTimeout(() => {
-            console.log("ENTRO EN EL Segundopaso")
             page.close();
-            Mineria(browser,  Pin);
-
+            Mineria(browser, Pin);
         }, 20000);
 
 
+
+
+
+        await page.setViewport({ width: 1368, height: 620 });
+        await page.goto('https://annamineria.anm.gov.co/sigm/');
+
+        let user = (Agente == 0) ? user1 : user2;
+        let pass = (Agente == 0) ? pass1 : pass2;
+
+
+        try {
+            console.log(user);
+            console.log(pass);
+            await page.type('#username', user);
+            await page.type('#password', pass);
+
+            page.click("#loginButton");
+
+
+        } catch (ex) {
+            console.log("Entro en el catch");
+        }
+
+
+
+
+
+        page.setDefaultTimeout(0);
+        try {
+            await page.waitForNavigation({
+                waitUntil: 'networkidle0',
+                timeout: 5000 // 5 segundos en milisegundos
+            });
+        } catch (error) {
+            if (error instanceof puppeteer.errors.TimeoutError) {
+                console.log('La navegación tardó más de 5 segundos.');
+                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+            } else {
+                throw error; // Lanzar el error si no es un TimeoutError
+            }
+        }
+
         clearTimeout(Primerpaso);
+        let Segundopaso = setTimeout(() => {
+            console.log("ENTRO EN EL Segundopaso")
+            page.close();
+            Mineria(browser, Pin);
+        }, 35000);
+
+
+
 
 
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
@@ -136,7 +146,7 @@ function Mineria(browser,  Pin) {
         const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
         await lblRadicar[0].click();
         if (Agente == 1) {
-            await page.waitFor(2000);
+            await page.waitForTimeout(2000);
 
 
             //await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "")
@@ -148,12 +158,13 @@ function Mineria(browser,  Pin) {
             await page.type('#submitterPersonOrganizationNameId', '76966');
             //await page.type('#submitterPersonOrganizationNameId', '');
 
-            await page.waitFor(3000);
+            await page.waitForTimeout(3000);
 
             await page.keyboard.press("Enter");
 
-            await page.waitFor(550);
+            await page.waitForTimeout(550);
         }
+
 
 
         await page.waitForTimeout(2500)
@@ -162,65 +173,6 @@ function Mineria(browser,  Pin) {
         const selectPin = await page.$('select[id="pinSlctId"]');
         await selectPin.type(Pin);
         console.log(Pin);
-
-        /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-            // Capturar todas las opciones de un select
-            const allOptions = await page.evaluate(select => {
-                const options = Array.from(select.options); // Convierte las opciones a un array
-                return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
-            }, selectPin);
-
-            console.log('Todas las opciones:', allOptions);
-
-            const closestDateOption = await page.evaluate(() => {
-                const select = document.querySelector('select');
-            
-                const monthMap = {
-                    "ENE": "01",
-                    "FEB": "02",
-                    "MAR": "03",
-                    "ABR": "04",
-                    "MAY": "05",
-                    "JUN": "06",
-                    "JUL": "07",
-                    "AGO": "08",
-                    "SEP": "09",
-                    "OCT": "10",
-                    "NOV": "11",
-                    "DIC": "12"
-                };
-            
-                const options = Array.from(select.options).map(option => {
-                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
-                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
-            
-                    const [day, monthName, year] = dateText.split('/');
-                    const month = monthMap[monthName];
-                    const formattedDate = new Date(`${year}-${month}-${day}`);
-            
-                    return { text, date: formattedDate };
-                });
-            
-                const now = new Date();
-            
-                const differences = options.map(option => {
-                    const diff = Math.abs(option.date - now);
-                    return { text: option.text, diff }; // Retornar la diferencia y el texto
-                });
-            
-                console.log('Diferencias calculadas:', differences);
-            
-                // Reducir para encontrar la fecha más cercana
-                const closest = options.reduce((prev, curr) => {
-                    return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
-                });
-            
-                return closest.text;
-            });            
-
-            console.log('Opción más cercana a la fecha actual:', closestDateOption);
-            const input = closestDateOption;
-        /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
 
         await page.waitForXPath('//span[contains(.,"Continuar")]');
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
@@ -275,6 +227,10 @@ function Mineria(browser,  Pin) {
         else if (await page.$x('//span[contains(.,"Vea los errores a continuación:")]').lenght == 0) {
             console.log('pasó el pin, hurra!');
         }
+
+
+
+
 
 
         await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
@@ -347,25 +303,11 @@ function Mineria(browser,  Pin) {
                 }
             }
 
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
-            
-            // const Pestanas = await browser.pages();
-            // console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            // if (Pestanas.length >= 3) {
-            //     console.log("Se cierran las pestañas para aumentar la velocidad");
-            //     for (let i = Pestanas.length - 1; i >= 2; i--) {
-            //         Pestanas[i].close();
-            //     }
-            // }
-            
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser,  Pin);
-                clearTimeout(TimeArea);
-
+                Mineria(browser, Pin);
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -386,13 +328,11 @@ function Mineria(browser,  Pin) {
             let DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
-                if(contador == 1){
-                    page.evaluate(({ Area }) => {
+
+                page.evaluate(({ Area }) => {
                     document.querySelector('[id="cellIdsTxtId"]').value = Area.join('');
                     angular.element(document.getElementById('cellIdsTxtId')).triggerHandler('change');
                 }, { Area });
-                }
-                
 
 
                 DetallesCompletos = {
@@ -415,32 +355,15 @@ function Mineria(browser,  Pin) {
             //         0
             //     );
             // }
-
-
-            // if (Band == 1) {
-            //     MonitorearAreas(
-            //         "Area19",
-            //         1,
-            //         "18N05E04D14R",
-            //         ["18N05E04D14R"],
-            //         0
-            //     );
-            // }
-            // else 
             if (Band == 1) {
                 MonitorearAreas(
-                    "Area14",
+                    "RFE_08A",
                     1,
                     "18N05A25G21R",
-                    ['18N02J23E10U'],
-                    77
+                    ["18N05A25G21R, 18N05A25G21H, 18N05A25G21I, 18N05A25G21E, 18N05A25G16U, 18N05A25G16I, 18N05A25G21J, 18N05A25G21S, 18N05A25G21T, 18N05A25G16Y, 18N05A25G16T, 18N05A25G16Z, 18N05A25G16P, 18N05A25G22K, 18N05A25G16L, 18N05A25G21M, 18N05A25G16M, 18N05A25G16H, 18N05A25G17K, 18N05A25G16X, 18N05A25G16J, 18N05A25G22F, 18N05A25G22A, 18N05A25G17F, 18N05A25G21C, 18N05A25G16S, 18N05A25G21N, 18N05A25G21P, 18N05A25G17Q, 18N05A25G21G, 18N05A25G21U, 18N05A25G22Q, 18N05A25G21L, 18N05A25G16W, 18N05A25G21D, 18N05A25G16N, 18N05A25G17V"],
+                    0
                 );
             }
-            
-
-
-
-
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
             Aviso = DetallesCompletos.Aviso;
@@ -499,11 +422,11 @@ function Mineria(browser,  Pin) {
                 // page.evaluate(() => {
                 //     document.querySelector('[id="cellIdsTxtId"]').value = "";
                 // });
-                Band++;
-                //Este es la cantidad de areas mas 1 
-                if (Band == 2) {
-                    Band = 1;
-                }
+                // Band++;
+                // //Este es la cantidad de areas mas 1 
+                // if (Band == 2) {
+                //     Band = 1;
+                // }
 
             } else {
                 Band = 99;
@@ -521,9 +444,7 @@ function Mineria(browser,  Pin) {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser,  Pin);
-            clearTimeout(TimeNOpaso);
-
+            Mineria(browser, Pin);
         }, 20000);
 
         console.log(page.url());
@@ -539,7 +460,6 @@ function Mineria(browser,  Pin) {
 
                 console.log("Si cargo la pagina  ");
                 clearTimeout(TimeNOpaso);
-             
             } else {
 
                 console.log("Nada no la carga ");
@@ -548,7 +468,19 @@ function Mineria(browser,  Pin) {
 
 
         }
- 
+
+
+
+        clearTimeout(TimeNOpaso);
+
+
+
+
+
+
+
+
+
         const continDetallesdelArea2 = await page.$x('//a[contains(.,"área")]');
         await continDetallesdelArea2[4].click();
 
@@ -561,16 +493,18 @@ function Mineria(browser,  Pin) {
 
         //CORREO LIBERADA
         Correo(1, IdArea, Celda);
-        RadiPrimero = setTimeout(() => {
+        if (SoloAviso == 1) {
+            CorreoAlternativo(1, IdArea);
+        }
+
+
+        let RadiPrimero = setTimeout(() => {
 
             console.log("ENTRO EN EL RadiPrimero");
             page.close();
-            Mineria(browser,  Pin);
-            clearTimeout(RadiPrimero);
-
- 
+            Mineria(browser, Pin);
         }, 30000);
-  
+
         await page.evaluate(() => {
 
             document.querySelector('[id="yearOfExecutionId0"]').value = 'number:1'
@@ -1006,10 +940,10 @@ function Mineria(browser,  Pin) {
         console.log("FIN DE LA SELECCIÓN DE CONTADOR(ES)");
         // ==============================================================================
 
+
+        // ==============================================================================
         // SELECCIÓN DE LOS VALORES
         // ==============================================================================
-
-        console.log('49. Selección de valores');
         await page.waitForSelector('#personClassificationId0');
         await page.select('#personClassificationId0', 'PJ');
         await page.evaluate(() => {
@@ -1017,44 +951,47 @@ function Mineria(browser,  Pin) {
 
             // Check
             // document.querySelector('Input[id="declareIndId0"]').click();
-            document.getElementById('activoCorrienteId0').value = '42539369275';
+
+            //Valores
+            // document.getElementById('currentAssetId0').value = '42539369275' // OLD
+            document.getElementById('activoCorrienteId0').value = '1414973400';
 
             angular.element(document.getElementById('activoCorrienteId0')).triggerHandler('change');
 
             // document.getElementById('currentLiabilitiesId0').value = '15184416062' // OLD
-            document.getElementById('pasivoCorrienteId0').value = '15184416062';
+            document.getElementById('pasivoCorrienteId0').value = '6104212000';
 
             angular.element(document.getElementById('pasivoCorrienteId0')).triggerHandler('change');
 
             // document.getElementById('totalAssetId0').value = '48322540755' // OLD
-            document.getElementById('activoTotalId0').value = '48322540755';
+            document.getElementById('activoTotalId0').value = '1155178400';
 
             angular.element(document.getElementById('activoTotalId0')).triggerHandler('change');
 
             // document.getElementById('totalLiabilitiesId0').value = '15401226207' // OLD
-            document.getElementById('pasivoTotalId0').value = '15401226207';
+            document.getElementById('pasivoTotalId0').value = '6423743000';
 
             angular.element(document.getElementById('pasivoTotalId0')).triggerHandler('change');
         });
+        // ==============================================================================
 
-          
+
+
+
 
         const continPag4 = await page.$x('//span[contains(.,"Continuar")]');
         await continPag4[1].click();
-
+        // Esperar la navegación
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
+            // timeout: 2000 // Ajusta el timeout según tus necesidades
         });
-
         clearTimeout(RadiPrimero);
         let Radisegundo = setTimeout(() => {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
-            clearTimeout(Radisegundo);
-
-
+            Mineria(browser, Pin);
         }, 30000);
 
 
@@ -1082,7 +1019,27 @@ function Mineria(browser,  Pin) {
 
         try {
 
-            let ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+            let ArchivoAmbiental ;
+            if(IdArea == '509188'){
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            }else if(IdArea == '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
+
+            }else if(IdArea == 'RFE_08211'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
+
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
+
+            }
+            else{
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+
+            }
+
 
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
@@ -1133,12 +1090,12 @@ function Mineria(browser,  Pin) {
                 "p_CaaCataMandatoryDocumentToAttachId8",//8
                 "p_CaaCataMandatoryDocumentToAttachId9",//9
                 "p_CaaCataMandatoryDocumentToAttachId10",//10
-                  "p_CaaCataMandatoryDocumentToAttachId11",//11
-                 "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId11",//11
+                "p_CaaCataMandatoryDocumentToAttachId12",//12
                 "p_CaaCataMandatoryDocumentToAttachId13",//13
                 // "p_CaaCataMandatoryDocumentToAttachId14"//14
             ];
-                console.log(ElementosFile.length);
+            console.log(ElementosFile.length);
             try {
                 for (let i = 0; i < ElementosFile.length; i++) {
                     try {
@@ -1172,16 +1129,30 @@ function Mineria(browser,  Pin) {
         }
 
 
-
         //CAPTURA DE PANTALLA
         await CapturaPantalla(page);
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
-    
+        await continPag[1].click();
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
         });
         console.log(" si navego ");
-    
+        // await page.waitForSelector('#recaptchaContainer');
+        // console.log("lo encontro");
+        // await page.waitForTimeout(2000);
+        // // Obtener todos los iframes en la página
+        // const frames = await page.frames();
+
+        // // Encontrar el iframe que contiene el recaptcha
+        // const recaptchaFrame = frames.find(frame => frame.url().includes('recaptcha'));
+
+        // // Esperar a que el elemento con la clase 'recaptcha-checkbox-border' esté presente
+        // // await page.waitForSelector('#recaptcha-anchor');
+        // const recaptchaCheckbox = await recaptchaFrame.waitForSelector('#recaptcha-anchor');
+
+        // // Hacer clic en el checkbox del recaptcha
+        // await recaptchaCheckbox.click();
+
 
 
         //CAPTURA DE PANTALLA
@@ -1191,13 +1162,11 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
-            clearTimeout(RadiTercero);
-
-
+            Mineria(browser, Pin);
         }, 60000);
 
-        
+
+
         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
         await HacerClicEnSpanDocumentacionDeSoporte[0].click();
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
@@ -1208,7 +1177,7 @@ function Mineria(browser,  Pin) {
             console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
         }
 
-        for (let i = 0; i < 1; i+=1) {
+        for (let i = 0; i < 1; i += 1) {
             // await page.keyboard.press('Tab');
             await keyboard.pressKey(Key.Tab);
             console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
@@ -1238,10 +1207,42 @@ function Mineria(browser,  Pin) {
 
 
 
+        console.log('51. Bóton Radicar');
+
+        const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
+        console.log("Este es el boton radicar : " + btnRadicar1);
+
+        //await page.waitForTimeout(4000);
+        console.log("Le di click");
+
+        try {
+            await btnRadicar1[0].click();
+        } catch (exepcion) {
+            console.log("La pos 0 No fue ")
+        }
+        try {
+
+            await btnRadicar1[1].click();
+        } catch (exepcion) {
+            console.log("La 1 tampoco Y_Y")
+        }
+
+        //CAPTURA DE PANTALLA
+        await CapturaPantalla(page);
+        //CORREO RADICACION
+        Correo(2, IdArea, Celda);
+        clearTimeout(Radisegundo);
+        await page.waitForTimeout(180000);
+        Mineria(browser, Pin);
+
+
+
+
 
 
     })();
 }
+
 
 // FUNCIÓN PARA ENVÍO DE CORREO SEGÚN LA SITUACIÓN
 function Correo(Tipo, Area, Celda) {
@@ -1437,97 +1438,37 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
                     await addProfesional[0].click();
                 } catch (error) {
                     console.log("ERR 0");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[1].click();
                 } catch (error) {
                     console.log("ERR 1");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[2].click();
 
                 } catch (error) {
                     console.log("ERR 2");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[3].click();
                 } catch (error) {
                     console.log("ERR 3");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[4].click();
                 } catch (error) {
                     console.log("ERR 4");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
             }
 
         }
-    }
-}
-
-var CorreoEnviado = false;
-var PrimerCorreoEnviado = false;
-// FUNCIÓN PARA VERIFICAR VENCIMIENTO DE PIN Y ENVIAR RECORDATORIO
-function VerificarVencimientoPin(selectedText, TextoDeOpcionSeleccionadaEnCampoPin) {
-
-    const input = TextoDeOpcionSeleccionadaEnCampoPin;
-
-    // Separar la fecha después de la coma
-    const dateString = input.split(',')[1].trim();
-
-    // Crear un objeto de fecha a partir de la cadena
-    const targetDate = new Date(dateString);
-
-    // Obtener la fecha actual
-    const currentDate = new Date();
-
-    // Calcular la diferencia en milisegundos
-    const diffInMs = targetDate - currentDate;
-
-    // Convertir la diferencia en días
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-
-    const diaSemana = targetDate.toLocaleString('es-Es', { weekday: 'long' });
-    console.log(`¡¡¡ DIFERENCIA EN DÍAS PIN: ${diffInDays}`);
-    const Description = `El pin vence en ${diffInDays} días, es decir, tiene vigencia hasta el día ${diaSemana} - ${dateString}`;
-
-    // Se captura la hora del día actual
-    const HoraActual = currentDate.getHours();
-
-    // Se captura el minuto actual
-    const MinutoActual = currentDate.getMinutes();
-
-    // Se captura el segundo actual
-    const SegundoActual = currentDate.getSeconds();
-
-    // Se verifica si la diferencia de días es igual a 5 y si la hora actual contiene 7 de la mañana ó contiene 3 de la tarde. Para hacer 2 envíos de recordatorio el día que se cumplan todas las condiciones
-
-    // Primer envío: 07:00 am
-    if ((diffInDays === 5) && ([7].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false) && !PrimerCorreoEnviado) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL PRIMER CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = true;
-    }
-
-    // Resetear el flag solo una vez después del primer correo
-    if ((diffInDays === 5) && ((HoraActual > 7) && (HoraActual < 15)) && (MinutoActual === 0) && PrimerCorreoEnviado && CorreoEnviado) {
-        CorreoEnviado = false;
-        console.log("LA VARIABLE DE CORREO ENVIADO SE HIZO FALSA");
-    }
-
-    // Segundo envío: 03:00 pm
-    if ((diffInDays === 5) && ([15].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false)) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL SEGUNDO CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = false;
     }
 }
