@@ -1148,19 +1148,16 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '503239'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
-
-            }else if(IdArea == 'RFE_08211'){
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
-
-            }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
-
+            let ArchivoAmbiental
+            if (IdArea == 'OG2_082210_2') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\OG2-082222X vital.pdf`;
+            
+            } else if (IdArea == 'ARE-509966') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental_Pol2.pdf`;
+            
+            } else {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+           
             }
 
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);

@@ -1074,7 +1074,6 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-
             let ArchivoAmbiental ;
             if(IdArea == '509188'){
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
@@ -1083,6 +1082,12 @@ function Mineria(browser, Pin) {
 
             }else if(IdArea == 'RFE_08211'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
+
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
             }
             else{

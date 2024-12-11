@@ -1359,14 +1359,23 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-            let ArchivoAmbiental;
-            if (IdArea == "Area21") {
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental_Pol1.pdf`;
+            let ArchivoAmbiental ;
+            if(IdArea == '509188'){
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            }else if(IdArea == '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
-            } else if(IdArea == "Area780")  {
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental_Pol2.pdf`;
+            }else if(IdArea == 'RFE_08211'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
-            }else{
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
+
+            }
+            else{
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }

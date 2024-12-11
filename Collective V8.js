@@ -1282,12 +1282,18 @@ function Mineria(browser,  Pin) {
             }else if(IdArea == 'RFE_08211'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
+
             }
             else{
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
-           
+            
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
