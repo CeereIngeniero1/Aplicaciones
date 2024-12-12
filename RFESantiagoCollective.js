@@ -242,7 +242,7 @@ function Mineria(browser, Pin) {
             // SE OBTIENEN LOS ELEMENTOS QUE TIENEN LA CLASE 'ng-binding ng-scope'
             var elementos = document.getElementsByClassName('ng-binding ng-scope');
 
-            let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
+            let Minerales = ['ARENAS', 'arenas'];
             let elementosConMinerales = [];
 
             // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
