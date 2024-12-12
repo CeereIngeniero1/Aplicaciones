@@ -249,7 +249,7 @@ async function AreaEspecial(browser) {
 
         await continPin2[1].click();
 
-        await page.waitForTimeout(1500);
+        await page.waitForTimeout(1000);
 
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
@@ -273,15 +273,15 @@ async function AreaEspecial(browser) {
         // console.log("Termiamos vlaida orfa");
         // await page.waitForTimeout(250000);
         if (cont == "0") {
-            console.log("Limpio El campo del area");
-            page.evaluate(() => {
-                document.querySelector('[id="cellIdsTxtId"]').value = "";
-            });
-            band++;
-            //Este es la cantidad de areas mas 1 
-            if (band == 2) {
-                band = 1;
-            }
+            // console.log("Limpio El campo del area");
+            // page.evaluate(() => {
+            //     document.querySelector('[id="cellIdsTxtId"]').value = "";
+            // });
+            // band++;
+            // //Este es la cantidad de areas mas 1 
+            // if (band == 2) {
+            //     band = 1;
+            // }
 
         } else {
             break;
