@@ -3,12 +3,29 @@ const fs = require('fs');
 const { Console } = require('console');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js'); 
 // Actualizado
+const os = require('os');
+const NombreEquipo = os.hostname();
+const EquiposGenerales = {
+    'HPGRIS': "EQUIPO CREADOR",
+    'DESKTOP-6JICI9S': "ASUS OLD",
+    'DESKTOP-SNSPTLM': "DELLC3",
+    'LAPTOP-2VU2EBUO': "EQUIPO VALEN",
+    'HPRED240': "FER EQUIPO",
+    'LAPTOP-JL0BL28F': "JORGE EQUIPO",
+    'MERCADEO': "MERCADEO",
+    'DESKTOP-RF3NUO3': "PIXEL",
+    'HPRED241':"FERCHO ingeniero en sistemas best"
+}
+
+
+const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Collective';
 var user1 = '76467';
 var pass1 = 'Simon1998.2022.';
 var user2 = '76467';
 var pass2 = 'Simon1998.2022.';
 var Agente = 1;
+var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
@@ -281,8 +298,18 @@ function Mineria(browser, Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
+        
         while (Band != 99) {
 
+            const Pestanas = await browser.pages();
+            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
+            if (Pestanas.length >= 4) {
+                EnviarCorreosParaPestanas++;
+                if (EnviarCorreosParaPestanas <= 2) {
+                    // Se realiza envío de correo para alertar
+                    Correo(5, '', '');
+                }
+            }
            // VerificarVencimientoPin(selectedText, input);
 
             console.log("Inicia el timer");
@@ -1332,14 +1359,23 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-            let ArchivoAmbiental;
-            if (IdArea == "Area21") {
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental_Pol1.pdf`;
+            let ArchivoAmbiental ;
+            if(IdArea == '509188'){
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            }else if(IdArea == '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
-            } else if(IdArea == "Area780")  {
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental_Pol2.pdf`;
+            }else if(IdArea == 'RFE_08211'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
-            }else{
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
+
+            }
+            else{
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
@@ -1496,21 +1532,23 @@ function Correo(Tipo, Area, Celda) {
     var Texto = "";
     //Area = "Tranquilos area de prueba";
     if (Tipo == 1) {
-        msg = "¡¡¡Posible Area Liberada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Liberada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#4CAF50";
         Texto = "POSIBLE AREA LIBERADA";
     } else if (Tipo == 2) {
-        msg = "¡¡¡Posible Area Radicada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Radicada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#D4AF37";
         Texto = "POSIBLE AREA RADICADA";
     } else if (Tipo == 3) {
-        msg = "¡¡¡Area Con fecha de Reapertura!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Area Con fecha de Reapertura!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#2196F3";
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
-        msg = `Proximo Pin A Vencerse -> ${Area}`;
-        Color = "#FE7401";
-        Texto = "PIN PRÓXIMO A VENCERSE";
+        msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
+    }else if ( Tipo == 5){
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+        Color = "#fe1426";
+        Texto = "Pestañas";
     }
 
     var nodemailer = require('nodemailer');
@@ -1523,98 +1561,77 @@ function Correo(Tipo, Area, Celda) {
             ciphers: 'SSLv3'
         },
         auth: {
-            user: 'pruebacitas@ceere.net',
+            user: 'correomineria2@ceere.net',
             pass: '1998Ceere*'
         }
     });
-
-    var Subject = "";
-    var Text = "";
-
-    if (Tipo !== 4) {
-        Subject = `LA AREA ES -> ${Area}`;
-        Text = `LA AREA ES -> ${Area} CELDA -> ${Celda}`;
-    } else {
-        Subject = `¡¡PIN PRÓXIMO A VENCERSE!! EN EMPRESA -> ${Empresa}`;
-        Text = `EL PIN ES -> ${Area}`;
-    }
-
-    var ContenidoHTMLDelCorreo = `
-        <html>
-        <head>
-            <style>
-                .container {
-                    font-family: Arial, sans-serif;
-                    max-width: 600px;
-                    margin: auto;
-                    padding: 20px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    background-color: #f9f9f9;
-                }
-                .header {
-                    background-color: ${Color};
-                    color: white;
-                    padding: 10px;
-                    text-align: center;
-                    border-radius: 5px 5px 0 0;
-                }
-                .content {
-                    margin: 20px 0;
-                }
-                .footer {
-                    text-align: center;
-                    padding: 10px;
-                    font-size: 12px;
-                    color: #777;
-                    border-top: 1px solid #ddd;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h3> ${Texto} </h3>
-                </div>
-                <div class="content">
-                    <p><strong>Detalles:</strong></p>
-                    <ul>`;
-    if (Tipo !== 4) {
-        ContenidoHTMLDelCorreo += `
-                            <li><strong>Empresa: </strong><br>${Empresa}</li>
-                            <li><strong>Area:</strong><br>${Area}</li>
-                            <li><strong>Celda:</strong><br>${Celda}</li>
-                        `;
-    } else {
-        ContenidoHTMLDelCorreo += `
-                            <li><strong>Pin:</strong><br>${Area}</li>
-                            <li><strong>Descripción: </strong><br>${Celda}</li>
-                        `;
-    }
-    ContenidoHTMLDelCorreo += `
-                    </ul>
-                </div>
-                <div class="footer">
-                    <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
-                </div>
-            </div>
-        </body>
-    </html>
-    `;
-
+    var mensaje = msg;
     var mailOptions = {
-        from: msg + '"Ceere" <pruebacitas@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
+        from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
         to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
-        subject: Subject,
-        text: Text,
-        html: ContenidoHTMLDelCorreo
+        //to: '  Fernando.pala.99@gmail.com',
+        subject: 'LA AREA ES-> ' + Area,
+        text: 'LA AREA ES->  ' + Area + "  " + Celda,
+        html: `
+            <html>
+                <head>
+                    <style>
+                        .container {
+                            font-family: Arial, sans-serif;
+                            max-width: 600px;
+                            margin: auto;
+                            padding: 20px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            background-color: #f9f9f9;
+                        }
+                        .header {
+                            background-color: ${Color};
+                            color: white;
+                            padding: 10px;
+                            text-align: center;
+                            border-radius: 5px 5px 0 0;
+                        }
+                        .content {
+                            margin: 20px 0;
+                        }
+                        .footer {
+                            text-align: center;
+                            padding: 10px;
+                            font-size: 12px;
+                            color: #777;
+                            border-top: 1px solid #ddd;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h3> ${Texto} </h3>
+                        </div>
+                        <div class="content">
+                            <p><strong>Detalles:</strong></p>
+                            <ul>
+                                <li><strong>Empresa: </strong><br>${Empresa}</li>
+                                <li><strong>Area:</strong><br>${Area}</li>
+                                <li><strong>Celda:</strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
+                            </ul>
+                        </div>
+                        <div class="footer">
+                            <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             return console.log(error);
         }
+
         console.log('Message sent: ' + info.response);
     });
 }

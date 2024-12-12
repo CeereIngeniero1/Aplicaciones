@@ -13,10 +13,10 @@ const EquiposGenerales = {
     'DESKTOP-RF3NUO3': "PIXEL",
     'HPRED241':"FERCHO ingeniero en sistemas best"
 }
-const Empresa = "Anuel";
+
 
 const EquipoActual = EquiposGenerales[NombreEquipo];
-
+const Empresa = "Anuel";
 Correo(1,'Prueba', 'jijiji', EquipoActual)
 
 
@@ -123,6 +123,7 @@ function Correo(Tipo, Area, Celda, EquipoActual) {
                         ContenidoHTMLDelCorreo += `
                             <li><strong>Pin:</strong><br>${Area}</li>
                             <li><strong>Descripción: </strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
                         `;
                     }
                     ContenidoHTMLDelCorreo += `
@@ -137,7 +138,11 @@ function Correo(Tipo, Area, Celda, EquipoActual) {
     `;
 
     var mailOptions = {
+<<<<<<< HEAD
         from: msg + '"Ceere" <correomineria@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
+=======
+        from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
+>>>>>>> f06983db5d7a61eec13dbc3f1c1aa8575390551a
         //to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
         to: 'soporte.ceere06068@gmail.com, Fernando.pala.99@gmail.com',
         subject: Subject,
