@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
-const user = '96443';
-const pass = 'Rigomazo2024*';
+const user = '96458';
+const pass = 'Sarita2024*';
 var Agente = 1;
 
 Pagina();
@@ -76,7 +76,7 @@ async function AreaEspecial(browser) {
 
 
 
-            await page.type('#submitterPersonOrganizationNameId', '96458');
+            await page.type('#submitterPersonOrganizationNameId', '96474');
 
             await page.waitForTimeout(3000);
 
@@ -223,27 +223,26 @@ async function AreaEspecial(browser) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,6227'; // Usar el valor con punto decimal
+                eastingInput.value = '-75,5486'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '5,49368';
+                northingInput.value = '5,55444';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,6227';
+                eastingInput2.value = '-75,5486';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '5,49368';
+                northingInput2.value = '5,55444';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
-            MonitorearAreas("AreaDePrueba", ["18N05E04D06H"]);
+            MonitorearAreas("AreaDePrueba", ["18N05A25G21B"]);
         }
-
 
         await page.waitForTimeout(500);
 
@@ -303,7 +302,7 @@ async function AreaEspecial(browser) {
         }
 
 
-
+        
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
         if (AparecioCaptcha) {
             console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
@@ -334,7 +333,7 @@ async function AreaEspecial(browser) {
 
         if (isCaptchaResolved) {
             console.log('El captcha ha sido resuelto.');
-
+           
             break;
         } else {
             console.log('El captcha no ha sido resuelto aún.');
@@ -344,12 +343,12 @@ async function AreaEspecial(browser) {
     try {
         await continuar[0].click();
     } catch (error) {
-
+        
     }
     try {
         await continuar[1].click();
     } catch (error) {
-
+        
     }
     //console.log(continuar.length);
     await page.waitForTimeout(250000);
