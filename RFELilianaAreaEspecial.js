@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
-const user = '96458';
-const pass = 'Sarita2024*';
+const user = '96474';
+const pass = 'Lilianab2024*';
 var Agente = 0;
 
 Pagina();
@@ -68,6 +68,7 @@ async function AreaEspecial(browser) {
         const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de Área de Reserva Especial")]');
         await lblRadicar[0].click();
         await page.waitForTimeout(2000);
+
         if (Agente == 1) {
             await page.waitForTimeout(2000);
 
@@ -75,7 +76,7 @@ async function AreaEspecial(browser) {
 
 
 
-            await page.type('#submitterPersonOrganizationNameId', '96458');
+            await page.type('#submitterPersonOrganizationNameId', '96474');
 
             await page.waitForTimeout(3000);
 
@@ -83,6 +84,7 @@ async function AreaEspecial(browser) {
 
             await page.waitForTimeout(550);
         }
+
 
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
@@ -221,57 +223,33 @@ async function AreaEspecial(browser) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-73,64974'; // Usar el valor con punto decimal
+                eastingInput.value = '-75,5486'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '7,22473';
+                northingInput.value = '5,55444';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-73,64974';
+                eastingInput2.value = '-75,5486';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '7,22473';
+                northingInput2.value = '5,55444';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
-            MonitorearAreas("AreaDePrueba", ["18N03E14P01A"]);
-
-        } else if (band == 2) {
-            // Establecer el valor directamente en el input
-            await page.evaluate(() => {
-                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,1938'; // Usar el valor con punto decimal
-                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
-
-                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '4,21175';
-                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-
-            // Repetir para los otros inputs
-            await page.evaluate(() => {
-                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,1938';
-                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-
-                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '4,21175';
-                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-            MonitorearAreas("AreaDePrueba", ["18N05N14M12R"]);
+            MonitorearAreas("AreaDePrueba", ["18N05A25G21B"]);
         }
 
 
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(500);
 
         await continPin2[1].click();
 
-        await page.waitForTimeout(3000);
+        await page.waitForTimeout(1500);
 
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
@@ -301,7 +279,7 @@ async function AreaEspecial(browser) {
             });
             band++;
             //Este es la cantidad de areas mas 1 
-            if (band == 3) {
+            if (band == 2) {
                 band = 1;
             }
 
@@ -313,53 +291,70 @@ async function AreaEspecial(browser) {
     console.log("Sali !!!!!!!!!!!!!!!!!!");
 
 
-var contador = 0;
-    while (true) {
-        try {        
-                const HacerClicEnDiv = await page.$('div[id="p_PsraRsraDocumentTypeId5"]');
-                await HacerClicEnDiv.click();
-                if (HacerClicEnDiv) {
-                    console.log("CLICK!!!");
-                }else {
-                    console.log("NDAAA");
-                }
-            
+    var contador = 0;
 
-            // const CUALQUIERCOSA = await page.$x('//span[contains(.,"RECAPTCHA")]');
-            // await CUALQUIERCOSA[contador].click();
-            //  await page.click('.widget-icon');
-            await page.waitForTimeout(1000);
-            const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
-            if (AparecioCaptcha) {
-                console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-
-            } else {
-                console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
-            }
-            await keyboard.pressKey(Key.Tab);
-            console.log(`PRESIONÉ LA TABULADORA`);
-            await keyboard.pressKey(Key.Enter);
-            console.log(`PRESIONÉ ENTER...`);
-            break;
-        } catch (error) {
-            contador++;
-            //console.error("Falle dandole click", error);
-            console.error("prueba", error)
-            if(contador==2){
-                break;
-            }
+    try {
+        const HacerClicEnDiv = await page.$('div[id="p_PsraRsraDocumentTypeId5"]');
+        await HacerClicEnDiv.click();
+        if (HacerClicEnDiv) {
+            console.log("CLICK!!!");
+        } else {
+            console.log("NDAAA");
         }
+
+
+
+        const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
+        if (AparecioCaptcha) {
+            console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
+
+        } else {
+            console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
+        }
+        await keyboard.pressKey(Key.Tab);
+        console.log(`PRESIONÉ LA TABULADORA`);
+        await keyboard.pressKey(Key.Enter);
+        console.log(`PRESIONÉ ENTER...`);
+
+    } catch (error) {
+        contador++;
+        console.error("Falle dandole click", error);
+        console.error("prueba", error)
+
     }
 
+    while (true) {
+        await page.waitForTimeout(700);
+        console.log("Chequeando si el captcha está resuelto...");
+
+        const isCaptchaResolved = await page.evaluate(() => {
+            const responseField = document.querySelector('#g-recaptcha-response');
+            return responseField && responseField.value.length > 0;
+        });
+
+        if (isCaptchaResolved) {
+            console.log('El captcha ha sido resuelto.');
+
+            break;
+        } else {
+            console.log('El captcha no ha sido resuelto aún.');
+        }
+    }
+    const continuar = await page.$x('//span[contains(.,"Confirmar")]');
+    try {
+        await continuar[0].click();
+    } catch (error) {
+
+    }
+    try {
+        await continuar[1].click();
+    } catch (error) {
+
+    }
+    //console.log(continuar.length);
     await page.waitForTimeout(250000);
 
 }
-
-
-
-
-
-
 
 
 

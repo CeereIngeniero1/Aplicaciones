@@ -26,6 +26,7 @@ var pass1 = 'CollectiveM_2024*';
 var user2 = '85127';
 var pass2 = 'J1026161053*';
 var Agente = 1;
+var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 var contComasceldas = 0;
@@ -41,7 +42,7 @@ async function Pagina() {
         }
     });
     for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'C2:') {
+        if (Pines.substring(i + 1, i + 4) == 'C1:') {
             console.log(Pines.substring(i + 1, i + 4));
             Pin = Pines.substring(i + 4, i + 31);
             break
@@ -289,7 +290,18 @@ function Mineria(browser, Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
+        
         while (Band != 99) {
+
+            const Pestanas = await browser.pages();
+            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
+            if (Pestanas.length >= 4) {
+                EnviarCorreosParaPestanas++;
+                if (EnviarCorreosParaPestanas <= 2) {
+                    // Se realiza envío de correo para alertar
+                    Correo(5, '', '');
+                }
+            }
 
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
@@ -344,33 +356,16 @@ function Mineria(browser, Pin) {
             //     );
             // }
 
-             if (Band == 1) {
+            if (Band == 1) {
                 MonitorearAreas(
-                    "502172",//Nombre del area
+                    "RFE_08A",//Nombre del area
                     1, // aviso
-                    "18N05E04D03F", // ceda de correo
-                    ['18N05E04D03F, 18N05A24Q23V, 18N05E04D03B, 18N05E04D03C, 18N05A24Q23U, 18N05A24Q24R, 18N05E04D02U, 18N05E04D03A, 18N05A24Q23S, 18N05A24Q23T, 18N05A24Q23N, 18N05A24Q23Z, 18N05A24Q24L, 18N05E04D02J, 18N05E04D02E, 18N05A24Q23Q, 18N05A24Q23M, 18N05A24Q23P, 18N05A24Q24Q, 18N05A24Q22U, 18N05A24Q23K, 18N05E04D03D, 18N05E04D03E, 18N05E04D04B, 18N05A24Q24V, 18N05A24Q24W, 18N05A24Q23L, 18N05A24Q23X, 18N05A24Q24X, 18N05E04D03L, 18N05E04D04A, 18N05A24Q24K, 18N05E04D04C, 18N05A24Q24M, 18N05A24Q22Z, 18N05E04D03G, 18N05A24Q23W, 18N05A24Q23R, 18N05A24Q23Y, 18N05E04D02P, 18N05A24Q22P, 18N05E04D03K, 18N05E04D03H, 18N05A24Q24S'], // Celdas de area
+                    "18N05A25G21R", // ceda de correo
+                    ['18N05A25G21R, 18N05A25G21H, 18N05A25G21I, 18N05A25G21E, 18N05A25G16U, 18N05A25G16I, 18N05A25G21J, 18N05A25G21S, 18N05A25G21T, 18N05A25G16Y, 18N05A25G16T, 18N05A25G16Z, 18N05A25G16P, 18N05A25G22K, 18N05A25G16L, 18N05A25G21M, 18N05A25G16M, 18N05A25G16H, 18N05A25G17K, 18N05A25G16X, 18N05A25G16J, 18N05A25G22F, 18N05A25G22A, 18N05A25G17F, 18N05A25G21C, 18N05A25G16S, 18N05A25G21N, 18N05A25G21P, 18N05A25G17Q, 18N05A25G21G, 18N05A25G21U, 18N05A25G22Q, 18N05A25G21L, 18N05A25G16W, 18N05A25G21D, 18N05A25G16N, 18N05A25G17V'], // Celdas de area
                      0 // comas
                 )
             }
-            else  if (Band == 2) {
-                MonitorearAreas(
-                    "505485",
-                    1,
-                    "",
-                    ["18N05A24N13H, 18N05A24N13Z, 18N05A24N13P, 18N05A24N19A, 18N05A24N14K, 18N05A24N14B, 18N05A24N14X, 18N05A24N14Z, 18N05A24N13Y, 18N05A24N09V, 18N05A24N14H, 18N05A24N14Y, 18N05A24N09Y, 18N05A24N14P, 18N05A24N09Z, 18N05A24N15W, 18N05A24N10W, 18N05A24N15Y, 18N05A24N15D, 18N05A24N18D, 18N05A24N14C, 18N05A24N14D, 18N05A24N19E, 18N05A24N14E, 18N05A24N10Y, 18N05A24N13X, 18N05A24N14J, 18N05A24N10V, 18N05A24N20D, 18N05A24N15N, 18N05A24N18C, 18N05A24N13M, 18N05A24N18E, 18N05A24N14M, 18N05A24N09X, 18N05A24N14T, 18N05A24N15F, 18N05A24N15L, 18N05A24N15G, 18N05A24N15B, 18N05A24N13N, 18N05A24N14V, 18N05A24N14F, 18N05A24N14A, 18N05A24N14L, 18N05A24N19D, 18N05A24N14I, 18N05A24N15V, 18N05A24N15K, 18N05A24N15A, 18N05A24N20B, 18N05A24N15S, 18N05A24N15M, 18N05A24N15H, 18N05A24N15T, 18N05A24N13S, 18N05A24N19B, 18N05A24N14R, 18N05A24N14G, 18N05A24N09W, 18N05A24N14U, 18N05A24N20C, 18N05A24N15X, 18N05A24N15R, 18N05A24N15C, 18N05A24N15I, 18N05A24N13T, 18N05A24N13I, 18N05A24N13U, 18N05A24N13J, 18N05A24N14Q, 18N05A24N14W, 18N05A24N19C, 18N05A24N14S, 18N05A24N14N, 18N05A24N20A, 18N05A24N15Q, 18N05A24N10X"],
-                    0
-                );
-            }
-            else  if (Band == 3) {
-                MonitorearAreas(
-                    "509188",
-                    1,
-                    "",
-                    [" 18N05A24Q23G, 18N05A24Q18W, 18N05A24Q18Y, 18N05A24Q23F, 18N05A24Q23A, 18N05A24Q23B, 18N05A24Q18X, 18N05A24Q23D, 18N05A24Q17Z, 18N05A24Q22J, 18N05A24Q18V, 18N05A24Q23H, 18N05A24Q23I, 18N05A24Q22E, 18N05A24Q23C"],
-                    0
-                );
-            } 
+            
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
@@ -382,7 +377,7 @@ function Mineria(browser, Pin) {
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await continCeldas[1].click();
             console.log(IdArea);
-            await page.waitForTimeout(3000);
+            await page.waitForTimeout(1000);
 
             const Todoslosparametros = await page.$$eval("span", links =>
                 links.map(link => link.textContent)
@@ -426,15 +421,15 @@ function Mineria(browser, Pin) {
 
 
             if (cont == "0") {
-                console.log("Limpio El campo del area");
-                page.evaluate(() => {
-                    document.querySelector('[id="cellIdsTxtId"]').value = "";
-                });
-                Band++;
-                //Este es la cantidad de areas mas 1 
-                if (Band == 2) {
-                    Band = 1;
-                }
+                // console.log("Limpio El campo del area");
+                // page.evaluate(() => {
+                //     document.querySelector('[id="cellIdsTxtId"]').value = "";
+                // });
+                // Band++;
+                // //Este es la cantidad de areas mas 1 
+                // if (Band == 2) {
+                //     Band = 1;
+                // }
 
             } else {
                 Band = 99;
@@ -1026,19 +1021,26 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-
             let ArchivoAmbiental ;
             if(IdArea == '509188'){
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else  if(IdArea == '503239'){
+            }else if(IdArea == '503239'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
+
+            }else if(IdArea == 'RFE_08211'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
+
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
             }
             else{
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
-           
 
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
@@ -1251,19 +1253,23 @@ function Correo(Tipo, Area, Celda) {
     var Texto = "";
     //Area = "Tranquilos area de prueba";
     if (Tipo == 1) {
-        msg = "¡¡¡Posible Area Liberada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Liberada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#4CAF50";
         Texto = "POSIBLE AREA LIBERADA";
     } else if (Tipo == 2) {
-        msg = "¡¡¡Posible Area Radicada!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Posible Area Radicada!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#D4AF37";
         Texto = "POSIBLE AREA RADICADA";
     } else if (Tipo == 3) {
-        msg = "¡¡¡Area Con fecha de Reapertura!!! " + Empresa + " " + Area + " ¡¡¡Verificar!!!.";
+        msg = "¡¡¡Area Con fecha de Reapertura!!! " + EquipoActual + " " + Area + " " + Empresa;
         Color = "#2196F3";
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
+    }else if ( Tipo == 5){
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+        Color = "#fe1426";
+        Texto = "Pestañas";
     }
 
     var nodemailer = require('nodemailer');
@@ -1276,13 +1282,13 @@ function Correo(Tipo, Area, Celda) {
             ciphers: 'SSLv3'
         },
         auth: {
-            user: 'correomineria@ceere.net',
+            user: 'correomineria2@ceere.net',
             pass: '1998Ceere*'
         }
     });
     var mensaje = msg;
     var mailOptions = {
-        from: msg + '"Ceere" <correomineria@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
+        from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
         to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
         //to: '  Fernando.pala.99@gmail.com',
         subject: 'LA AREA ES-> ' + Area,

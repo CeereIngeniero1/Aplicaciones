@@ -1,3 +1,4 @@
+
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
@@ -14,41 +15,36 @@ const EquiposGenerales = {
     'LAPTOP-JL0BL28F': "JORGE EQUIPO",
     'MERCADEO': "MERCADEO",
     'DESKTOP-RF3NUO3': "PIXEL",
-    'HPRED241':"FERCHO ingeniero en sistemas best"
+    'HPRED241': "FERCHO ingeniero en sistemas best"
 }
 
 
 const EquipoActual = EquiposGenerales[NombreEquipo];
-var Empresa = 'ARABANY';
-var user1 = '45248';
-var pass1 = 'ANM2020ANNA*';
-var user2 = '12725';
-var pass2 = 'LFGG1960**';
+var Empresa = 'Collective';
+var user1 = '76966';
+var pass1 = 'CollectiveM_2024*';
+var user2 = '83955';
+var pass2 = 'wX2*dQ3*cS';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
-var ContadorVueltas = 0;
-var contComasceldas = 0;
-var Cag = false;
-var Caggrande = false;
+var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
+    if (error) {
+        throw error;
+    } else {
+        console.log(datos);
+    }
+});
+for (let i = 0; i < Pines.length; i++) {
+    if (Pines.substring(i + 1, i + 4) == 'Co:') {
+        console.log(Pines.substring(i + 1, i + 4));
+        Pin = Pines.substring(i + 4, i + 31);
+        break
+    }
+}
+
 Pagina();
 async function Pagina() {
-    var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
-        if (error) {
-            throw error;
-        } else {
-            console.log(datos);
-        }
-    });
-    for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'LF:') {
-            console.log(Pines.substring(i + 1, i + 4));
-            Pin = Pines.substring(i + 4, i + 31);
-            break
-        }
-    }
-
-
 
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
 
@@ -65,174 +61,166 @@ async function Pagina() {
         devtools: false
     });
 
-    Mineria(browser, Pin);
-
+    Mineria(browser);
 }
 
 
 
 
-function Mineria(browser, Pin) {
+function Mineria(browser) {
     (async () => {
-
-        console.log("Esta es la vuelta " + ContadorVueltas);
-        const page = await browser.newPage();
-
         let Primerpaso = setTimeout(() => {
             console.log("ENTRO EN EL PRIMERPASO")
 
+
+            Mineria(browser);
             page.close();
-            Mineria(browser, Pin);
-
-        }, 20000);
-
-
-
-
+        }, 15000);
+        const page = await browser.newPage();
 
         await page.setViewport({ width: 1368, height: 620 });
         await page.goto('https://annamineria.anm.gov.co/sigm/');
 
+
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
-
         try {
-
-            console.log(user);
-            console.log(pass);
             await page.type('#username', user);
             await page.type('#password', pass);
 
             page.click("#loginButton");
-
-
-        } catch (ex) {
-            console.log("Entro en el catch");
-        }
-
-        page.setDefaultTimeout(0);
-        try {
-            await page.waitForNavigation({
-                waitUntil: 'networkidle0',
-                timeout: 5000 // 5 segundos en milisegundos
-            });
         } catch (error) {
-            if (error instanceof puppeteer.errors.TimeoutError) {
-                console.log('La navegación tardó más de 5 segundos.');
-                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-            } else {
-                throw error; // Lanzar el error si no es un TimeoutError
-            }
+
         }
-        validador = 0;
+
+
+        // await page.setDefaultTimeout(0);
+        // page.waitForNavigation({
+        //     waitUntil: 'networkidle0',
+        //     timeout: 10000
+        // });
+
+
+
+
+
         clearTimeout(Primerpaso);
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
+
+            Mineria(browser);
             page.close();
-            Mineria(browser, Pin);
         }, 35000);
 
+        let Contador1 = 0;
+        while (true) {
+            try {
+                let solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
+                if (solicitudes.length > 1) {
+                    try {
+                        await solicitudes[1].click();
+                        break;
+                    } catch (error) {
+                        console.log("No le pudo dar click por que no lo podia ver");
+                    }
+                } else if (Contador1 == 18) {
+                    break;
+                } else {
+                    console.error('No se encontró el segundo elemento con el texto "Solicitudes".');
+                    Contador1++;
+                }
+                await page.waitForTimeout(500);
+            } catch (error) {
+                if (Contador1 == 20) {
+                    break;
+                }
+            }
+        }
+
+        Contador1 = 0;
+        while (true) {
+            try {
+                let lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
+                if (lblRadicar.length > -1) {
+                    try {
+                        await lblRadicar[0].click();
+                        break;
+                    } catch (error) {
+                        console.log("No le pudo dar click por que no lo podia ver");
+                    }
 
 
+                } else if (Contador1 == 18) {
+                    break;
+                } else {
+                    console.error('No se encontró el segundo elemento con el texto "Radicar".');
+                    Contador1++;
+                }
+                await page.waitForTimeout(500);
+            } catch (error) {
+                if (Contador1 == 20) {
+                    break;
+                }
+            }
+
+        }
 
 
-        const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
-        await solicitudes[1].click();
-
-        const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
-        await lblRadicar[0].click();
         if (Agente == 1) {
-            await page.waitForTimeout(2000);
 
+            await page.waitForFunction(() => {
+                const element = document.getElementById("submitterPersonOrganizationNameId");
+                return element && element.value !== undefined;
+            }, { timeout: 30000 });
+            await page.waitForTimeout(800);
 
-            //await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "")
-            await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
+            await page.evaluate(() => {
+                document.getElementById("submitterPersonOrganizationNameId").value = "";
+            });
+            await page.type('#submitterPersonOrganizationNameId', '76966');
 
-            //await page.waitForSelector('select[id="submitterPersonOrganizationNameId"]');
-            //const Agente = await page.$('select[id=" submitterPersonOrganizationNameId"]');
+            await page.waitForFunction(() => {
+                const element = document.querySelector('a[title="COLLECTIVE MINING (BERMUDA) SUCURSAL COLOMBIA (76966)"]');
+                return element !== null; // Retorna true si el elemento existe
+            }, { timeout: 30000 }); // Espera hasta 30 segundos
 
-            await page.type('#submitterPersonOrganizationNameId', '45248');
-            //await page.type('#submitterPersonOrganizationNameId', '');
-
-            await page.waitForTimeout(3000);
-
-            await page.keyboard.press("Enter");
-
-            await page.waitForTimeout(550);
+            // Ahora interactúa con el elemento
+            await page.evaluate(() => {
+                const element = document.querySelector('a[title="COLLECTIVE MINING (BERMUDA) SUCURSAL COLOMBIA (76966)"]');
+                element.click(); // Haz clic en el elemento
+            });
         }
 
 
 
-        await page.waitForTimeout(2500)
+
+        await page.waitForSelector('#pinSlctId', { visible: true });
+        await page.waitForTimeout(1000);
+
+
+
+
+
+
+
+
+
+
+        await page.waitForTimeout(2500);
         page.setDefaultTimeout(0);
         await page.waitForSelector('select[id="pinSlctId"]');
         const selectPin = await page.$('select[id="pinSlctId"]');
         await selectPin.type(Pin);
         console.log(Pin);
 
-        /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-            // Capturar todas las opciones de un select
-            const allOptions = await page.evaluate(select => {
-                const options = Array.from(select.options); // Convierte las opciones a un array
-                return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
-            }, selectPin);
-
-            console.log('Todas las opciones:', allOptions);
-
-            const closestDateOption = await page.evaluate(() => {
-                const select = document.querySelector('select');
-            
-                const monthMap = {
-                    "ENE": "01",
-                    "FEB": "02",
-                    "MAR": "03",
-                    "ABR": "04",
-                    "MAY": "05",
-                    "JUN": "06",
-                    "JUL": "07",
-                    "AGO": "08",
-                    "SEP": "09",
-                    "OCT": "10",
-                    "NOV": "11",
-                    "DIC": "12"
-                };
-            
-                const options = Array.from(select.options).map(option => {
-                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
-                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
-            
-                    const [day, monthName, year] = dateText.split('/');
-                    const month = monthMap[monthName];
-                    const formattedDate = new Date(`${year}-${month}-${day}`);
-            
-                    return { text, date: formattedDate };
-                });
-            
-                const now = new Date();
-            
-                const differences = options.map(option => {
-                    const diff = Math.abs(option.date - now);
-                    return { text: option.text, diff }; // Retornar la diferencia y el texto
-                });
-            
-                console.log('Diferencias calculadas:', differences);
-            
-                // Reducir para encontrar la fecha más cercana
-                const closest = options.reduce((prev, curr) => {
-                    return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
-                });
-            
-                return closest.text;
-            });            
-
-            console.log('Opción más cercana a la fecha actual:', closestDateOption);
-            const input = closestDateOption;
-        /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-
         await page.waitForXPath('//span[contains(.,"Continuar")]');
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
         await page.waitForTimeout(1000);
+
+
+
+
 
         const Fallopin = await page.$$eval("span", links =>
 
@@ -258,17 +246,7 @@ function Mineria(browser, Pin) {
             await page.waitForXPath('//span[contains(.,"Continuar")]');
             const continPin = await page.$x('//span[contains(.,"Continuar")]');
             await continPin[1].click();
-            /*
-                        //await page.waitForTimeout(1000)
-                        Primero();
-            
-                        browser.close();*/
-
         }
-
-        /*await page.waitForNavigation({
-           waitUntil: 'networkidle0',
-       });*/
 
         if (await page.$x('//span[contains(.,"Vea los errores a continuación:")]').lenght > 0) {
             console.log('no pasó el pin');
@@ -330,24 +308,16 @@ function Mineria(browser, Pin) {
 
         clearTimeout(Segundopaso);
 
-
-
-        //console.log(Area10);
-        var Aviso = 0;
         var contador = 0;
         var Band = 1;
         var IdArea = '';
         var SoloAviso = 0;
-        ContadorVueltas++;
-        var Comas = 0;
-        var Texto = "";
-        var liberadas = 0;
         var Celda = 0;
 
-        let ComasTotalesPorArea = {};
-        
-        while (Band != 99) {
 
+
+        while (Band != 99) {
+            
             const Pestanas = await browser.pages();
             console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
             if (Pestanas.length >= 4) {
@@ -358,14 +328,11 @@ function Mineria(browser, Pin) {
                 }
             }
 
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
-
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser, Pin);
+                Mineria(browser);
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -415,56 +382,112 @@ function Mineria(browser, Pin) {
             // }
 
 
-            // if (Band == 1) {
-            //     MonitorearAreas(
-            //         "Area780",
-            //         1,
-            //         "",
-            //         ["18N05A25M09Q, 18N05A25M09R, 18N05A25M09S, 18N05A25M09T, 18N05A25M09U, 18N05A25M09V, 18N05A25M09W, 18N05A25M09X, 18N05A25M09Y, 18N05A25M14B, 18N05A25M14C, 18N05A25M14G, 18N05A25M14H, 18N05A25M14L, 18N05A25M14R, 18N05A25M14W, 18N05A25M19B, 18N05A25M19G, 18N05A25M19L, 18N05A25M19R, 18N05A25M19W, 18N05A25M19X, 18N05A25M24B, 18N05A25M24C, 18N05A25M24G, 18N05A25M24H, 18N05A25M24L, 18N05A25M24M"],
-            //         0
-            //     );
-            // }
-
             if (Band == 1) {
                 MonitorearAreas(
-                    "OG2_082210_2",
+                    "Area18",
                     1,
-                    "18N02N08J04L",
-                    ["18N02N08J04L, 18N02N08J04G, 18N02N08J04Y, 18N02N08J09D, 18N02N08J04T, 18N02N08J04W, 18N02N08J04B, 18N02N08F24W, 18N02N08J09C, 18N02N08J04H, 18N02N08J04S, 18N02N08J04M, 18N02N08J09B, 18N02N08J04R, 18N02N08J04X, 18N02N08J04N, 18N02N08J04I, 18N02N08J04C"],
+                    "18N05E04D06M",
+                    ["18N05E04D06M"],
                     0
                 );
             }
             else if (Band == 2) {
                 MonitorearAreas(
-                    "509971",
-                    1,
-                    "18N05E04D09S",
-                    ["18N05E04D09S, 18N05E04D09M, 18N05E04D09H"],
-                    0
-                );
+                    "OG2_Area_10",//Nombre del area
+                    0, // aviso
+                    "18N05A24L21Q", // ceda de correo
+                    ['18N05A24L17S, 18N05A24L17T, 18N05A24L17W, 18N05A24L17X, 18N05A24L17Y, 18N05A24L17Z, 18N05A24L18V, 18N05A24L18W, 18N05A24L18X, 18N05A24L18Y, 18N05A24L18Z, 18N05A24L19V, 18N05A24L19W, 18N05A24L19X, 18N05A24L19Y, 18N05A24L19Z, 18N05A24L20V, 18N05A24L20W, 18N05A24L20X, 18N05A24L20Y, 18N05A24L20Z, 18N05A24L21E, 18N05A24L21I, 18N05A24L21J, 18N05A24L21L, 18N05A24L21M, 18N05A24L21N, 18N05A24L21P, 18N05A24L21Q, 18N05A24L21R, 18N05A24L21S, 18N05A24L21T, 18N05A24L21U, 18N05A24L22A, 18N05A24L22B, 18N05A24L22C, 18N05A24L22D, 18N05A24L22E, 18N05A24L22F, 18N05A24L22G, 18N05A24L22H, 18N05A24L22I, 18N05A24L22J, 18N05A24L22K, 18N05A24L22L, 18N05A24L22M, 18N05A24L22N, 18N05A24L22P, 18N05A24L22Q, 18N05A24L22R, 18N05A24L22S, 18N05A24L22T, 18N05A24L22U, 18N05A24L23A, 18N05A24L23B, 18N05A24L23C, 18N05A24L23D, 18N05A24L23E, 18N05A24L23F, 18N05A24L23G, 18N05A24L23H, 18N05A24L23I, 18N05A24L23J, 18N05A24L23K, 18N05A24L23L, 18N05A24L23M, 18N05A24L23N, 18N05A24L23P, 18N05A24L23Q, 18N05A24L23R, 18N05A24L23S, 18N05A24L23T, 18N05A24L23U, 18N05A24L23V, 18N05A24L23W, 18N05A24L23X, 18N05A24L23Y, 18N05A24L23Z, 18N05A24L24A, 18N05A24L24B, 18N05A24L24C, 18N05A24L24D, 18N05A24L24E, 18N05A24L24F, 18N05A24L24G, 18N05A24L24H, 18N05A24L24I, 18N05A24L24J, 18N05A24L24K, 18N05A24L24L, 18N05A24L24M, 18N05A24L24N, 18N05A24L24P, 18N05A24L24Q, 18N05A24L24R, 18N05A24L24S, 18N05A24L24T, 18N05A24L24U, 18N05A24L24V, 18N05A24L24W, 18N05A24L24X, 18N05A24L24Y, 18N05A24L25A, 18N05A24L25B, 18N05A24L25C, 18N05A24L25D, 18N05A24L25E, 18N05A24L25F, 18N05A24L25G, 18N05A24L25H, 18N05A24L25I, 18N05A24L25J, 18N05A24L25K, 18N05A24L25L, 18N05A24L25M, 18N05A24L25N, 18N05A24L25P, 18N05A24L25Q, 18N05A24L25R, 18N05A24L25S, 18N05A24L25T, 18N05A24L25U, 18N05A24Q03A, 18N05A24Q03B, 18N05A24Q03C, 18N05A24Q03D, 18N05A24Q03E, 18N05A24Q03F, 18N05A24Q03G, 18N05A24Q03H, 18N05A24Q03I, 18N05A24Q03J, 18N05A24Q03K, 18N05A24Q03L, 18N05A24Q03M, 18N05A24Q03N, 18N05A24Q03P, 18N05A24Q03Q, 18N05A24Q03R, 18N05A24Q03S, 18N05A24Q03T, 18N05A24Q03U, 18N05A24Q03V, 18N05A24Q03W, 18N05A24Q03X, 18N05A24Q03Y, 18N05A24Q03Z, 18N05A24Q04A, 18N05A24Q04B, 18N05A24Q04C, 18N05A24Q04D, 18N05A24Q04E, 18N05A24Q04F, 18N05A24Q04G, 18N05A24Q04H, 18N05A24Q04J, 18N05A24Q04K, 18N05A24Q04L, 18N05A24Q04P, 18N05A24Q04Q, 18N05A24Q04R, 18N05A24Q04V, 18N05A24Q05F, 18N05A24Q05K, 18N05A24Q05L, 18N05A24Q05Q, 18N05A24Q05R, 18N05A24Q05S, 18N05A24Q05V, 18N05A24Q05W, 18N05A24Q05X, 18N05A24Q05Y, 18N05A24Q08A, 18N05A24Q08B, 18N05A24Q08C, 18N05A24Q08D, 18N05A24Q08E, 18N05A24Q08F, 18N05A24Q08G, 18N05A24Q08H, 18N05A24Q08I, 18N05A24Q08J, 18N05A24Q09A, 18N05A24Q10B, 18N05A24Q10C, 18N05A24Q10D, 18N05A24Q10E, 18N05A24Q10H, 18N05A24Q10I, 18N05A24Q10J, 18N05A24Q10P, 18N05A25I16V, 18N05A25I16W, 18N05A25I16X, 18N05A25I16Y, 18N05A25I16Z, 18N05A25I17V, 18N05A25I17W, 18N05A25I17X, 18N05A25I17Y, 18N05A25I17Z, 18N05A25I18V, 18N05A25I21A, 18N05A25I21B, 18N05A25I21C, 18N05A25I21D, 18N05A25I21E, 18N05A25I21F, 18N05A25I21G, 18N05A25I21H, 18N05A25I21I, 18N05A25I21J, 18N05A25I21K, 18N05A25I21L, 18N05A25I21M, 18N05A25I21N, 18N05A25I21P, 18N05A25I21Q, 18N05A25I21R, 18N05A25I21S, 18N05A25I21T, 18N05A25I21U, 18N05A25I22A, 18N05A25I22B, 18N05A25I22C, 18N05A25I22D, 18N05A25I22E, 18N05A25I22F, 18N05A25I22G, 18N05A25I22H, 18N05A25I22I, 18N05A25I22J, 18N05A25I22K, 18N05A25I22L, 18N05A25I22M, 18N05A25I22N, 18N05A25I22P, 18N05A25I22Q, 18N05A25I22R, 18N05A25I22S, 18N05A25I22T, 18N05A25I22U, 18N05A25I23A, 18N05A25I23F, 18N05A25I23K, 18N05A25I23Q, 18N05A25M06A, 18N05A25M06B, 18N05A25M06F, 18N05A25M06G, 18N05A25M06H, 18N05A25M06K, 18N05A25M06L, 18N05A25M06M, 18N05A25M06N, 18N05A25M06P, 18N05A25M07G, 18N05A25M07H, 18N05A25M07I, 18N05A25M07K, 18N05A25M07L, 18N05A25M07M, 18N05A25M07N, 18N05A25M07P, 18N05A25M08K, 18N05A25M08L, 18N05A25M08M, 18N05A25M08N, 18N05A25M08P, 18N05A25M09K, 18N05A25M09L, 18N05A25M09M, 18N05A25M09N'],
+                    260 // comas
+                )
+
             }
             else if (Band == 3) {
                 MonitorearAreas(
-                    "ARE-509966",
-                    1,
-                    "18N05E05A07Q",
-                    ["18N05E05A07Q, 18N05E05A07F, 18N05E05A07C, 18N05E05A07T, 18N05E05A07I, 18N05E05A07D, 18N05E05A08F, 18N05E05A08U, 18N05E05A09V, 18N05E05A09F, 18N05E05A09B, 18N05E05A04R, 18N05E05A09J, 18N05E05A04P, 18N05E05A04E, 18N05E04D10C, 18N05E05A06T, 18N05E05A06E, 18N05E05A07A, 18N05E05A07S, 18N05E05A08W, 18N05E05A08X, 18N05E05A08S, 18N05E05A08C, 18N05E05A08P, 18N05E05A09K, 18N05E05A04G, 18N05E05A04B, 18N05A25M24S, 18N05E05A04T, 18N05A25M24Y, 18N05E05A09E, 18N05E04D10B, 18N05E05A06I, 18N05E05A08A, 18N05E05A08Y, 18N05E05A08M, 18N05E05A08N, 18N05E05A09Q, 18N05E05A09W, 18N05A25M24W, 18N05E05A04C, 18N05E05A09T, 18N05E05A04I, 18N05E05A04Z, 18N05E05A06Y, 18N05E05A06N, 18N05E05A06U, 18N05E05A07L, 18N05E05A07G, 18N05E05A07M, 18N05E05A07H, 18N05E05A07Y, 18N05E05A07N, 18N05E05A07Z, 18N05E05A07U, 18N05E05A08K, 18N05E05A08L, 18N05E05A08H, 18N05E05A08Z, 18N05E05A09R, 18N05A25M24R, 18N05E05A09S, 18N05E05A09M, 18N05E05A09H, 18N05E05A04N, 18N05E05A09Z, 18N05E04D10D, 18N05E05A06A, 18N05E05A07V, 18N05E05A07E, 18N05E05A08G, 18N05E05A04X, 18N05E05A04S, 18N05E05A04M, 18N05E05A04Y, 18N05E05A09P, 18N05E04D09E, 18N05E04D10A, 18N05E05A06Z, 18N05E05A06P, 18N05E05A06J, 18N05E05A07B, 18N05E05A07X, 18N05E05A08E, 18N05E05A09G, 18N05E05A04W, 18N05E05A09X, 18N05E05A09C, 18N05E05A04H, 18N05A25M24X, 18N05E05A09N, 18N05E04D10E, 18N05E05A06C, 18N05E05A06D, 18N05E05A07K, 18N05E05A07W, 18N05E05A07P, 18N05E05A08V, 18N05E05A08Q, 18N05E05A08B, 18N05E05A08T, 18N05E05A08J, 18N05E05A09A, 18N05E05A09L, 18N05E05A09I, 18N05E05A09D, 18N05E05A04D, 18N05A25M24T, 18N05E05A04U, 18N05E05A04J, 18N05E05A06B, 18N05E05A07R, 18N05E05A07J, 18N05E05A08R, 18N05E05A08I, 18N05E05A08D, 18N05E05A04L, 18N05E05A09Y, 18N05E05A09U"],
-                    0
-                );
+                    "LH0071_17_P1",//Nombre del area
+                    1, // aviso
+                    "18N05E04D11A", // ceda de correo
+                    ['18N05E04D11A, 18N05E04D11F, 18N05E04D11K, 18N05E04D11Q, 18N05E04D11V, 18N05E04D16A, 18N05E04D16F, 18N05E04D16K, 18N05E04D16Q, 18N05E04D16V, 18N05E04D21A, 18N05E04D21F, 18N05E04D21K, 18N05E04D21G, 18N05E04D21H, 18N05E04D21C, 18N05E04D21D, 18N05E04D16X, 18N05E04D16Z, 18N05E04D16Y, 18N05E04D17V, 18N05E04D17Q, 18N05E04D17W, 18N05E04D17R, 18N05E04D17X, 18N05E04D17S, 18N05E04D17Y, 18N05E04D17T, 18N05E04D17M, 18N05E04D17N, 18N05E04D17P, 18N05E04D17U, 18N05E04D18Q, 18N05E04D18K, 18N05E04D18L, 18N05E04D18F, 18N05E04D17J, 18N05E04D18G, 18N05E04D18A, 18N05E04D18B, 18N05E04D18H, 18N05E04D18I, 18N05E04D18C, 18N05E04D13X, 18N05E04D18D, 18N05E04D13Y, 18N05E04D18E, 18N05E04D13Z, 18N05E04D13U, 18N05E04D14Q, 18N05E04D14V, 18N05E04D19A, 18N05E04D14W, 18N05E04D14L, 18N05E04D14X, 18N05E04D14S, 18N05E04D14M, 18N05E04D14G, 18N05E04D14H, 18N05E04D14C, 18N05E04D14B, 18N05E04D09W, 18N05E04D09X, 18N05E04D09Y, 18N05E04D09R, 18N05E04D09T, 18N05E04D09L, 18N05E04D09N, 18N05E04D09G, 18N05E04D09I, 18N05E04D09B, 18N05E04D09C, 18N05E04D09J, 18N05E04D10F, 18N05E04D10G, 18N05E04D10H, 18N05E04D10I, 18N05E04D10J, 18N05E05A06F, 18N05E04D09D, 18N05E04D04Y, 18N05E04D04T, 18N05E04D04N, 18N05E04D04I, 18N05E04D04H, 18N05E04D04G, 18N05E04D04F, 18N05E04D03J, 18N05E04D03I, 18N05E04D03N, 18N05E04D03M, 18N05E04D03S, 18N05E04D03R, 18N05E04D03Q, 18N05E04D03V, 18N05E04D02Z, 18N05E04D02Y, 18N05E04D07D, 18N05E04D07C, 18N05E04D07H, 18N05E04D07G, 18N05E04D07F, 18N05E04D07K, 18N05E04D06P, 18N05E04D06N, 18N05E04D06T, 18N05E04D06S, 18N05E04D06X, 18N05E04D06W, 18N05E04D06V'], // Celdas de area
+                    109  // comas
+                )
             }
+
+
             else if (Band == 4) {
                 MonitorearAreas(
-                    "843-17",
+                    "500946",//Nombre del area
+                    1, // aviso
+                    "18N05E04L17N", // ceda de correo
+                    ['18N05E04L17N, 18N05E04L17D, 18N05E04L07N, 18N05E04Q07J, 18N05E04Q07E, 18N05E04L17U, 18N05E04L12U, 18N05E04L12E, 18N05E04L07P, 18N05E04Q08F, 18N05E04L18Q, 18N05E04Q03G, 18N05E04L23L, 18N05E04L18R, 18N05E04L13W, 18N05E04L08S, 18N05E04Q03Y, 18N05E04L18Z, 18N05E04L13J, 18N05E04Q04K, 18N05E04L24V, 18N05E04L19R, 18N05E04L09V, 18N05E04L09Q, 18N05E04Q04H, 18N05E04L24H, 18N05E04L19C, 18N05E04L14M, 18N05E04L19N, 18N05E04L14Y, 18N05E04L14D, 18N05E04Q04Z, 18N05E04Q04P, 18N05E04L24Z, 18N05E04L24U, 18N05E04L24P, 18N05E04L14U, 18N05E04Q05W, 18N05E04L20L, 18N05E04L10R, 18N05E04Q02Y, 18N05E04L22I, 18N05E04L17I, 18N05E04L07T, 18N05E04L22Z, 18N05E04L17E, 18N05E04L12P, 18N05E04Q03V, 18N05E04Q03K, 18N05E04L13K, 18N05E04L13F, 18N05E04L08K, 18N05E04L23B, 18N05E04L18G, 18N05E04L18B, 18N05E04L13G, 18N05E04Q08C, 18N05E04Q03C, 18N05E04L23T, 18N05E04L13Y, 18N05E04Q03E, 18N05E04L23Z, 18N05E04Q09G, 18N05E04Q04Q, 18N05E04L24K, 18N05E04L09F, 18N05E04Q04X, 18N05E04L24M, 18N05E04L14H, 18N05E04Q09D, 18N05E04L24Y, 18N05E04L14P, 18N05E04L09Z, 18N05E04Q10A, 18N05E04L20K, 18N05E04L15Q, 18N05E04Q05B, 18N05E04L25W, 18N05E04L25B, 18N05E04L20R, 18N05E04L10W, 18N05E04L10L, 18N05E04Q07I, 18N05E04Q02N, 18N05E04L07I, 18N05E04Q02U, 18N05E04Q02J, 18N05E04Q02E, 18N05E04L22J, 18N05E04L12J, 18N05E04L23Q, 18N05E04L18K, 18N05E04Q03L, 18N05E04Q03B, 18N05E04L23G, 18N05E04L08L, 18N05E04Q03S, 18N05E04Q03M, 18N05E04L18M, 18N05E04L18H, 18N05E04L18C, 18N05E04L13C, 18N05E04L08X, 18N05E04L23Y, 18N05E04L23D, 18N05E04L18T, 18N05E04L08Y, 18N05E04L08T, 18N05E04L08N, 18N05E04Q03J, 18N05E04L18J, 18N05E04L08Z, 18N05E04Q04F, 18N05E04Q04B, 18N05E04L24R, 18N05E04L24G, 18N05E04L19W, 18N05E04L19Q, 18N05E04L19L, 18N05E04L14R, 18N05E04L14G, 18N05E04L09G, 18N05E04Q04S, 18N05E04Q04M, 18N05E04Q04C, 18N05E04L24X, 18N05E04L19S, 18N05E04L09S, 18N05E04L24N, 18N05E04L19Y, 18N05E04L14T, 18N05E04L09I, 18N05E04Q09J, 18N05E04L24E, 18N05E04L19U, 18N05E04L19P, 18N05E04L19E, 18N05E04L25V, 18N05E04L25Q, 18N05E04L25A, 18N05E04L15A, 18N05E04L20G, 18N05E04L15R, 18N05E04L22Y, 18N05E04L22T, 18N05E04L12T, 18N05E04L07Y, 18N05E04Q02P, 18N05E04L17Z, 18N05E04Q08A, 18N05E04Q03Q, 18N05E04Q03F, 18N05E04L18V, 18N05E04L18F, 18N05E04L08V, 18N05E04Q08G, 18N05E04Q03W, 18N05E04L23R, 18N05E04Q08H, 18N05E04L23M, 18N05E04L13M, 18N05E04Q08I, 18N05E04Q08D, 18N05E04Q03T, 18N05E04Q08E, 18N05E04Q03Z, 18N05E04L08J, 18N05E04Q09A, 18N05E04Q09B, 18N05E04Q04W, 18N05E04Q04R, 18N05E04Q04L, 18N05E04L24B, 18N05E04L19V, 18N05E04L19G, 18N05E04L19A, 18N05E04L19B, 18N05E04L14W, 18N05E04L09W, 18N05E04L09R, 18N05E04Q09C, 18N05E04L14S, 18N05E04Q04N, 18N05E04L24I, 18N05E04L09Y, 18N05E04L09N, 18N05E04Q04J, 18N05E04L24J, 18N05E04L14J, 18N05E04L09U, 18N05E04Q10F, 18N05E04L25K, 18N05E04L15F, 18N05E04Q10B, 18N05E04Q05G, 18N05E04L25R, 18N05E04Q07D, 18N05E04Q02T, 18N05E04Q02I, 18N05E04L17T, 18N05E04L12N, 18N05E04L12I, 18N05E04L07U, 18N05E04L23A, 18N05E04L18A, 18N05E04L13V, 18N05E04L08Q, 18N05E04L08F, 18N05E04L13R, 18N05E04L13L, 18N05E04L08R, 18N05E04L08G, 18N05E04Q03X, 18N05E04L08H, 18N05E04Q03N, 18N05E04Q03D, 18N05E04L23N, 18N05E04L18N, 18N05E04L18D, 18N05E04L13D, 18N05E04L13P, 18N05E04Q04V, 18N05E04L24Q, 18N05E04L24F, 18N05E04L14V, 18N05E04L19X, 18N05E04L19M, 18N05E04Q09I, 18N05E04L24D, 18N05E04L14I, 18N05E04Q04E, 18N05E04L19Z, 18N05E04L14E, 18N05E04Q05V, 18N05E04Q05Q, 18N05E04L25F, 18N05E04L20V, 18N05E04L20Q, 18N05E04Q10G, 18N05E04Q05R, 18N05E04L25G, 18N05E04L20W, 18N05E04L15B, 18N05E04L17Y, 18N05E04L12Y, 18N05E04L12D, 18N05E04L12Z, 18N05E04L07Z, 18N05E04Q03A, 18N05E04L23V, 18N05E04L13Q, 18N05E04Q03R, 18N05E04L18W, 18N05E04L13B, 18N05E04L18S, 18N05E04Q03I, 18N05E04L23I, 18N05E04L18I, 18N05E04L13I, 18N05E04Q03U, 18N05E04Q03P, 18N05E04L23E, 18N05E04L18E, 18N05E04L08U, 18N05E04Q04A, 18N05E04L24L, 18N05E04L24A, 18N05E04L14Q, 18N05E04L14K, 18N05E04L14L, 18N05E04L14F, 18N05E04L14A, 18N05E04L09K, 18N05E04Q09H, 18N05E04L24C, 18N05E04L09X, 18N05E04Q04Y, 18N05E04L24T, 18N05E04L09T, 18N05E04L19J, 18N05E04L09J, 18N05E04Q05K, 18N05E04Q05A, 18N05E04L15K, 18N05E04L10V, 18N05E04L10Q, 18N05E04L10F, 18N05E04L25L, 18N05E04L15W, 18N05E04Q02D, 18N05E04L22D, 18N05E04Q02Z, 18N05E04L17P, 18N05E04L07J, 18N05E04L23K, 18N05E04Q03H, 18N05E04L23C, 18N05E04L13X, 18N05E04L13S, 18N05E04L13H, 18N05E04L08M, 18N05E04L18Y, 18N05E04L13T, 18N05E04L13N, 18N05E04L08I, 18N05E04Q08J, 18N05E04L23U, 18N05E04L23P, 18N05E04L18U, 18N05E04L18P, 18N05E04L13Z, 18N05E04L13U, 18N05E04L13E, 18N05E04L08P, 18N05E04L24W, 18N05E04L19F, 18N05E04L24S, 18N05E04L19H, 18N05E04L14X, 18N05E04L09H, 18N05E04Q04T, 18N05E04Q04D, 18N05E04Q09E, 18N05E04L09P, 18N05E04Q05F, 18N05E04L20F, 18N05E04Q05L, 18N05E04L22N, 18N05E04L22U, 18N05E04L22P, 18N05E04L22E, 18N05E04L17J, 18N05E04L23F, 18N05E04L13A, 18N05E04Q08B, 18N05E04L23W, 18N05E04L18L, 18N05E04L08W, 18N05E04L23X, 18N05E04L23S, 18N05E04L23H, 18N05E04L18X, 18N05E04L23J, 18N05E04Q09F, 18N05E04Q04G, 18N05E04L19K, 18N05E04L14B, 18N05E04L09L, 18N05E04L14C, 18N05E04L09M, 18N05E04Q04I, 18N05E04L19T, 18N05E04L19I, 18N05E04L19D, 18N05E04L14N, 18N05E04Q04U, 18N05E04L14Z, 18N05E04L20A, 18N05E04L15V, 18N05E04L10K, 18N05E04L20B, 18N05E04L15L, 18N05E04L15G, 18N05E04L10G '], // Celdas de area
+                    260 // comas
+                )
+            }
+
+            else if (Band == 5) {
+                MonitorearAreas(
+                    "007-85M",//Nombre del area
+                    1, // aviso
+                    "18N05E04D09P", // ceda de correo
+                    ['18N05E04D09P, 18N05E04D10L, 18N05E04D10M, 18N05E04D10T, 18N05E04D10Z, 18N05E04D10U, 18N05E04D10K, 18N05E04D15D, 18N05E04D10N, 18N05E04D15E, 18N05E04D10Y, 18N05E04D10P'], // Celdas de area
+                    11 // comas
+                )
+            }
+            else if (Band == 6) {
+                MonitorearAreas(
+                    "HI8-15231-P3",//Nombre del area
+                    1, // aviso
+                    "18N05E04G11P", // ceda de correo
+                    ['18N05E04G11P, 18N05E04G12P, 18N05E04G13P, 18N05E04H21A, 18N05E04H21C, 18N05E04H16S, 18N05E04H16M, 18N05E04H06S, 18N05E04H06C, 18N05E04H01S, 18N05E04G12M, 18N05E04G14M, 18N05E04G15L, 18N05E04H11Q, 18N05E04H11M, 18N05E04H06X, 18N05E04G12N, 18N05E04G13M, 18N05E04G14L, 18N05E04G15P, 18N05E04H21G, 18N05E04H21H, 18N05E04G14K, 18N05E04H16C, 18N05E04H11X, 18N05E04G12L, 18N05E04G13K, 18N05E04G15N, 18N05E04H16Q, 18N05E04H06H, 18N05E04G11N, 18N05E04H16V, 18N05E04H16A, 18N05E04H11C, 18N05E04H01H, 18N05E04G13L, 18N05E04G13N, 18N05E04G14N, 18N05E04G14P, 18N05E04G15K, 18N05E04G15M, 18N05E04H21F, 18N05E04H16K, 18N05E04H11V, 18N05E04H11S, 18N05E04H11H, 18N05E04G12K, 18N05E04H16F, 18N05E04H11K, 18N05E04H16X, 18N05E04H16H, 18N05E04H06M, 18N05E04H01X, 18N05E04H01M'], // Celdas de area
+                    53 // comas
+                )
+            }
+            else if (Band == 7) {
+                MonitorearAreas(
+                    "DLH-14451X",//Nombre del area
+                    1, // aviso
+                    "18N05A24Q24J", // ceda de correo
+                    ['18N05A24Q24J, 18N05A24Q24D, 18N05A24Q19Y, 18N05A24Q25A, 18N05A24Q24E, 18N05A24Q19N, 18N05A24Q25G, 18N05A24Q25H, 18N05A24Q20X, 18N05A24Q19Z, 18N05A24Q20K, 18N05A24Q25B, 18N05A24Q20W, 18N05A24Q20L, 18N05A24Q25C, 18N05A24Q25I, 18N05A24Q25E, 18N05A24Q24I, 18N05A24Q19U, 18N05A24Q19P, 18N05A24Q25F, 18N05A24Q20V, 18N05A24Q20Q, 18N05A24Q20M, 18N05A24Q20R, 18N05A24Q25D, 18N05A24Q20S, 18N05A24Q19T, 18N05A24Q25J'], // Celdas de area
+                    46 // comas
+                )
+            }
+            else if (Band == 8) {
+                MonitorearAreas(
+                    "500946_2",//Nombre del area
+                    1, // aviso
+                    "18N05E04Q07J", // ceda de correo
+                    ['18N05E04Q07J, 18N05E04Q07E, 18N05E04Q08F, 18N05E04Q03G, 18N05E04L23L, 18N05E04Q03Y, 18N05E04L18Z, 18N05E04Q04K, 18N05E04L24V, 18N05E04Q04H, 18N05E04L24H, 18N05E04Q04Z, 18N05E04Q04P, 18N05E04L24Z, 18N05E04L24U, 18N05E04L24P, 18N05E04Q05W, 18N05E04Q02Y, 18N05E04L22I, 18N05E04L22Z, 18N05E04Q03V, 18N05E04Q03K, 18N05E04L23B, 18N05E04Q08C, 18N05E04Q03C, 18N05E04L23T, 18N05E04Q03E, 18N05E04L23Z, 18N05E04Q09G, 18N05E04Q04Q, 18N05E04L24K, 18N05E04Q04X, 18N05E04L24M, 18N05E04Q09D, 18N05E04L24Y, 18N05E04Q10A, 18N05E04Q05B, 18N05E04L25W, 18N05E04L25B, 18N05E04Q07I, 18N05E04Q02N, 18N05E04Q02U, 18N05E04Q02J, 18N05E04Q02E, 18N05E04L22J, 18N05E04L23Q, 18N05E04Q03L, 18N05E04Q03B, 18N05E04L23G, 18N05E04Q03S, 18N05E04Q03M, 18N05E04L23Y, 18N05E04L23D, 18N05E04Q03J, 18N05E04Q04F, 18N05E04Q04B, 18N05E04L24R, 18N05E04L24G, 18N05E04L19W, 18N05E04Q04S, 18N05E04Q04M, 18N05E04Q04C, 18N05E04L24X, 18N05E04L24N, 18N05E04L19Y, 18N05E04Q09J, 18N05E04L24E, 18N05E04L25V, 18N05E04L25Q, 18N05E04L25A, 18N05E04L22Y, 18N05E04L22T, 18N05E04Q02P, 18N05E04L17Z, 18N05E04Q08A, 18N05E04Q03Q, 18N05E04Q03F, 18N05E04L18V, 18N05E04Q08G, 18N05E04Q03W, 18N05E04L23R, 18N05E04Q08H, 18N05E04L23M, 18N05E04Q08I,' +
+                        ' 18N05E04Q08D, 18N05E04Q03T, 18N05E04Q08E, 18N05E04Q03Z, 18N05E04Q09A, 18N05E04Q09B, 18N05E04Q04W, 18N05E04Q04R, 18N05E04Q04L, 18N05E04L24B, 18N05E04L19V, 18N05E04Q09C, 18N05E04Q04N, 18N05E04L24I, 18N05E04Q04J, 18N05E04L24J, 18N05E04Q10F, 18N05E04L25K, 18N05E04Q10B, 18N05E04Q05G, 18N05E04L25R, 18N05E04Q07D, 18N05E04Q02T, 18N05E04Q02I, 18N05E04L23A, 18N05E04Q03X, 18N05E04Q03N, 18N05E04Q03D, 18N05E04L23N, 18N05E04Q04V, 18N05E04L24Q, 18N05E04L24F, 18N05E04L19X, 18N05E04Q09I, 18N05E04L24D, 18N05E04Q04E, 18N05E04L19Z, 18N05E04Q05V, 18N05E04Q05Q, 18N05E04L25F, 18N05E04L20V, 18N05E04Q10G, 18N05E04Q05R, 18N05E04L25G, 18N05E04L20W, 18N05E04L17Y, 18N05E04Q03A, 18N05E04L23V, 18N05E04Q03R, 18N05E04L18W, 18N05E04Q03I, 18N05E04L23I, 18N05E04Q03U, 18N05E04Q03P, 18N05E04L23E, 18N05E04Q04A, 18N05E04L24L, 18N05E04L24A, 18N05E04Q09H, 18N05E04L24C, 18N05E04Q04Y, 18N05E04L24T, 18N05E04Q05K, 18N05E04Q05A, 18N05E04L25L, 18N05E04Q02D, 18N05E04L22D, 18N05E04Q02Z, 18N05E04L23K, 18N05E04Q03H, 18N05E04L23C, 18N05E04L18Y, 18N05E04Q08J, 18N05E04L23U, 18N05E04L23P, 18N05E04L24W, 18N05E04L24S, 18N05E04Q04T, 18N05E04Q04D, 18N05E04Q09E, 18N05E04Q05F, 18N05E04Q05L, 18N05E04L22N, 18N05E04L22U, 18N05E04L22P, 18N05E04L22E, 18N05E04L23F, 18N05E04Q08B, 18N05E04L23W, 18N05E04L23X, 18N05E04L23S, 18N05E04L23H, 18N05E04L18X, 18N05E04L23J, 18N05E04Q09F, 18N05E04Q04G, 18N05E04Q04I, 18N05E04Q04U']
+                    , // Celdas de area
+                    0 // comas
+                )
+            }
+
+            else if (Band == 9) {
+                MonitorearAreas(
+                    "Cag-141",//Nombre del area
+                    1, // aviso
+                    "18N05A25N06S", // ceda de correo
+                    ['18N05A25N06S, 18N05A25N06R, 18N05A25N06N, 18N05A25N06I, 18N05A25N06D, 18N05A25N06K, 18N05A25N06L, 18N05A25N06M, 18N05A25N06T, 18N05A25N06Q, 18N05A25N06H'], // Celdas de area
+                    0 // comas
+                )
+            }
+            else if (Band == 10) {
+                MonitorearAreas(
+                    "505485",
                     1,
-                    "18N05E03L19F",
-                    ["18N05E03L19F, 18N05E03L24G, 18N05E03L24H, 18N05E03L19W, 18N05E03L19I, 18N05E03L19Q, 18N05E03L24L, 18N05E03L24M, 18N05E03L24C, 18N05E03L19X, 18N05E03L19C, 18N05E03L19E, 18N05E03L19J, 18N05E03L24K, 18N05E03L19R, 18N05E03L19M, 18N05E03L19B, 18N05E03L24F, 18N05E03L24A, 18N05E03L19A, 18N05E03L19L, 18N05E03L19K, 18N05E03L24B, 18N05E03L19G, 18N05E03L19H, 18N05E03L19V, 18N05E03L19S, 18N05E03L19D"],
+                    "",
+                    ["18N05A24N13H, 18N05A24N13Z, 18N05A24N13P, 18N05A24N19A, 18N05A24N14K, 18N05A24N14B, 18N05A24N14X, 18N05A24N14Z, 18N05A24N13Y, 18N05A24N09V, 18N05A24N14H, 18N05A24N14Y, 18N05A24N09Y, 18N05A24N14P, 18N05A24N09Z, 18N05A24N15W, 18N05A24N10W, 18N05A24N15Y, 18N05A24N15D, 18N05A24N18D, 18N05A24N14C, 18N05A24N14D, 18N05A24N19E, 18N05A24N14E, 18N05A24N10Y, 18N05A24N13X, 18N05A24N14J, 18N05A24N10V, 18N05A24N20D, 18N05A24N15N, 18N05A24N18C, 18N05A24N13M, 18N05A24N18E, 18N05A24N14M, 18N05A24N09X, 18N05A24N14T, 18N05A24N15F, 18N05A24N15L, 18N05A24N15G, 18N05A24N15B, 18N05A24N13N, 18N05A24N14V, 18N05A24N14F, 18N05A24N14A, 18N05A24N14L, 18N05A24N19D, 18N05A24N14I, 18N05A24N15V, 18N05A24N15K, 18N05A24N15A, 18N05A24N20B, 18N05A24N15S, 18N05A24N15M, 18N05A24N15H, 18N05A24N15T, 18N05A24N13S, 18N05A24N19B, 18N05A24N14R, 18N05A24N14G, 18N05A24N09W, 18N05A24N14U, 18N05A24N20C, 18N05A24N15X, 18N05A24N15R, 18N05A24N15C, 18N05A24N15I, 18N05A24N13T, 18N05A24N13I, 18N05A24N13U, 18N05A24N13J, 18N05A24N14Q, 18N05A24N14W, 18N05A24N19C, 18N05A24N14S, 18N05A24N14N, 18N05A24N20A, 18N05A24N15Q, 18N05A24N10X"],
                     0
                 );
             }
-
-
-
-
+            else if (Band == 11) {
+                MonitorearAreas(
+                    "509188",
+                    1,
+                    "",
+                    [" 18N05A24Q23G, 18N05A24Q18W, 18N05A24Q18Y, 18N05A24Q23F, 18N05A24Q23A, 18N05A24Q23B, 18N05A24Q18X, 18N05A24Q23D, 18N05A24Q17Z, 18N05A24Q22J, 18N05A24Q18V, 18N05A24Q23H, 18N05A24Q23I, 18N05A24Q22E, 18N05A24Q23C"],
+                    0
+                );
+            }
 
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
@@ -477,6 +500,28 @@ function Mineria(browser, Pin) {
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await continCeldas[1].click();
             console.log(IdArea);
+            // let Contador2 = 0;
+            
+            //     while (true) {
+            //         try {
+            //             await page.waitForTimeout(1000);
+            //             if (page.url() == 'https://annamineria.anm.gov.co/sigm/index.html#/p_CaaIataInputTechnicalEconomicalDetails') {
+            //                 Band = 99;
+            //                 break
+            //             } else if (Contador2 > 4) {
+            //                 break;
+            //             } else {
+            //                 console.log("Nada no la carga ");
+            //             }
+            //             Contador2++;
+            //         } catch (error) {
+                        
+            //         } 
+            //     }
+            
+
+
+            // console.log("Validar despues de los 3 seg");
             await page.waitForTimeout(3000);
 
             const Todoslosparametros = await page.$$eval("span", links =>
@@ -527,7 +572,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 5) {
+                if (Band == 12) {
                     Band = 1;
                 }
 
@@ -538,7 +583,8 @@ function Mineria(browser, Pin) {
             clearTimeout(TimeArea);
         }
 
-
+        // console.log("Pase y pase bien ");
+        // await page.waitForTimeout(30000);
 
         console.log("ahhh se salio Y_Y ");
         var bandera = 0;
@@ -547,7 +593,7 @@ function Mineria(browser, Pin) {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser, Pin);
+            Mineria(browser);
         }, 20000);
 
         console.log(page.url());
@@ -596,15 +642,16 @@ function Mineria(browser, Pin) {
 
         //CORREO LIBERADA
         Correo(1, IdArea, Celda);
+        if (SoloAviso == 1) {
+            CorreoAlternativo(1, IdArea);
+        }
 
 
         let RadiPrimero = setTimeout(() => {
 
-            // console.log("ENTRO EN EL RadiPrimero");
-            // page.close();
-            // Mineria(browser,  Pin);
-
-
+            console.log("ENTRO EN EL RadiPrimero");
+            page.close();
+            Mineria(browser);
         }, 30000);
 
         await page.evaluate(() => {
@@ -1007,8 +1054,8 @@ function Mineria(browser, Pin) {
         console.log("INICIA LA SELECCIÓN DE LOS PROFESIONALES");
         console.log('================================================================');
         let profesionales = [
-            // { tipo: "Geólogo", nombres: ["Oscar Javier Pinilla Reyes (73619)"] },
-            { tipo: "Ingeniero Geólogo", nombres: ["MARCELA RAMIREZ VARON (10838)"] },
+            { tipo: "Geólogo", nombres: ["Oscar Javier Pinilla Reyes (73619)"] },
+            //  { tipo: "Ingeniero Geólogo", nombres: [""]},
             //  { tipo: "Ingeniero de Minas", nombres: [""]}
         ];
 
@@ -1033,7 +1080,7 @@ function Mineria(browser, Pin) {
         console.log("INICIA LA SELECCIÓN DE CONTADOR(ES)");
         console.log('================================================================');
         let Contador_es = [
-            { tipo: "Contador", nombres: ["JUAN GONZALO  MONTOYA LOPEZ (37634)"] },
+            { tipo: "Contador", nombres: ["PABLO ESTEBAN MONTOYA MONTOYA (91124)"] },
         ];
 
         await seleccionar_Profesional(Contador_es, page, 2);
@@ -1042,62 +1089,36 @@ function Mineria(browser, Pin) {
         console.log("FIN DE LA SELECCIÓN DE CONTADOR(ES)");
         // ==============================================================================
 
+
+        // ==============================================================================
         // SELECCIÓN DE LOS VALORES
         // ==============================================================================
         await page.waitForSelector('#personClassificationId0');
-        await page.select('#personClassificationId0', 'PN');
-
+        await page.select('#personClassificationId0', 'PJ');
         await page.evaluate(() => {
 
 
             // Check
-            // // document.querySelector('Input[id="declareIndId0"]').click();
-
-            // // Selecciona el valor deseado
-            // let selectElement = document.querySelector('select[id="personClassificationId0"]');
-            // selectElement.value = 'CRNP';
-
-            // // Dispara el evento 'change' para asegurarte de que el cambio sea reconocido por el navegador o aplicación web.
-            // let event = new Event('change', { bubbles: true });
-            // selectElement.dispatchEvent(event);
-
-            // // Si necesitas hacer clic en la opción después de seleccionar el valor
-            // let option = selectElement.querySelector('option[value="CRNP"]');
-            // if (option) {
-            //     option.click();
-            // }
-
-            // //  Check
-            // document.querySelector('select[id="personClassificationId0"]').click();
-
-            // document.querySelector('[id="personClassificationId0"]').value = 'SRNP';
-            // document.querySelector('[id="personClassificationId0"]').value = 'CRNP';
-            // document.querySelector('[id="personClassificationId0"]').value = 'CRNP';
-            //Clasificacion de persona
-            // document.getElementById('personClassificationId0').value = 'CRNP';
-
-            // Check
             // document.querySelector('Input[id="declareIndId0"]').click();
 
-            //Valores//activo corriente
+            //Valores
             // document.getElementById('currentAssetId0').value = '42539369275' // OLD
-            document.getElementById('activoCorrienteId0').value = '3620854';
+            document.getElementById('activoCorrienteId0').value = '1414973400';
 
             angular.element(document.getElementById('activoCorrienteId0')).triggerHandler('change');
 
-
             // document.getElementById('currentLiabilitiesId0').value = '15184416062' // OLD
-            document.getElementById('pasivoCorrienteId0').value = '758771';
+            document.getElementById('pasivoCorrienteId0').value = '6104212000';
 
             angular.element(document.getElementById('pasivoCorrienteId0')).triggerHandler('change');
 
             // document.getElementById('totalAssetId0').value = '48322540755' // OLD
-            document.getElementById('activoTotalId0').value = '7109986';
+            document.getElementById('activoTotalId0').value = '1155178400';
 
             angular.element(document.getElementById('activoTotalId0')).triggerHandler('change');
 
             // document.getElementById('totalLiabilitiesId0').value = '15401226207' // OLD
-            document.getElementById('pasivoTotalId0').value = '758771';
+            document.getElementById('pasivoTotalId0').value = '6423743000';
 
             angular.element(document.getElementById('pasivoTotalId0')).triggerHandler('change');
         });
@@ -1119,9 +1140,7 @@ function Mineria(browser, Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser, Pin);
-
-
+            Mineria(browser);
         }, 30000);
 
 
@@ -1148,18 +1167,27 @@ function Mineria(browser, Pin) {
         // await page.waitForTimeout(1000);
 
         try {
-            let ArchivoAmbiental
-            if (IdArea == 'OG2_082210_2') {
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\OG2-082222X vital.pdf`;
-            
-            } else if (IdArea == 'ARE-509966') {
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental_Pol2.pdf`;
-            
-            } else {
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
-           
-            }
 
+            let ArchivoAmbiental ;
+            if(IdArea == '509188'){
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            }else if(IdArea == '503239'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
+
+            }else if(IdArea == 'RFE_08211'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
+
+            }else if(IdArea == 'RFE_08A'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+
+            }else if(IdArea == 'RFE_08B'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
+
+            }
+            else{
+                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+
+            }
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1191,8 +1219,10 @@ function Mineria(browser, Pin) {
                 "8. Extractos Bancarios Proponente 1.pdf",//7
                 "9. RUT.pdf",//8
                 "10. Fotocopia Documento De Identificacion.pdf",//9
-                "13. Certificado Vigente De Antecedentes Disciplinarios.pdf",//10
-                "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf",//11
+                "11. Certificado De Composicion Accionaria De La Sociedad.pdf",//10
+                "12. Certificado De Existencia Y Representacion Legal.pdf",//11
+                "13. Certificado Vigente De Antecedentes Disciplinarios.pdf",//12
+                "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf",//13
 
             ];
 
@@ -1208,7 +1238,9 @@ function Mineria(browser, Pin) {
                 "p_CaaCataMandatoryDocumentToAttachId9",//9
                 "p_CaaCataMandatoryDocumentToAttachId10",//10
                 "p_CaaCataMandatoryDocumentToAttachId11",//11
-                //  "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId13",//13
+                // "p_CaaCataMandatoryDocumentToAttachId14"//14
             ];
             console.log(ElementosFile.length);
             try {
@@ -1244,7 +1276,6 @@ function Mineria(browser, Pin) {
         }
 
 
-
         //CAPTURA DE PANTALLA
         await CapturaPantalla(page);
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
@@ -1253,28 +1284,21 @@ function Mineria(browser, Pin) {
             waitUntil: 'networkidle0',
         });
         console.log(" si navego ");
+        // await page.waitForSelector('#recaptchaContainer');
+        // console.log("lo encontro");
+        // await page.waitForTimeout(2000);
+        // // Obtener todos los iframes en la página
+        // const frames = await page.frames();
 
-        try {
-            // Bajar hasta el final del scroll
-            await page.evaluate(async () => {
-                await new Promise((resolve, reject) => {
-                    let totalHeight = 0;
-                    let distance = 100; // Ajusta la distancia de desplazamiento
-                    const timer = setInterval(() => {
-                        let scrollHeight = document.body.scrollHeight;
-                        window.scrollBy(0, distance);
-                        totalHeight += distance;
+        // // Encontrar el iframe que contiene el recaptcha
+        // const recaptchaFrame = frames.find(frame => frame.url().includes('recaptcha'));
 
-                        if (totalHeight >= scrollHeight) {
-                            clearInterval(timer);
-                            resolve();
-                        }
-                    }, 100); // Ajusta el tiempo de espera entre desplazamientos
-                });
-            });
-        } catch (error) {
-            console.log(error);
-        }
+        // // Esperar a que el elemento con la clase 'recaptcha-checkbox-border' esté presente
+        // // await page.waitForSelector('#recaptcha-anchor');
+        // const recaptchaCheckbox = await recaptchaFrame.waitForSelector('#recaptcha-anchor');
+
+        // // Hacer clic en el checkbox del recaptcha
+        // await recaptchaCheckbox.click();
 
 
 
@@ -1285,8 +1309,9 @@ function Mineria(browser, Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser, Pin);
+            Mineria(browser);
         }, 60000);
+
 
 
         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
@@ -1299,16 +1324,18 @@ function Mineria(browser, Pin) {
             console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
         }
 
-
-        await keyboard.pressKey(Key.Tab);
-        console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN `);
+        for (let i = 0; i < 1; i += 1) {
+            // await page.keyboard.press('Tab');
+            await keyboard.pressKey(Key.Tab);
+            console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
+        }
 
         await keyboard.pressKey(Key.Enter);
 
         // await page.waitForTimeout(1000000);
 
         while (true) {
-            await page.waitForTimeout(800);
+            await page.waitForTimeout(1000);
             console.log("Chequeando si el captcha está resuelto...");
 
             const isCaptchaResolved = await page.evaluate(() => {
@@ -1353,8 +1380,7 @@ function Mineria(browser, Pin) {
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
-        Mineria(browser, Pin);
-
+        Mineria(browser);
 
 
 
@@ -1386,8 +1412,8 @@ function Correo(Tipo, Area, Celda) {
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-    }else if ( Tipo == 5){
-        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+    } else if (Tipo == 5) {
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
         Color = "#fe1426";
         Texto = "Pestañas";
     }
@@ -1591,65 +1617,5 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
             }
 
         }
-    }
-}
-
-var CorreoEnviado = false;
-var PrimerCorreoEnviado = false;
-// FUNCIÓN PARA VERIFICAR VENCIMIENTO DE PIN Y ENVIAR RECORDATORIO
-function VerificarVencimientoPin(selectedText, TextoDeOpcionSeleccionadaEnCampoPin) {
-
-    const input = TextoDeOpcionSeleccionadaEnCampoPin;
-
-    // Separar la fecha después de la coma
-    const dateString = input.split(',')[1].trim();
-
-    // Crear un objeto de fecha a partir de la cadena
-    const targetDate = new Date(dateString);
-
-    // Obtener la fecha actual
-    const currentDate = new Date();
-
-    // Calcular la diferencia en milisegundos
-    const diffInMs = targetDate - currentDate;
-
-    // Convertir la diferencia en días
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-
-    const diaSemana = targetDate.toLocaleString('es-Es', { weekday: 'long' });
-    console.log(`¡¡¡ DIFERENCIA EN DÍAS PIN: ${diffInDays}`);
-    const Description = `El pin vence en ${diffInDays} días, es decir, tiene vigencia hasta el día ${diaSemana} - ${dateString}`;
-
-    // Se captura la hora del día actual
-    const HoraActual = currentDate.getHours();
-
-    // Se captura el minuto actual
-    const MinutoActual = currentDate.getMinutes();
-
-    // Se captura el segundo actual
-    const SegundoActual = currentDate.getSeconds();
-
-    // Se verifica si la diferencia de días es igual a 5 y si la hora actual contiene 7 de la mañana ó contiene 3 de la tarde. Para hacer 2 envíos de recordatorio el día que se cumplan todas las condiciones
-
-    // Primer envío: 07:00 am
-    if ((diffInDays === 5) && ([7].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false) && !PrimerCorreoEnviado) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL PRIMER CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = true;
-    }
-
-    // Resetear el flag solo una vez después del primer correo
-    if ((diffInDays === 5) && ((HoraActual > 7) && (HoraActual < 15)) && (MinutoActual === 0) && PrimerCorreoEnviado && CorreoEnviado) {
-        CorreoEnviado = false;
-        console.log("LA VARIABLE DE CORREO ENVIADO SE HIZO FALSA");
-    }
-
-    // Segundo envío: 03:00 pm
-    if ((diffInDays === 5) && ([15].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false)) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL SEGUNDO CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = false;
     }
 }
