@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
-const user = '96443';
-const pass = 'Rigomazo2024*';
+const user = '96458';
+const pass = 'Sarita2024*';
 var Agente = 1;
 
 Pagina();
@@ -109,7 +109,7 @@ async function AreaEspecial(browser) {
 
         var elementos = document.getElementsByClassName('ng-binding ng-scope');
 
-        let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
+        let Minerales = ['ARENAS', 'arenas'];
         let elementosConMinerales = [];
 
         for (let i = 0; i < elementos.length; i++) {
@@ -244,7 +244,6 @@ async function AreaEspecial(browser) {
             MonitorearAreas("AreaDePrueba", ["18N05A25G21B"]);
         }
 
-
         await page.waitForTimeout(500);
 
         await continPin2[1].click();
@@ -303,7 +302,7 @@ async function AreaEspecial(browser) {
         }
 
 
-
+        
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
         if (AparecioCaptcha) {
             console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
@@ -334,7 +333,7 @@ async function AreaEspecial(browser) {
 
         if (isCaptchaResolved) {
             console.log('El captcha ha sido resuelto.');
-
+           
             break;
         } else {
             console.log('El captcha no ha sido resuelto aún.');
@@ -344,12 +343,12 @@ async function AreaEspecial(browser) {
     try {
         await continuar[0].click();
     } catch (error) {
-
+        
     }
     try {
         await continuar[1].click();
     } catch (error) {
-
+        
     }
     //console.log(continuar.length);
     await page.waitForTimeout(250000);
