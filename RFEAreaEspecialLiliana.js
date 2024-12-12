@@ -249,7 +249,7 @@ async function AreaEspecial(browser) {
 
         await continPin2[1].click();
 
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(500);
 
         const Todoslosparametros = await page.$$eval("span", links =>
             links.map(link => link.textContent)
