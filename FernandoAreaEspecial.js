@@ -9,7 +9,7 @@ const pass = 'wX2*dQ3*cS';
 AreaEspecial();
 
 async function AreaEspecial() {
-    console.log("modas");
+ 
 
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
 
@@ -108,7 +108,7 @@ async function AreaEspecial() {
 
     // await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
 
-    await page.type('#selectedApplicantInputId', '76966');
+    await page.type('#selectedApplicantInputId', '83955');
 
     await page.waitForTimeout(3000);
 
@@ -145,7 +145,7 @@ async function AreaEspecial() {
 
     await page.waitForTimeout(5050);
     await page.type('#selectedCellInputMethodSlctId', '');
-    console.log("prueba");
+  
 
     const selectporCeldas = await page.$('select[id="selectedCellInputMethodSlctId"]');
     await selectporCeldas.type('U');
