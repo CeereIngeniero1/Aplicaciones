@@ -109,7 +109,7 @@ async function AreaEspecial(browser) {
 
         var elementos = document.getElementsByClassName('ng-binding ng-scope');
 
-        let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
+        let Minerales = ['ARENAS', 'arenas'];
         let elementosConMinerales = [];
 
         for (let i = 0; i < elementos.length; i++) {
