@@ -22,7 +22,7 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
-var pass1 = 'CollectiveM_2024**';
+var pass1 = 'CMLCollective2024*';
 var user2 = '83949';
 var pass2 = '*Jcrmh2022#';
 var Agente = 0;
