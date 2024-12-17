@@ -69,145 +69,88 @@ async function Pagina() {
 
 function Mineria(browser) {
     (async () => {
-       
-        console.log("pruebas");
-        const page = await browser.newPage();
+        console.log("Esta es la vuelta " + ContadorVueltas);
 
+        const page = await browser.newPage();
         let Primerpaso = setTimeout(() => {
             console.log("ENTRO EN EL PRIMERPASO")
-
             page.close();
-            Mineria(browser);
-
+            Mineria(browser,  Pin); 
         }, 20000);
-
-
-
-
-
         await page.setViewport({ width: 1368, height: 620 });
         await page.goto('https://annamineria.anm.gov.co/sigm/');
+        
 
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
 
-            try {
+        try {
 
-                console.log(user);
-                console.log(pass);
-                await page.type('#username', user);
-                await page.type('#password', pass);
+            console.log(user);
+            console.log(pass);
+            await page.type('#username', user);
+            await page.type('#password', pass);
 
-                page.click("#loginButton");
-
-
-            } catch (ex) {
-                console.log("Entro en el catch");
-            }
-
-        // await page.setDefaultTimeout(0);
-        // page.waitForNavigation({
-        //     waitUntil: 'networkidle0',
-        //     timeout: 10000
-        // });
+            page.click("#loginButton");
 
 
-
-        let Contador1 = 0;
-        while (true) {
-            try {
-                let solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
-                if (solicitudes.length > 1) {
-                    console.log("prueba");
-                    try {
-                        await solicitudes[1].click();
-                        break;
-                    } catch (error) {
-                        console.log("Contado:", Contador1);
-                        if (Contador1 == 22) {
-                            console.log("Me sali por por este lado ");
-                            break;
-                        }
-
-                        console.log("No le pudo dar click por que no lo podia ver");
-
-                    }
-                } else if (Contador1 == 22) {
-                    break;
-
-                } else {
-                    console.error('No se encontró el segundo elemento con el texto "Solicitudes".');
-                    Contador1++;
-                }
-                await page.waitForTimeout(1000);
-            } catch (error) {
-                if (Contador1 == 22) {
-                    break;
-                }
-            }
+        } catch (ex) {
+            console.log("Entro en el catch");
         }
 
-        Contador1 = 0;
-        while (true) {
-            try {
-                let lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
-                if (lblRadicar.length > -1) {
-                    try {
-                        await lblRadicar[0].click();
-                        break;
-                    } catch (error) {
-                        console.log("No le pudo dar click por que no lo podia ver");
-                    }
-
-
-                } else if (Contador1 == 22) {
-                    break;
-                } else {
-                    console.error('No se encontró el segundo elemento con el texto "Radicar".');
-                    Contador1++;
-                }
-                await page.waitForTimeout(1000);
-            } catch (error) {
-                if (Contador1 == 22) {
-                    break;
-                }
-            }
-
-        }
-        clearTimeout(Primerpaso);
-        console.log("Aqui termino el otro cosito cosito");
-
-        let Segundopaso = setTimeout(() => {
-            console.log("ENTRO EN EL Segundopaso")
-
-            Mineria(browser);
-            page.close();
-        }, 10000);
-
-        if (Agente == 1) {
-
-            await page.waitForFunction(() => {
-                const element = document.getElementById("submitterPersonOrganizationNameId");
-                return element && element.value !== undefined;
-            }, { timeout: 30000 });
-            await page.waitForTimeout(800);
-
-            await page.evaluate(() => {
-                document.getElementById("submitterPersonOrganizationNameId").value = "";
+        page.setDefaultTimeout(0);
+        try {
+            await page.waitForNavigation({
+                waitUntil: 'networkidle0',
+                timeout: 5000 // 5 segundos en milisegundos
             });
-            await page.type('#submitterPersonOrganizationNameId', '76966');
-
-            await page.waitForFunction(() => {
-                const element = document.querySelector('a[title="COLLECTIVE MINING (BERMUDA) SUCURSAL COLOMBIA (76966)"]');
-                return element !== null; // Retorna true si el elemento existe
-            }, { timeout: 30000 }); // Espera hasta 30 segundos
-
-            // Ahora interactúa con el elemento
-            await page.evaluate(() => {
-                const element = document.querySelector('a[title="COLLECTIVE MINING (BERMUDA) SUCURSAL COLOMBIA (76966)"]');
-                element.click(); // Haz clic en el elemento
-            });
+        } catch (error) {
+            if (error instanceof puppeteer.errors.TimeoutError) {
+                console.log('La navegación tardó más de 5 segundos.');
+                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+            } else {
+                throw error; // Lanzar el error si no es un TimeoutError
+            }
         }
+        validador = 0;
+       
+    
+    let Segundopaso = setTimeout(() => {
+        console.log("ENTRO EN EL Segundopaso")
+        page.close();
+        Mineria(browser);
+        clearTimeout(Segundopaso);
+    }, 20000);
+
+
+    clearTimeout(Primerpaso);
+
+
+    const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
+    await solicitudes[1].click();
+
+    const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
+    await lblRadicar[0].click();
+    if (Agente == 1) {
+        await page.waitForTimeout(2000);
+
+
+        //await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "")
+        await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
+
+        //await page.waitForSelector('select[id="submitterPersonOrganizationNameId"]');
+        //const Agente = await page.$('select[id=" submitterPersonOrganizationNameId"]');
+
+        await page.type('#submitterPersonOrganizationNameId', '76966');
+        //await page.type('#submitterPersonOrganizationNameId', '');
+
+        await page.waitForTimeout(3000);
+
+        await page.keyboard.press("Enter");
+
+        await page.waitForTimeout(550);
+    }
+
 
 
 
