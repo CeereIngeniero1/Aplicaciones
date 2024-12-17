@@ -42,15 +42,30 @@ for (let i = 0; i < Pines.length; i++) {
         break
     }
 }
-
 Pagina();
 async function Pagina() {
+    var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
+        if (error) {
+            throw error;
+        } else {
+            console.log(datos);
+        }
+    });
+    for (let i = 0; i < Pines.length; i++) {
+        if (Pines.substring(i + 1, i + 4) == 'Co:') {
+            console.log(Pines.substring(i + 1, i + 4));
+            Pin = Pines.substring(i + 4, i + 31);
+            break
+        }
+    }
 
+
+    
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
-
+   
 
     const browser = await puppeteer.launch({
-        //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
         // Reemplaza con la ruta real a tu Google Chrome
         headless: false,
@@ -61,97 +76,96 @@ async function Pagina() {
         devtools: false
     });
 
-    Mineria(browser);
+        Mineria(browser, Pin);
 }
 
 
+ 
 
-
-function Mineria(browser) {
+function Mineria(browser,  Pin) {
     (async () => {
-        console.log("Esta es la vuelta " + ContadorVueltas);
-
-        const page = await browser.newPage();
-        let Primerpaso = setTimeout(() => {
-            console.log("ENTRO EN EL PRIMERPASO")
-            page.close();
-            Mineria(browser,  Pin); 
-        }, 20000);
-        await page.setViewport({ width: 1368, height: 620 });
-        await page.goto('https://annamineria.anm.gov.co/sigm/');
         
+            console.log("Esta es la vuelta " + ContadorVueltas);
 
-        let user = (Agente == 0) ? user1 : user2;
-        let pass = (Agente == 0) ? pass1 : pass2;
+            const page = await browser.newPage();
+            let Primerpaso = setTimeout(() => {
+                console.log("ENTRO EN EL PRIMERPASO")
+                page.close();
+                Mineria(browser,  Pin); 
+            }, 20000);
+            await page.setViewport({ width: 1368, height: 620 });
+            await page.goto('https://annamineria.anm.gov.co/sigm/');
+            
 
-        try {
+            let user = (Agente == 0) ? user1 : user2;
+            let pass = (Agente == 0) ? pass1 : pass2;
 
-            console.log(user);
-            console.log(pass);
-            await page.type('#username', user);
-            await page.type('#password', pass);
+            try {
 
-            page.click("#loginButton");
+                console.log(user);
+                console.log(pass);
+                await page.type('#username', user);
+                await page.type('#password', pass);
+
+                page.click("#loginButton");
 
 
-        } catch (ex) {
-            console.log("Entro en el catch");
-        }
-
-        page.setDefaultTimeout(0);
-        try {
-            await page.waitForNavigation({
-                waitUntil: 'networkidle0',
-                timeout: 5000 // 5 segundos en milisegundos
-            });
-        } catch (error) {
-            if (error instanceof puppeteer.errors.TimeoutError) {
-                console.log('La navegación tardó más de 5 segundos.');
-                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-            } else {
-                throw error; // Lanzar el error si no es un TimeoutError
+            } catch (ex) {
+                console.log("Entro en el catch");
             }
+
+            page.setDefaultTimeout(0);
+            try {
+                await page.waitForNavigation({
+                    waitUntil: 'networkidle0',
+                    timeout: 5000 // 5 segundos en milisegundos
+                });
+            } catch (error) {
+                if (error instanceof puppeteer.errors.TimeoutError) {
+                    console.log('La navegación tardó más de 5 segundos.');
+                    // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+                } else {
+                    throw error; // Lanzar el error si no es un TimeoutError
+                }
+            }
+            validador = 0;
+           
+        
+        let Segundopaso = setTimeout(() => {
+            console.log("ENTRO EN EL Segundopaso")
+            page.close();
+            Mineria(browser,  Pin);
+            clearTimeout(Segundopaso);
+        }, 20000);
+
+
+        clearTimeout(Primerpaso);
+
+
+        const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
+        await solicitudes[1].click();
+
+        const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
+        await lblRadicar[0].click();
+        if (Agente == 1) {
+            await page.waitForTimeout(2000);
+
+
+            //await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "")
+            await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
+
+            //await page.waitForSelector('select[id="submitterPersonOrganizationNameId"]');
+            //const Agente = await page.$('select[id=" submitterPersonOrganizationNameId"]');
+
+            await page.type('#submitterPersonOrganizationNameId', '76966');
+            //await page.type('#submitterPersonOrganizationNameId', '');
+
+            await page.waitForTimeout(3000);
+
+            await page.keyboard.press("Enter");
+
+            await page.waitForTimeout(550);
         }
-        validador = 0;
-       
-    
-    let Segundopaso = setTimeout(() => {
-        console.log("ENTRO EN EL Segundopaso")
-        page.close();
-        Mineria(browser);
-        clearTimeout(Segundopaso);
-    }, 20000);
-
-
-    clearTimeout(Primerpaso);
-
-
-    const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
-    await solicitudes[1].click();
-
-    const lblRadicar = await page.$x('//a[contains(.,"Radicar solicitud de propuesta de contrato de concesión")]');
-    await lblRadicar[0].click();
-    if (Agente == 1) {
-        await page.waitForTimeout(2000);
-
-
-        //await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "")
-        await page.evaluate(() => document.getElementById("submitterPersonOrganizationNameId").value = "");
-
-        //await page.waitForSelector('select[id="submitterPersonOrganizationNameId"]');
-        //const Agente = await page.$('select[id=" submitterPersonOrganizationNameId"]');
-
-        await page.type('#submitterPersonOrganizationNameId', '76966');
-        //await page.type('#submitterPersonOrganizationNameId', '');
-
-        await page.waitForTimeout(3000);
-
-        await page.keyboard.press("Enter");
-
-        await page.waitForTimeout(550);
-    }
-
-
 
 
 
@@ -293,7 +307,7 @@ function Mineria(browser) {
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser);
+                Mineria(browser,  Pin);
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -554,7 +568,7 @@ function Mineria(browser) {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser);
+            Mineria(browser,  Pin);
         }, 20000);
 
         console.log(page.url());
@@ -612,7 +626,7 @@ function Mineria(browser) {
 
             console.log("ENTRO EN EL RadiPrimero");
             page.close();
-            Mineria(browser);
+            Mineria(browser,  Pin);
         }, 30000);
 
         await page.evaluate(() => {
@@ -1101,7 +1115,7 @@ function Mineria(browser) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser);
+            Mineria(browser,  Pin);
         }, 30000);
 
 
@@ -1270,7 +1284,7 @@ function Mineria(browser) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser);
+            Mineria(browser,  Pin);
         }, 60000);
 
 
@@ -1341,7 +1355,7 @@ function Mineria(browser) {
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
-        Mineria(browser);
+        Mineria(browser,  Pin);
 
 
 
