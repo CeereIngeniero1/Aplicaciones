@@ -47,9 +47,9 @@ async function Pagina() {
     }
 
 
-    
+
     const pathToExtension = 'C:\\Aplicaciones\\Exte\\0.2.1_0';
-   
+
 
     const browser = await puppeteer.launch({
         // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -63,65 +63,65 @@ async function Pagina() {
         devtools: false
     });
 
-        Mineria(browser, Pin);
+    Mineria(browser, Pin);
 }
 
 
- 
 
-function Mineria(browser,  Pin) {
+
+function Mineria(browser, Pin) {
     (async () => {
+
         
-            console.log("Esta es la vuelta " + ContadorVueltas);
 
-            const page = await browser.newPage();
-            let Primerpaso = setTimeout(() => {
-                console.log("ENTRO EN EL PRIMERPASO")
-                page.close();
-                Mineria(browser,  Pin); 
-            }, 20000);
-            await page.setViewport({ width: 1368, height: 620 });
-            await page.goto('https://annamineria.anm.gov.co/sigm/');
-            
-
-            let user = (Agente == 0) ? user1 : user2;
-            let pass = (Agente == 0) ? pass1 : pass2;
-
-            try {
-
-                console.log(user);
-                console.log(pass);
-                await page.type('#username', user);
-                await page.type('#password', pass);
-
-                page.click("#loginButton");
+        const page = await browser.newPage();
+        let Primerpaso = setTimeout(() => {
+            console.log("ENTRO EN EL PRIMERPASO")
+            page.close();
+            Mineria(browser, Pin);
+        }, 20000);
+        await page.setViewport({ width: 1368, height: 620 });
+        await page.goto('https://annamineria.anm.gov.co/sigm/');
 
 
-            } catch (ex) {
-                console.log("Entro en el catch");
+        let user = (Agente == 0) ? user1 : user2;
+        let pass = (Agente == 0) ? pass1 : pass2;
+
+        try {
+
+            console.log(user);
+            console.log(pass);
+            await page.type('#username', user);
+            await page.type('#password', pass);
+
+            page.click("#loginButton");
+
+
+        } catch (ex) {
+            console.log("Entro en el catch");
+        }
+
+        page.setDefaultTimeout(0);
+        try {
+            await page.waitForNavigation({
+                waitUntil: 'networkidle0',
+                timeout: 5000 // 5 segundos en milisegundos
+            });
+        } catch (error) {
+            if (error instanceof puppeteer.errors.TimeoutError) {
+                console.log('La navegación tardó más de 5 segundos.');
+                // Aquí puedes manejar la situación cuando se supera el tiempo de espera
+            } else {
+                throw error; // Lanzar el error si no es un TimeoutError
             }
+        }
+        validador = 0;
 
-            page.setDefaultTimeout(0);
-            try {
-                await page.waitForNavigation({
-                    waitUntil: 'networkidle0',
-                    timeout: 5000 // 5 segundos en milisegundos
-                });
-            } catch (error) {
-                if (error instanceof puppeteer.errors.TimeoutError) {
-                    console.log('La navegación tardó más de 5 segundos.');
-                    // Aquí puedes manejar la situación cuando se supera el tiempo de espera
-                } else {
-                    throw error; // Lanzar el error si no es un TimeoutError
-                }
-            }
-            validador = 0;
-           
-        
+
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
             clearTimeout(Segundopaso);
         }, 20000);
 
@@ -294,7 +294,7 @@ function Mineria(browser,  Pin) {
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser,  Pin);
+                Mineria(browser, Pin);
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -555,7 +555,7 @@ function Mineria(browser,  Pin) {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 20000);
 
         console.log(page.url());
@@ -613,7 +613,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL RadiPrimero");
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 30000);
 
         await page.evaluate(() => {
@@ -1102,7 +1102,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 30000);
 
 
@@ -1271,7 +1271,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 60000);
 
 
@@ -1342,7 +1342,7 @@ function Mineria(browser,  Pin) {
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
-        Mineria(browser,  Pin);
+        Mineria(browser, Pin);
 
 
 
