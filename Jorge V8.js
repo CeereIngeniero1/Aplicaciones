@@ -28,20 +28,7 @@ var pass2 = '*Jcrmh2022#';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
-var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
-    if (error) {
-        throw error;
-    } else {
-        console.log(datos);
-    }
-});
-for (let i = 0; i < Pines.length; i++) {
-    if (Pines.substring(i + 1, i + 4) == 'Co:') {
-        console.log(Pines.substring(i + 1, i + 4));
-        Pin = Pines.substring(i + 4, i + 31);
-        break
-    }
-}
+
 Pagina();
 async function Pagina() {
     var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
