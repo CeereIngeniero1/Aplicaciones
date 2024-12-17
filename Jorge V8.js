@@ -69,30 +69,41 @@ async function Pagina() {
 
 function Mineria(browser) {
     (async () => {
+       
+        console.log("pruebas");
+        const page = await browser.newPage();
+
         let Primerpaso = setTimeout(() => {
             console.log("ENTRO EN EL PRIMERPASO")
 
-
-            Mineria(browser);
             page.close();
-        }, 15000);
-        const page = await browser.newPage();
+            Mineria(browser);
+
+        }, 20000);
+
+
+
+
 
         await page.setViewport({ width: 1368, height: 620 });
         await page.goto('https://annamineria.anm.gov.co/sigm/');
 
-
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
-        try {
-            await page.type('#username', user);
-            await page.type('#password', pass);
 
-            page.click("#loginButton");
-        } catch (error) {
+            try {
 
-        }
+                console.log(user);
+                console.log(pass);
+                await page.type('#username', user);
+                await page.type('#password', pass);
 
+                page.click("#loginButton");
+
+
+            } catch (ex) {
+                console.log("Entro en el catch");
+            }
 
         // await page.setDefaultTimeout(0);
         // page.waitForNavigation({
@@ -102,36 +113,35 @@ function Mineria(browser) {
 
 
 
-
-
-        clearTimeout(Primerpaso);
-        let Segundopaso = setTimeout(() => {
-            console.log("ENTRO EN EL Segundopaso")
-
-            Mineria(browser);
-            page.close();
-        }, 35000);
-
         let Contador1 = 0;
         while (true) {
             try {
                 let solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
                 if (solicitudes.length > 1) {
+                    console.log("prueba");
                     try {
                         await solicitudes[1].click();
                         break;
                     } catch (error) {
+                        console.log("Contado:", Contador1);
+                        if (Contador1 == 22) {
+                            console.log("Me sali por por este lado ");
+                            break;
+                        }
+
                         console.log("No le pudo dar click por que no lo podia ver");
+
                     }
-                } else if (Contador1 == 18) {
+                } else if (Contador1 == 22) {
                     break;
+
                 } else {
                     console.error('No se encontró el segundo elemento con el texto "Solicitudes".');
                     Contador1++;
                 }
-                await page.waitForTimeout(500);
+                await page.waitForTimeout(1000);
             } catch (error) {
-                if (Contador1 == 20) {
+                if (Contador1 == 22) {
                     break;
                 }
             }
@@ -150,21 +160,29 @@ function Mineria(browser) {
                     }
 
 
-                } else if (Contador1 == 18) {
+                } else if (Contador1 == 22) {
                     break;
                 } else {
                     console.error('No se encontró el segundo elemento con el texto "Radicar".');
                     Contador1++;
                 }
-                await page.waitForTimeout(500);
+                await page.waitForTimeout(1000);
             } catch (error) {
-                if (Contador1 == 20) {
+                if (Contador1 == 22) {
                     break;
                 }
             }
 
         }
+        clearTimeout(Primerpaso);
+        console.log("Aqui termino el otro cosito cosito");
 
+        let Segundopaso = setTimeout(() => {
+            console.log("ENTRO EN EL Segundopaso")
+
+            Mineria(browser);
+            page.close();
+        }, 10000);
 
         if (Agente == 1) {
 
@@ -317,7 +335,7 @@ function Mineria(browser) {
 
 
         while (Band != 99) {
-            
+
             const Pestanas = await browser.pages();
             console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
             if (Pestanas.length >= 4) {
@@ -501,7 +519,7 @@ function Mineria(browser) {
             await continCeldas[1].click();
             console.log(IdArea);
             // let Contador2 = 0;
-            
+
             //     while (true) {
             //         try {
             //             await page.waitForTimeout(1000);
@@ -515,10 +533,10 @@ function Mineria(browser) {
             //             }
             //             Contador2++;
             //         } catch (error) {
-                        
+
             //         } 
             //     }
-            
+
 
 
             // console.log("Validar despues de los 3 seg");
@@ -1168,24 +1186,24 @@ function Mineria(browser) {
 
         try {
 
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '503239'){
+            let ArchivoAmbiental;
+            if (IdArea == '509188') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            } else if (IdArea == '503239') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
-            }else if(IdArea == 'RFE_08211'){
+            } else if (IdArea == 'RFE_08211') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
-            }else if(IdArea == 'RFE_08A'){
+            } else if (IdArea == 'RFE_08A') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
 
-            }else if(IdArea == 'RFE_08B'){
+            } else if (IdArea == 'RFE_08B') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
             }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+            else {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
