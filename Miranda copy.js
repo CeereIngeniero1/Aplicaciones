@@ -995,7 +995,7 @@ function Mineria(browser,  Pin) {
         console.log("INICIA LA SELECCIÓN DE CONTADOR(ES)");
         console.log('================================================================');
         let Contador_es = [
-            { tipo: "Contador", nombres: ["Daniela Celeste Bracho Raleigh (88876)"] },
+            { tipo: "Contador", nombres: ["LUIS FERNANDO VARGAS JULIO (93637)"] },
         ];
 
         await seleccionar_Profesional(Contador_es, page, 2);
