@@ -344,7 +344,7 @@ function Mineria(browser, Pin) {
             // }
 
 
-            if (Band == 1) {
+            if (Band == 3) {
                 MonitorearAreas(
                     "500946",//Nombre del area
                     1, // aviso
@@ -353,7 +353,7 @@ function Mineria(browser, Pin) {
                     260 // comas
                 )
             }
-            else if (Band == 2) {
+            else if (Band == 1) {
                 MonitorearAreas(
                     "500946_1",//Nombre del area
                     1, // aviso
