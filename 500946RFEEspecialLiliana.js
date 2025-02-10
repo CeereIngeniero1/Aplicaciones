@@ -1,9 +1,13 @@
+//ARE
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
-const user = '96474';
-const pass = 'Lilianab2024*';
+const userARE = '96474';
+const passARE = 'Lilianab2024*';
 var Agente = 0;
+
+
+
 
 Pagina();
 async function Pagina() {
@@ -36,10 +40,8 @@ async function AreaEspecial(browser) {
 
     try {
 
-        console.log(user);
-        console.log(pass);
-        await page.type('#username', user);
-        await page.type('#password', pass);
+        await page.type('#username', userARE);
+        await page.type('#password', passARE);
 
         page.click("#loginButton");
 
@@ -193,12 +195,13 @@ async function AreaEspecial(browser) {
     var band = 1;
     while (true) {
 
+    
+
         let ciclo = setTimeout(() => {
             console.log("ENTRO EN EL Tercerpaso")
             page.close();
             AreaEspecial(browser);
-            return "error";
-        }, 15000);
+        }, 5000);
         await page.waitForTimeout(1000);
 
 
@@ -220,6 +223,7 @@ async function AreaEspecial(browser) {
         }
 
         if (band == 1) {
+
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
@@ -266,10 +270,16 @@ async function AreaEspecial(browser) {
                 cont = 0;
             }
 
+
         }
 
 
         clearTimeout(ciclo);
+        let Radicar = setTimeout(() => {
+            console.log("ENTRO EN EL radicar")
+            page.close();
+            AreaEspecial(browser);
+        }, 5000);
         // console.log("Termiamos vlaida orfa");
         // await page.waitForTimeout(250000);
         if (cont == "0") {
@@ -351,14 +361,10 @@ async function AreaEspecial(browser) {
     } catch (error) {
 
     }
+    clearTimeout(Radicar);
     //console.log(continuar.length);
     await page.waitForTimeout(250000);
 
 }
-
-
-
-
-
 
 

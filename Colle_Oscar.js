@@ -59,7 +59,13 @@ async function Pagina() {
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
         // Reemplaza con la ruta real a tu Google Chrome
         headless: false,
-        args: ['--start-maximized',
+        // args: ['--start-maximized',
+        //     `--disable-extensions-except=${pathToExtension}`,
+        //     `--load-extension=${pathToExtension}`
+        // ],
+        args: [
+            '--start-maximized', // Intenta abrir en pantalla completa
+            '--window-size=1920,1080', // Fuerza una resolución específica
             `--disable-extensions-except=${pathToExtension}`,
             `--load-extension=${pathToExtension}`
         ],
@@ -1036,6 +1042,9 @@ function Mineria(browser, Pin) {
 
             }else if(IdArea == '500946' || IdArea == '500946_1' || IdArea == '500946_2' || IdArea == '500946_1Completo' || IdArea == '500946Completo'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\500946.pdf`;
+
+            }else if(IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto'){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
 
             }
             else{
