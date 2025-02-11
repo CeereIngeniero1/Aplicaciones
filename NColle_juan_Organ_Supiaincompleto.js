@@ -16,7 +16,7 @@ const EquiposGenerales = {
     'LAPTOP-JL0BL28F': "JORGE EQUIPO",
     'MERCADEO': "MERCADEO",
     'DESKTOP-RF3NUO3': "PIXEL",
-    'HPRED241':"FERCHO ingeniero en sistemas best"
+    'HPRED241': "FERCHO ingeniero en sistemas best"
 }
 
 
@@ -24,8 +24,8 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Collective';
 var user1 = '76966';
 var pass1 = 'CollectiveM_2024*';
-var user2 = '96232';
-var pass2 = 'Campeon0624*';
+var user2 = '83955';
+var pass2 = 'wX2*dQ3*cS';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
@@ -289,19 +289,18 @@ function Mineria(browser, Pin) {
         var Texto = "";
         var liberadas = 0;
         var Celda = 0;
-
+        var ComparacionCeldas = "";
+        var areaFiltrado;
+        var Filtrado;
         let ComasTotalesPorArea = {};
-        
         while (Band != 99) {
 
-            const Pestanas = await browser.pages();
-            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            if (Pestanas.length >= 4) {
-                EnviarCorreosParaPestanas++;
-                if (EnviarCorreosParaPestanas <= 2) {
-                    // Se realiza envío de correo para alertar
-                    Correo(5, '', '');
-                }
+            if (Band == 81) {
+                console.log("Aviso")
+                Filtrado = `${areaFiltrado.join(', ')}`;
+                //console.log(  `["${areaFiltrado.join(', ')}"],` ) 
+                console.log("FILTRADO " + Filtrado);
+                // await page.waitForTimeout(2000000);
             }
 
             console.log("Inicia el timer");
@@ -309,6 +308,8 @@ function Mineria(browser, Pin) {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
                 Mineria(browser, Pin);
+                clearTimeout(TimeArea);
+
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -326,10 +327,13 @@ function Mineria(browser, Pin) {
             console.log(contador);
 
             console.log("y este es la bandera = " + Band);
-            let DetallesCompletos;
+            var DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
 
+                // Asegúrate de que Area es un array de celdas sin espacios innecesarios
+                const AreaCeldas = Area[0].split(',').map(celda => celda.trim());
+                console.log(Area);
                 page.evaluate(({ Area }) => {
                     document.querySelector('[id="cellIdsTxtId"]').value = Area.join('');
                     angular.element(document.getElementById('cellIdsTxtId')).triggerHandler('change');
@@ -341,51 +345,61 @@ function Mineria(browser, Pin) {
                     Aviso: Aviso,
                     Celda: Celda,
                     Area: Area,
-                    Comas: Comas
+                    Comas: Comas,
+                    ComparacionCeldas: AreaCeldas, // Usa el array de celdas limpio
                 }
 
                 return DetallesCompletos;
             }
 
-            // if (Band == 1000) {
+            // CELDA DE PRUEBA, DISPONIBLE
+            // if (Band == 1) {
             //     MonitorearAreas(
-            //         "AreaDePrueba",
+            //         "007-85M",
             //         1,
             //         "Esto es una celda de prueba",
             //         ["18N05N14M12R"],
             //         0
             //     );
             // }
+
+
             if (Band == 1) {
-                
                 MonitorearAreas(
-                    "500946",//Nombre del area
-                    1, // aviso
-                    "18N05E04L17N", // ceda de correo
-                    ['18N05E04L17N, 18N05E04L17D, 18N05E04L07N, 18N05E04Q07J, 18N05E04Q07E, 18N05E04L17U, 18N05E04L12U, 18N05E04L12E, 18N05E04L07P, 18N05E04Q08F, 18N05E04L18Q, 18N05E04Q03G, 18N05E04L23L, 18N05E04L18R, 18N05E04L13W, 18N05E04L08S, 18N05E04Q03Y, 18N05E04L18Z, 18N05E04L13J, 18N05E04Q04K, 18N05E04L24V, 18N05E04L19R, 18N05E04L09V, 18N05E04L09Q, 18N05E04Q04H, 18N05E04L24H, 18N05E04L19C, 18N05E04L14M, 18N05E04L19N, 18N05E04L14Y, 18N05E04L14D, 18N05E04Q04Z, 18N05E04Q04P, 18N05E04L24Z, 18N05E04L24U, 18N05E04L24P, 18N05E04L14U, 18N05E04Q05W, 18N05E04L20L, 18N05E04L10R, 18N05E04Q02Y, 18N05E04L22I, 18N05E04L17I, 18N05E04L07T, 18N05E04L22Z, 18N05E04L17E, 18N05E04L12P, 18N05E04Q03V, 18N05E04Q03K, 18N05E04L13K, 18N05E04L13F, 18N05E04L08K, 18N05E04L23B, 18N05E04L18G, 18N05E04L18B, 18N05E04L13G, 18N05E04Q08C, 18N05E04Q03C, 18N05E04L23T, 18N05E04L13Y, 18N05E04Q03E, 18N05E04L23Z, 18N05E04Q09G, 18N05E04Q04Q, 18N05E04L24K, 18N05E04L09F, 18N05E04Q04X, 18N05E04L24M, 18N05E04L14H, 18N05E04Q09D, 18N05E04L24Y, 18N05E04L14P, 18N05E04L09Z, 18N05E04Q10A, 18N05E04L20K, 18N05E04L15Q, 18N05E04Q05B, 18N05E04L25W, 18N05E04L25B, 18N05E04L20R, 18N05E04L10W, 18N05E04L10L, 18N05E04Q07I, 18N05E04Q02N, 18N05E04L07I, 18N05E04Q02U, 18N05E04Q02J, 18N05E04Q02E, 18N05E04L22J, 18N05E04L12J, 18N05E04L23Q, 18N05E04L18K, 18N05E04Q03L, 18N05E04Q03B, 18N05E04L23G, 18N05E04L08L, 18N05E04Q03S, 18N05E04Q03M, 18N05E04L18M, 18N05E04L18H, 18N05E04L18C, 18N05E04L13C, 18N05E04L08X, 18N05E04L23Y, 18N05E04L23D, 18N05E04L18T, 18N05E04L08Y, 18N05E04L08T, 18N05E04L08N, 18N05E04Q03J, 18N05E04L18J, 18N05E04L08Z, 18N05E04Q04F, 18N05E04Q04B, 18N05E04L24R, 18N05E04L24G, 18N05E04L19W, 18N05E04L19Q, 18N05E04L19L, 18N05E04L14R, 18N05E04L14G, 18N05E04L09G, 18N05E04Q04S, 18N05E04Q04M, 18N05E04Q04C, 18N05E04L24X, 18N05E04L19S, 18N05E04L09S, 18N05E04L24N, 18N05E04L19Y, 18N05E04L14T, 18N05E04L09I, 18N05E04Q09J, 18N05E04L24E, 18N05E04L19U, 18N05E04L19P, 18N05E04L19E, 18N05E04L25V, 18N05E04L25Q, 18N05E04L25A, 18N05E04L15A, 18N05E04L20G, 18N05E04L15R, 18N05E04L22Y, 18N05E04L22T, 18N05E04L12T, 18N05E04L07Y, 18N05E04Q02P, 18N05E04L17Z, 18N05E04Q08A, 18N05E04Q03Q, 18N05E04Q03F, 18N05E04L18V, 18N05E04L18F, 18N05E04L08V, 18N05E04Q08G, 18N05E04Q03W, 18N05E04L23R, 18N05E04Q08H, 18N05E04L23M, 18N05E04L13M, 18N05E04Q08I, 18N05E04Q08D, 18N05E04Q03T, 18N05E04Q08E, 18N05E04Q03Z, 18N05E04L08J, 18N05E04Q09A, 18N05E04Q09B, 18N05E04Q04W, 18N05E04Q04R, 18N05E04Q04L, 18N05E04L24B, 18N05E04L19V, 18N05E04L19G, 18N05E04L19A, 18N05E04L19B, 18N05E04L14W, 18N05E04L09W, 18N05E04L09R, 18N05E04Q09C, 18N05E04L14S, 18N05E04Q04N, 18N05E04L24I, 18N05E04L09Y, 18N05E04L09N, 18N05E04Q04J, 18N05E04L24J, 18N05E04L14J, 18N05E04L09U, 18N05E04Q10F, 18N05E04L25K, 18N05E04L15F, 18N05E04Q10B, 18N05E04Q05G, 18N05E04L25R, 18N05E04Q07D, 18N05E04Q02T, 18N05E04Q02I, 18N05E04L17T, 18N05E04L12N, 18N05E04L12I, 18N05E04L07U, 18N05E04L23A, 18N05E04L18A, 18N05E04L13V, 18N05E04L08Q, 18N05E04L08F, 18N05E04L13R, 18N05E04L13L, 18N05E04L08R, 18N05E04L08G, 18N05E04Q03X, 18N05E04L08H, 18N05E04Q03N, 18N05E04Q03D, 18N05E04L23N, 18N05E04L18N, 18N05E04L18D, 18N05E04L13D, 18N05E04L13P, 18N05E04Q04V, 18N05E04L24Q, 18N05E04L24F, 18N05E04L14V, 18N05E04L19X, 18N05E04L19M, 18N05E04Q09I, 18N05E04L24D, 18N05E04L14I, 18N05E04Q04E, 18N05E04L19Z, 18N05E04L14E, 18N05E04Q05V, 18N05E04Q05Q, 18N05E04L25F, 18N05E04L20V, 18N05E04L20Q, 18N05E04Q10G, 18N05E04Q05R, 18N05E04L25G, 18N05E04L20W, 18N05E04L15B, 18N05E04L17Y, 18N05E04L12Y, 18N05E04L12D, 18N05E04L12Z, 18N05E04L07Z, 18N05E04Q03A, 18N05E04L23V, 18N05E04L13Q, 18N05E04Q03R, 18N05E04L18W, 18N05E04L13B, 18N05E04L18S, 18N05E04Q03I, 18N05E04L23I, 18N05E04L18I, 18N05E04L13I, 18N05E04Q03U, 18N05E04Q03P, 18N05E04L23E, 18N05E04L18E, 18N05E04L08U, 18N05E04Q04A, 18N05E04L24L, 18N05E04L24A, 18N05E04L14Q, 18N05E04L14K, 18N05E04L14L, 18N05E04L14F, 18N05E04L14A, 18N05E04L09K, 18N05E04Q09H, 18N05E04L24C, 18N05E04L09X, 18N05E04Q04Y, 18N05E04L24T, 18N05E04L09T, 18N05E04L19J, 18N05E04L09J, 18N05E04Q05K, 18N05E04Q05A, 18N05E04L15K, 18N05E04L10V, 18N05E04L10Q, 18N05E04L10F, 18N05E04L25L, 18N05E04L15W, 18N05E04Q02D, 18N05E04L22D, 18N05E04Q02Z, 18N05E04L17P, 18N05E04L07J, 18N05E04L23K, 18N05E04Q03H, 18N05E04L23C, 18N05E04L13X, 18N05E04L13S, 18N05E04L13H, 18N05E04L08M, 18N05E04L18Y, 18N05E04L13T, 18N05E04L13N, 18N05E04L08I, 18N05E04Q08J, 18N05E04L23U, 18N05E04L23P, 18N05E04L18U, 18N05E04L18P, 18N05E04L13Z, 18N05E04L13U, 18N05E04L13E, 18N05E04L08P, 18N05E04L24W, 18N05E04L19F, 18N05E04L24S, 18N05E04L19H, 18N05E04L14X, 18N05E04L09H, 18N05E04Q04T, 18N05E04Q04D, 18N05E04Q09E, 18N05E04L09P, 18N05E04Q05F, 18N05E04L20F, 18N05E04Q05L, 18N05E04L22N, 18N05E04L22U, 18N05E04L22P, 18N05E04L22E, 18N05E04L17J, 18N05E04L23F, 18N05E04L13A, 18N05E04Q08B, 18N05E04L23W, 18N05E04L18L, 18N05E04L08W, 18N05E04L23X, 18N05E04L23S, 18N05E04L23H, 18N05E04L18X, 18N05E04L23J, 18N05E04Q09F, 18N05E04Q04G, 18N05E04L19K, 18N05E04L14B, 18N05E04L09L, 18N05E04L14C, 18N05E04L09M, 18N05E04Q04I, 18N05E04L19T, 18N05E04L19I, 18N05E04L19D, 18N05E04L14N, 18N05E04Q04U, 18N05E04L14Z, 18N05E04L20A, 18N05E04L15V, 18N05E04L10K, 18N05E04L20B, 18N05E04L15L, 18N05E04L15G, 18N05E04L10G '], // Celdas de area
-                    260 // comas
-                )
-            } else if (Band == 81 ){
-                console.log( "FILTRADO  2 "+ Filtrado);
-                MonitorearAreas(
-                            IdArea,
-                            1,
-                            "Esto es una celda de prueba",
-                            [Filtrado],
-                            0
-                        );
-                        // await page.waitForTimeout(50000);
-                        // Band=99;
+                    "supiaincompleto",
+                    1,
+                    "18N05A24M13E",
+                    ['18N05A24M13E, 18N05A24M14R, 18N05A24M14H, 18N05A24M14P, 18N05A24M15L, 18N05A24M20H, 18N05A24M15X, 18N05A24M15H, 18N05A24M20D, 18N05A24M15T, 18N05E04B06A, 18N05E04B01Q, 18N05A24M25U, 18N05A24N21Q, 18N05A24M25E, 18N05E04B01W, 18N05A24N21R, 18N05A24N16W, 18N05A24N16R, 18N05A24N11R, 18N05A24N21D, 18N05E04B06E, 18N05A24N16P, 18N05E04B02A, 18N05A24N22Q, 18N05A24N17F, 18N05A24N12Q, 18N05E04B07R, 18N05A24N22R, 18N05A24N17G, 18N05E04B07C, 18N05E04B02X, 18N05E04B02M, 18N05E04B02H, 18N05E04B02C, 18N05A24N22M, 18N05A24N17M, 18N05A24N17H, 18N05E04B07N, 18N05A24N17N, 18N05A24N12Y, 18N05A24N17Z, 18N05E04B08F, 18N05A24N23V, 18N05A24N23K, 18N05A24N18Q, 18N05A24N18K, 18N05A24N18F, 18N05A24N18A, 18N05A24M14F, 18N05A24M14L, 18N05A24M14X, 18N05A24M14Y, 18N05A24M15R, 18N05A24M15S, 18N05E04A05N, 18N05E04A05D, 18N05A24M20I, 18N05E04B01K, 18N05A24N16Q, 18N05A24N16F, 18N05A24N11V, 18N05A24N21B, 18N05A24N16G, 18N05A24N16X, 18N05A24N16S, 18N05A24N21N, 18N05A24N21I, 18N05A24N16T, 18N05E04B06P, 18N05A24N21U, 18N05A24N11Z, 18N05A24N11J, 18N05E04B07A, 18N05E04B02V, 18N05A24N12W, 18N05A24N12R, 18N05A24N12L, 18N05A24N22S, 18N05A24N17X, 18N05A24N17C, 18N05A24N12H, 18N05A24N17I, 18N05E04B02J, 18N05A24N22J, 18N05A24N17U, 18N05E04B08Q, 18N05E04B08A, 18N05E04B03Q, 18N05A24N23Q, 18N05A24N23A, 18N05A24N18V, 18N05A24N13L, 18N05A24M14U, 18N05E04A05M, 18N05E04A05Y, 18N05A24M25Z, 18N05A24M25J, 18N05A24M20J, 18N05A24N11K, 18N05E04B06G, 18N05A24N11L, 18N05A24N21X, 18N05A24N21H, 18N05A24N11X, 18N05A24N11S, 18N05A24N11M, 18N05A24N16D, 18N05E04B01P, 18N05A24N16U, 18N05A24N16E, 18N05A24N11U, 18N05A24N22V, 18N05E04B07L, 18N05E04B02R, 18N05A24N12G, 18N05E04B07M, 18N05E04B02S, 18N05A24N12X, 18N05A24N12M, 18N05E04B07T, 18N05A24N22D, 18N05E04B02Z, 18N05E04B02E, 18N05A24N17J, 18N05E04B08K, 18N05A24M14S, 18N05A24M14N, 18N05A24M14Z, 18N05A24M15F, 18N05A24M20G, 18N05E04A05X, 18N05A24M20Y, 18N05E04A05E, 18N05A24M25P, 18N05A24N21K, 18N05A24N21F, 18N05A24M20U, 18N05A24M15Z, 18N05E04B06B, 18N05E04B01R, 18N05A24N21L, 18N05A24N16L, 18N05E04B06H, 18N05A24N21S, 18N05A24N21C, 18N05A24N21T, 18N05E04B01Z, 18N05E04B07K, 18N05E04B07F, 18N05A24N17V, 18N05E04B02G, 18N05A24N22B, 18N05A24N17B, 18N05E04B07S, 18N05E04B07H, 18N05A24N22X, 18N05E04B02N, 18N05A24N22Y, 18N05E04B02U, 18N05A24N22Z, 18N05A24N17P, 18N05A24N17E, 18N05A24N13R, 18N05A24N13G, 18N05A24M14C, 18N05A24M14T, 18N05A24M15Q, 18N05A24M15G, 18N05E04A05C, 18N05E04A10D, 18N05E04A05Z, 18N05A24N21V, 18N05A24N21A, 18N05A24N16V, 18N05A24M15U, 18N05A24N11W, 18N05E04B06C, 18N05E04B01X, 18N05E04B01C, 18N05A24N21M, 18N05E04B01N, 18N05A24N16Y, 18N05A24N21P, 18N05A24N16Z, 18N05A24N16J, 18N05A24N11P, 18N05A24N22K, 18N05E04B02W, 18N05E04B02L, 18N05E04B02B, 18N05A24N22C, 18N05A24N17S, 18N05E04B07D, 18N05E04B02D, 18N05A24N17T, 18N05A24N17D, 18N05A24N12I, 18N05E04B07J, 18N05A24N12P, 18N05A24N12J, 18N05E04B03V, 18N05A24N18B, 18N05A24N13F, 18N05A24M14G, 18N05A24M19D, 18N05A24M14J, 18N05A24M15V, 18N05E04A05R, 18N05E04A10C, 18N05A24M20C, 18N05A24M15N, 18N05E04A05U, 18N05A24M15J, 18N05A24N11F, 18N05E04B01L, 18N05E04B01B, 18N05E04B01S, 18N05A24N16C, 18N05E04B06N, 18N05E04B01Y, 18N05E04B01D, 18N05A24N11T, 18N05A24N11N, 18N05E04B01U, 18N05E04B01J, 18N05A24N21J, 18N05E04B02Q, 18N05E04B02K, 18N05A24N22F, 18N05A24N22A, 18N05A24N17A, 18N05A24N12K, 18N05E04B07B, 18N05A24N17W, 18N05E04B07I, 18N05A24N17Y, 18N05E04B07U, 18N05E04B07E, 18N05A24N12Z, 18N05A24N13V, 18N05A24M14M, 18N05A24M14I, 18N05E04A05W, 18N05A24M20B, 18N05A24M15W, 18N05A24M20M, 18N05A24M15Y, 18N05A24M15I, 18N05E04B06F, 18N05E04A05P, 18N05A24M20Z, 18N05A24N16K, 18N05A24N16A, 18N05A24M15P, 18N05E04B01M, 18N05A24N11H, 18N05E04B06D, 18N05E04B01T, 18N05A24N21Y, 18N05A24N11I, 18N05E04B01E, 18N05E04B02F, 18N05A24N17K, 18N05A24N12V, 18N05A24N12F, 18N05E04B07G, 18N05A24N22W, 18N05A24N17L, 18N05A24N22H, 18N05E04B07Y, 18N05E04B02Y, 18N05E04B02I, 18N05A24N22T, 18N05A24N22N, 18N05A24N22I, 18N05E04B07Z, 18N05E04B02P, 18N05A24N22U, 18N05A24N22P, 18N05A24N12U, 18N05E04B08V, 18N05E04B03K, 18N05E04B03F, 18N05A24N13Q, 18N05A24M13J, 18N05A24M14A, 18N05A24M14B, 18N05A24M19E, 18N05A24M20A, 18N05A24M15K, 18N05A24M20L, 18N05E04A05S, 18N05A24M15M, 18N05E04A05T, 18N05A24M25Y, 18N05A24M20T, 18N05A24M20N, 18N05E04A10E, 18N05E04B01V, 18N05E04B01A, 18N05A24M20P, 18N05A24M20E, 18N05A24N11Q, 18N05A24N21W, 18N05A24N21G, 18N05A24N16B, 18N05A24N11G, 18N05A24N16M, 18N05A24N16H, 18N05E04B06I, 18N05A24N16N, 18N05A24N16I, 18N05A24N11Y, 18N05E04B06J, 18N05A24N21Z, 18N05A24N21E, 18N05E04B07Q, 18N05A24N17Q, 18N05A24N22L, 18N05A24N22G, 18N05A24N17R, 18N05A24N12S, 18N05E04B02T, 18N05A24N12T, 18N05A24N12N, 18N05E04B07P, 18N05A24N22E, 18N05E04B03A, 18N05A24N23F, 18N05A24N13K'],
+                    77
+                );
             }
+            if (Band == 81) {
+                console.log("FILTRADO  2 " + Filtrado);
+                MonitorearAreas(
+                    IdArea,
+                    1,
+                    "Esto es una celda de prueba",
+                    [Filtrado],
+                    0
+                );
+                // await page.waitForTimeout(50000);
+                // Band=99;
+            }
+
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
             Aviso = DetallesCompletos.Aviso;
             Celda = DetallesCompletos.Celda;
             Area = DetallesCompletos.Area;
             Comas = DetallesCompletos.Comas;
+            ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await continCeldas[1].click();
+            // if(Band == 81 ){
+            //     console.log("prueba");
+            //     await page.waitForTimeout(300000);
+            // }
             console.log(IdArea);
             await page.waitForTimeout(3000);
 
@@ -398,11 +412,9 @@ function Mineria(browser, Pin) {
                 if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
                     cont = 0;
                 }
-
             }
 
-
-              /* CODIGO PARA REORGANIZAR AREA CON CELDAS NO DISPONIBLES, INFERIOR A LA INICIAL */
+            /* CODIGO PARA REORGANIZAR AREA CON CELDAS NO DISPONIBLES, INFERIOR A LA INICIAL */
             // Extraer celdas no disponibles del DOM
             const celdasNoDisponibles = await page.$$eval('a.errorMsg', links => {
                 return links
@@ -440,10 +452,31 @@ function Mineria(browser, Pin) {
                 console.log(`["${areaFiltrado.join(', ')}"],`);
                 console.log(`===============================================================================================`.cyan.bold);
 
+                //     page.evaluate(() => {
+                //         document.querySelector('[id="cellIdsTxtId"]').value = "";
+                //     });
+
+                //     MonitorearAreas(
+                //         "007-85M",
+                //         1,
+                //         "Esto es una celda de prueba",
+                //         `["${areaFiltrado.join(', ')}"],`,
+                //         0
+                //     );
+
+                //     IdArea = DetallesCompletos.IdArea;
+                // Aviso = DetallesCompletos.Aviso;
+                // Celda = DetallesCompletos.Celda;
+                // Area = DetallesCompletos.Area;
+                // Comas = DetallesCompletos.Comas;
+                // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
+
+                // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+                // await continCeldas[1].click();
 
                 Band = 80;
 
-            
+
                 // await page.waitForTimeout(2000000);
             } else {
                 console.log('No se encontraron celdas no disponibles.');
@@ -451,9 +484,7 @@ function Mineria(browser, Pin) {
             }
             /* FIN FIN FIN */
 
-
-
-
+            // await page.waitForTimeout(2000000);
             const FechaReapertura = await page.$$eval("a", links =>
                 links.map(link => link.textContent)
             );
@@ -469,9 +500,9 @@ function Mineria(browser, Pin) {
                     console.log("Lo encontre");
                     Reapertura = 1;
                     contreapertura++;
-                    if (contreapertura < 2) {
-                        Correo(3, IdArea, Celda);
-                    }
+                    // if (contreapertura < 2) {
+                    //     Correo(3, IdArea, Celda);
+                    // }
 
 
                     console.log(contreapertura);
@@ -494,6 +525,9 @@ function Mineria(browser, Pin) {
                 if (Band == 2) {
                     Band = 1;
                 }
+                // else if (Band == 81){
+
+                // }
 
             } else {
                 Band = 99;
@@ -501,6 +535,8 @@ function Mineria(browser, Pin) {
             console.log("limpia el timer");
             clearTimeout(TimeArea);
         }
+
+
 
 
 
@@ -1086,30 +1122,30 @@ function Mineria(browser, Pin) {
 
         try {
 
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '503239'){
+            let ArchivoAmbiental;
+            if (IdArea == '509188') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            } else if (IdArea == '503239') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
-            }else if(IdArea == 'RFE_08211'){
+            } else if (IdArea == 'RFE_08211') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
-            }else if(IdArea == 'RFE_08A'){
+            } else if (IdArea == 'RFE_08A') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
 
-            }else if(IdArea == 'RFE_08B'){
+            } else if (IdArea == 'RFE_08B') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
-            }else if(IdArea == '500946' || IdArea == '500946_1' || IdArea == '500946_2' || IdArea == '500946_1Completo' || IdArea == '500946Completo'){
+            } else if (IdArea == '500946' || IdArea == '500946_1' || IdArea == '500946_2' || IdArea == '500946_1Completo' || IdArea == '500946Completo') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\500946.pdf`;
 
-            }else if(IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto'){
+            } else if (IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
 
             }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+            else {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
 
@@ -1338,8 +1374,8 @@ function Correo(Tipo, Area, Celda) {
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-    }else if ( Tipo == 5){
-        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+    } else if (Tipo == 5) {
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
         Color = "#fe1426";
         Texto = "Pestañas";
     }
