@@ -1100,7 +1100,7 @@ function Mineria(browser,  Pin) {
             }else if(IdArea == 'RFE_08B'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
-            }else if(IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto'){
+            }else if(IdArea == 'Riosucio598' || IdArea == 'Supia' || IdArea == 'supiaincompleto'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
 
             }
