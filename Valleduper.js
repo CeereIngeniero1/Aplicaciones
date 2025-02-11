@@ -416,7 +416,7 @@ function Mineria(browser,  Pin) {
             // }
 
 
-             if (Band == 1) {
+            if (Band == 1) {
                 MonitorearAreas(
                     "508391",
                     1,
