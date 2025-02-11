@@ -375,7 +375,8 @@ function Mineria(browser, Pin) {
                             0
                         );
                         // await page.waitForTimeout(50000);
-                        // Band=99;
+                        Band=99;
+                        break;
             }
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
