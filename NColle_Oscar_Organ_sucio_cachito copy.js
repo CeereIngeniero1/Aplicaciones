@@ -26,7 +26,7 @@ var user1 = '76966';
 var pass1 = 'CMLCollective2024*';
 var user2 = '96232';
 var pass2 = 'Campeon0624*';
-var Agente = 0;
+var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
@@ -370,7 +370,7 @@ function Mineria(browser, Pin) {
                     'Cachito',
                     1,
                     "",
-                    ["18N05E04A04L,	18N05E04A04S,	18N05E04A05V,	18N05E04A05K,	18N05E04A03P,	18N05E04A04K,	18N05E04A04Z,	18N05E04A04P,	18N05E04A05Q,	18N05E04A04T,	18N05E04A05L,	18N05E04A04M,	18N05E04A04N,	18N05E04A04U"],
+                    ["18P11M21I02G, 18P11M21I02R, 18P11M21I02L, 18P11M21I02B, 18P11M21I02S, 18P11M21I02M, 18P11M21I02H, 18P11M21I02C, 18P11M21E23V, 18P11M21E23H, 18P11M21E23C, 18P11M21E23Y, 18P11M21E23T, 18P11M21E23N, 18P11M21E23I, 18P11M21E23D, 18P11M21E23Z, 18P11M21E23U, 18P11M21E23P, 18P11M21E23J, 18P11M21E23E, 18P11M21I03Q, 18P11M21I03K, 18P11M21I03A, 18P11M21I03R, 18P11M21I03L, 18P11M21I03G, 18P11M21I03B, 18P11M21I03S, 18P11M21I03M, 18P11M21I02P, 18P11M21I02J, 18P11M21I02E, 18P11M21I03H, 18P11M21I03C, 18P11M21I03T, 18P11M21I03N, 18P11M21I03I, 18P11M21I03D, 18P11M21I03F, 18P11M21E22X, 18P11M21E22S, 18P11M21E22M, 18P11M21E22H, 18P11M21E22C, 18P11M21E22Y, 18P11M21E22T, 18P11M21E22N, 18P11M21E22I, 18P11M21E22D, 18P11M21E22Z, 18P11M21E22U, 18P11M21E22P, 18P11M21E22J, 18P11M21E22E, 18P11M21E22W, 18P11M21E22R, 18P11M21E22L, 18P11M21E22G, 18P11M21E22B, 18P11M21I03U, 18P11M21I03P, 18P11M21I03J, 18P11M21I03E, 18P11M21E23A, 18P11M21E23Q, 18P11M21E23K, 18P11M21E23F, 18P11M21E23W, 18P11M21E23R, 18P11M21E23L, 18P11M21E23G, 18P11M21E23B, 18P11M21E23X, 18P11M21E23S, 18P11M21E23M, 18P11M21I02T, 18P11M21I02N, 18P11M21I02I, 18P11M21I02D, 18P11M21I02U,18P11M21E22K, 18P11M21E17Y, 18P11M21E18Z, 18P11M21E24K, 18P11M21E24F, 18P11M21I02V, 18P11M21E22Q, 18P11M21E22F, 18P11M21E18W, 18P11M21E24A, 18P11M21I02K, 18P11M21I02Z, 18P11M21I03V, 18P11M21I03X, 18P11M21E24V, 18P11M21E17W, 18P11M21I02X, 18P11M21I02Y, 18P11M21E18X, 18P11M21I03Z, 18P11M21I04Q, 18P11M21I02W, 18P11M21I02F, 18P11M21I02A, 18P11M21E22A, 18P11M21E17V, 18P11M21E18V, 18P11M21E18Y, 18P11M21E19V, 18P11M21E22V, 18P11M21I03Y, 18P11M21I04A, 18P11M21I02Q, 18P11M21E17X, 18P11M21I04V, 18P11M21I04F, 18P11M21E24Q, 18P11M21E17Z, 18P11M21I03W, 18P11M21I04K"],
                     0
                 );
             }
@@ -1242,112 +1242,11 @@ function Mineria(browser, Pin) {
         //CAPTURA DE PANTALLA
         await CapturaPantalla(page);
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
-        await continPag[1].click();
+      
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
         });
-        console.log(" si navego ");
-        // await page.waitForSelector('#recaptchaContainer');
-        // console.log("lo encontro");
-        // await page.waitForTimeout(2000);
-        // // Obtener todos los iframes en la página
-        // const frames = await page.frames();
-
-        // // Encontrar el iframe que contiene el recaptcha
-        // const recaptchaFrame = frames.find(frame => frame.url().includes('recaptcha'));
-
-        // // Esperar a que el elemento con la clase 'recaptcha-checkbox-border' esté presente
-        // // await page.waitForSelector('#recaptcha-anchor');
-        // const recaptchaCheckbox = await recaptchaFrame.waitForSelector('#recaptcha-anchor');
-
-        // // Hacer clic en el checkbox del recaptcha
-        // await recaptchaCheckbox.click();
-
-
-
-        //CAPTURA DE PANTALLA
-        clearTimeout(Radisegundo);
-
-        let RadiTercero = setTimeout(() => {
-
-            console.log("ENTRO EN EL Radisegundo");
-            //page.close();
-            Mineria(browser, Pin);
-        }, 60000);
-
-
-
-        const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
-        await HacerClicEnSpanDocumentacionDeSoporte[0].click();
-        const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
-        if (AparecioCaptcha) {
-            console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-            await page.waitForTimeout(500);
-        } else {
-            console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
-        }
-
-        for (let i = 0; i < 1; i += 1) {
-            // await page.keyboard.press('Tab');
-            await keyboard.pressKey(Key.Tab);
-            console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
-        }
-
-        await keyboard.pressKey(Key.Enter);
-
-        // await page.waitForTimeout(1000000);
-
-        while (true) {
-            await page.waitForTimeout(1000);
-            console.log("Chequeando si el captcha está resuelto...");
-
-            const isCaptchaResolved = await page.evaluate(() => {
-                const responseField = document.querySelector('#g-recaptcha-response');
-                return responseField && responseField.value.length > 0;
-            });
-
-            if (isCaptchaResolved) {
-                console.log('El captcha ha sido resuelto.');
-                clearTimeout(RadiTercero);
-                break;
-            } else {
-                console.log('El captcha no ha sido resuelto aún.');
-            }
-        }
-
-
-
-        console.log('51. Bóton Radicar');
-
-        const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
-        console.log("Este es el boton radicar : " + btnRadicar1);
-
-        //await page.waitForTimeout(4000);
-        console.log("Le di click");
-
-        try {
-            await btnRadicar1[0].click();
-        } catch (exepcion) {
-            console.log("La pos 0 No fue ")
-        }
-        try {
-
-            await btnRadicar1[1].click();
-        } catch (exepcion) {
-            console.log("La 1 tampoco Y_Y")
-        }
-
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        //CORREO RADICACION
-        Correo(2, IdArea, Celda);
-        clearTimeout(Radisegundo);
-        await page.waitForTimeout(180000);
-        Mineria(browser, Pin);
-
-
-
-
+    
 
 
     })();
@@ -1398,8 +1297,8 @@ function Correo(Tipo, Area, Celda) {
     var mensaje = msg;
     var mailOptions = {
         from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: '  Fernando.pala.99@gmail.com',
+       // to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
+        to: '  Fernando.pala.99@gmail.com',
         subject: 'LA AREA ES-> ' + Area,
         text: 'LA AREA ES->  ' + Area + "  " + Celda,
         html: `
