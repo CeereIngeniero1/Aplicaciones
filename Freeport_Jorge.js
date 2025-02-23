@@ -14,7 +14,7 @@ const EquiposGenerales = {
     'LAPTOP-JL0BL28F': "JORGE EQUIPO",
     'MERCADEO': "MERCADEO",
     'DESKTOP-RF3NUO3': "PIXEL",
-    'HPRED241':"FERCHO ingeniero en sistemas best"
+    'HPRED241': "FERCHO ingeniero en sistemas best"
 }
 
 
@@ -66,14 +66,14 @@ async function Pagina() {
         devtools: false
     });
 
-        Mineria(browser, Pin);
+    Mineria(browser, Pin);
 
 }
 
 
 
 
-function Mineria(browser,  Pin) {
+function Mineria(browser, Pin) {
     (async () => {
 
         console.log("Esta es la vuelta " + ContadorVueltas);
@@ -83,7 +83,7 @@ function Mineria(browser,  Pin) {
             console.log("ENTRO EN EL PRIMERPASO")
 
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
 
         }, 20000);
 
@@ -97,19 +97,19 @@ function Mineria(browser,  Pin) {
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
 
-            try {
+        try {
 
-                console.log(user);
-                console.log(pass);
-                await page.type('#username', user);
-                await page.type('#password', pass);
+            console.log(user);
+            console.log(pass);
+            await page.type('#username', user);
+            await page.type('#password', pass);
 
-                page.click("#loginButton");
+            page.click("#loginButton");
 
 
-            } catch (ex) {
-                console.log("Entro en el catch");
-            }
+        } catch (ex) {
+            console.log("Entro en el catch");
+        }
 
         page.setDefaultTimeout(0);
         try {
@@ -130,7 +130,7 @@ function Mineria(browser,  Pin) {
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 35000);
 
 
@@ -172,62 +172,62 @@ function Mineria(browser,  Pin) {
         console.log(Pin);
 
         /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-            // Capturar todas las opciones de un select
-            const allOptions = await page.evaluate(select => {
-                const options = Array.from(select.options); // Convierte las opciones a un array
-                return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
-            }, selectPin);
+        // Capturar todas las opciones de un select
+        const allOptions = await page.evaluate(select => {
+            const options = Array.from(select.options); // Convierte las opciones a un array
+            return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
+        }, selectPin);
 
-            console.log('Todas las opciones:', allOptions);
+        console.log('Todas las opciones:', allOptions);
 
-            const closestDateOption = await page.evaluate(() => {
-                const select = document.querySelector('select');
+        const closestDateOption = await page.evaluate(() => {
+            const select = document.querySelector('select');
 
-                const monthMap = {
-                    "ENE": "01",
-                    "FEB": "02",
-                    "MAR": "03",
-                    "ABR": "04",
-                    "MAY": "05",
-                    "JUN": "06",
-                    "JUL": "07",
-                    "AGO": "08",
-                    "SEP": "09",
-                    "OCT": "10",
-                    "NOV": "11",
-                    "DIC": "12"
-                };
+            const monthMap = {
+                "ENE": "01",
+                "FEB": "02",
+                "MAR": "03",
+                "ABR": "04",
+                "MAY": "05",
+                "JUN": "06",
+                "JUL": "07",
+                "AGO": "08",
+                "SEP": "09",
+                "OCT": "10",
+                "NOV": "11",
+                "DIC": "12"
+            };
 
-                const options = Array.from(select.options).map(option => {
-                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
-                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
+            const options = Array.from(select.options).map(option => {
+                const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
+                const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
 
-                    const [day, monthName, year] = dateText.split('/');
-                    const month = monthMap[monthName];
-                    const formattedDate = new Date(`${year}-${month}-${day}`);
+                const [day, monthName, year] = dateText.split('/');
+                const month = monthMap[monthName];
+                const formattedDate = new Date(`${year}-${month}-${day}`);
 
-                    return { text, date: formattedDate };
-                });
-
-                const now = new Date();
-
-                const differences = options.map(option => {
-                    const diff = Math.abs(option.date - now);
-                    return { text: option.text, diff }; // Retornar la diferencia y el texto
-                });
-
-                console.log('Diferencias calculadas:', differences);
-
-                // Reducir para encontrar la fecha más cercana
-                const closest = options.reduce((prev, curr) => {
-                    return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
-                });
-
-                return closest.text;
+                return { text, date: formattedDate };
             });
 
-            console.log('Opción más cercana a la fecha actual:', closestDateOption);
-            const input = closestDateOption;
+            const now = new Date();
+
+            const differences = options.map(option => {
+                const diff = Math.abs(option.date - now);
+                return { text: option.text, diff }; // Retornar la diferencia y el texto
+            });
+
+            console.log('Diferencias calculadas:', differences);
+
+            // Reducir para encontrar la fecha más cercana
+            const closest = options.reduce((prev, curr) => {
+                return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
+            });
+
+            return closest.text;
+        });
+
+        console.log('Opción más cercana a la fecha actual:', closestDateOption);
+        const input = closestDateOption;
         /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
 
         await page.waitForXPath('//span[contains(.,"Continuar")]');
@@ -344,29 +344,27 @@ function Mineria(browser,  Pin) {
         var Texto = "";
         var liberadas = 0;
         var Celda = 0;
-
+        var ComparacionCeldas = "";
+        var areaFiltrado;
+        var Filtrado;
         let ComasTotalesPorArea = {};
-      
         while (Band != 99) {
 
-            const Pestanas = await browser.pages();
-            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            if (Pestanas.length >= 4) {
-                EnviarCorreosParaPestanas++;
-                if (EnviarCorreosParaPestanas <= 2) {
-                    // Se realiza envío de correo para alertar
-                    Correo(5, '', '');
-                }
+            if (Band == 81) {
+                console.log("Aviso")
+                Filtrado = `${areaFiltrado.join(', ')}`;
+                //console.log(  `["${areaFiltrado.join(', ')}"],` ) 
+                console.log("FILTRADO " + Filtrado);
+                // await page.waitForTimeout(2000000);
             }
-
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
 
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser,  Pin);
+                Mineria(browser, Pin);
+                clearTimeout(TimeArea);
+
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -384,10 +382,13 @@ function Mineria(browser,  Pin) {
             console.log(contador);
 
             console.log("y este es la bandera = " + Band);
-            let DetallesCompletos;
+            var DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
 
+                // Asegúrate de que Area es un array de celdas sin espacios innecesarios
+                const AreaCeldas = Area[0].split(',').map(celda => celda.trim());
+                console.log(Area);
                 page.evaluate(({ Area }) => {
                     document.querySelector('[id="cellIdsTxtId"]').value = Area.join('');
                     angular.element(document.getElementById('cellIdsTxtId')).triggerHandler('change');
@@ -399,15 +400,17 @@ function Mineria(browser,  Pin) {
                     Aviso: Aviso,
                     Celda: Celda,
                     Area: Area,
-                    Comas: Comas
+                    Comas: Comas,
+                    ComparacionCeldas: AreaCeldas, // Usa el array de celdas limpio
                 }
 
                 return DetallesCompletos;
             }
 
-            // if (Band == 1000) {
+            // CELDA DE PRUEBA, DISPONIBLE
+            // if (Band == 1) {
             //     MonitorearAreas(
-            //         "AreaDePrueba",
+            //         "007-85M",
             //         1,
             //         "Esto es una celda de prueba",
             //         ["18N05N14M12R"],
@@ -424,7 +427,7 @@ function Mineria(browser,  Pin) {
                     ['18P09K04N18H, 18P09K04N18Y, 18P09K04N18N, 18P09K04N19Z, 18P09K04N19P, 18P09K04N20H, 18P09K04N20I, 18P09K04N20U, 18P09K04P16V, 18P09K04P16W, 18P09K04P16S, 18P09K04P16H, 18P09K04P16D, 18P09K04P16J, 18P09K04P16E, 18P09K04P17V, 18P09K04P17W, 18P09K04P17S, 18P09K04P18F, 18P09K04P18U, 18P09K09C04Q, 18P09K04P19F, 18P09K09C14G, 18P09K09C09R, 18P09K04P19B, 18P09K09C04S, 18P09K04P19H, 18P09K04P19T, 18P09K09C04Z, 18P09K04P24U, 18P09K09C05K, 18P09K09C05F, 18P09K09C05A, 18P09K04P25F, 18P09K04P20A, 18P09K09C05S, 18P09K09C05G, 18P09K09C05B, 18P09K09C10Y, 18P09K09C10I, 18P09K04P20Y, 18P09K09C10E, 18P09K09C05E, 18P09K04P25P, 18P09K04P20U, 18P09K09D11A, 18P09K09D01K, 18P09K09D01X, 18P09K09D01M, 18P09K04Q21S, 18P09K04Q16M, 18P09K09D11D, 18P09K09D06I, 18P09K09D01D, 18P09K09D06Z, 18P09K09D01Z, 18P09K09D01E, 18P09K09D12F, 18P09K09D07F, 18P09K09D02F, 18P09K04Q17F, 18P09K09D07R, 18P09K04Q17W, 18P09K04Q17R, 18P09K04N18U, 18P09K04N19Q, 18P09K04N19K, 18P09K04N19B, 18P09K04N20Y, 18P09K04N20P, 18P09K04P16R, 18P09K04P16T, 18P09K04P16N, 18P09K04P17L, 18P09K04P17X, 18P09K04P18A, 18P09K09C09K, 18P09K09C04F, 18P09K04P24F, 18P09K09C04R, 18P09K04P24S, 18P09K04P19N, 18P09K09C09J, 18P09K09C04U, 18P09K04P20Q, 18P09K04P20F, 18P09K09C10W, 18P09K09C05R, 18P09K04P25H, 18P09K04P20X, 18P09K09C10D, 18P09K09C05N, 18P09K04P25Y, 18P09K04P25N, 18P09K09C10U, 18P09K09C05P, 18P09K04P20P, 18P09K04P20E, 18P09K09D06L, 18P09K09D01G, 18P09K04Q21L, 18P09K04Q21B, 18P09K04Q16R, 18P09K09D01S, 18P09K04Q21M, 18P09K04Q16C, 18P09K09D01N, 18P09K04Q21D, 18P09K09D06U, 18P09K04Q21P, 18P09K04Q16U, 18P09K09D07V, 18P09K09D07Q, 18P09K09D07A, 18P09K09D02Q, 18P09K04Q22V, 18P09K09D07W, 18P09K09D02L, 18P09K09D02G, 18P09K04Q22H, 18P09K04Q17H, 18P09K04N18I, 18P09K04N18D, 18P09K04N19A, 18P09K04N19I, 18P09K04N19U, 18P09K04N20A, 18P09K04N20X, 18P09K04N20D, 18P09K04P16F, 18P09K04P16U, 18P09K04P17G, 18P09K04P17B, 18P09K04P17H, 18P09K04P17N, 18P09K04P17J, 18P09K04P18L, 18P09K04P18M, 18P09K09C09V, 18P09K04P24K, 18P09K09C09L, 18P09K04P24W, 18P09K04P19R, 18P09K04P19L, 18P09K09C14C, 18P09K09C04M, 18P09K04P24X, 18P09K09C09D, 18P09K09C04Y, 18P09K09C04N, 18P09K04P24T, 18P09K04P24I, 18P09K09C09Z, 18P09K09C09E, 18P09K04P24E, 18P09K04P19J, 18P09K09C15A, 18P09K09C10F, 18P09K04P25V, 18P09K04P25A, 18P09K09C15H, 18P09K09C10X, 18P09K09C10G, 18P09K09C10B, 18P09K09C10C, 18P09K09C05C, 18P09K04P25W, 18P09K04P25M, 18P09K04P25G, 18P09K04P20B, 18P09K09C15D, 18P09K09C05I, 18P09K09C05D, 18P09K04P20I, 18P09K09D06V, 18P09K04Q16A, 18P09K09D01L, 18P09K04Q21W, 18P09K04Q21R, 18P09K04Q21C, 18P09K04Q16S, 18P09K04Q11Y, 18P09K09D01P, 18P09K04Q21J, 18P09K04Q21E, 18P09K04Q22F, 18P09K04Q22A, 18P09K09D07G, 18P09K04Q22B, 18P09K09D07X, 18P09K09D07C, 18P09K09D02M, 18P09K04Q17C, 18P09K04N18J, 18P09K04N19V, 18P09K04N19W, 18P09K04N19R, 18P09K04N19X, 18P09K04N20Q, 18P09K04N20M, 18P09K04P17F, 18P09K04P17Y, 18P09K04P17T, 18P09K04P17I, 18P09K04P17D, 18P09K04P17U, 18P09K04P17E, 18P09K04P18Q, 18P09K04P18W, 18P09K04P18R, 18P09K04P18K, 18P09K04P18D, 18P09K04P18P, 18P09K04P19Q, 18P09K09C09B, 18P09K04P19G, 18P09K09C09C, 18P09K09C04X, 18P09K04P24M, 18P09K04P24C, 18P09K04P19X, 18P09K09C14I, 18P09K09C09N, 18P09K04P24D, 18P09K04P19D, 18P09K09C14J, 18P09K04P24P, 18P09K04P19P, 18P09K09C10V, 18P09K09C10A, 18P09K09C15G, 18P09K09C10S, 18P09K09C05W, 18P09K09C05H, 18P09K04P25X, 18P09K04P20G, 18P09K09C10P, 18P09K04P25Z, 18P09K04P25U, 18P09K04P25E, 18P09K09D11F, 18P09K09D06Q, 18P09K04Q21K, 18P09K04Q21F, 18P09K04Q21A, 18P09K04Q16F, 18P09K04Q16W, 18P09K04Q16G, 18P09K09D01C, 18P09K09D06T, 18P09K09D01T, 18P09K04Q21T, 18P09K09D01J, 18P09K04Q21U, 18P09K04Q16Z, 18P09K09D07K, 18P09K09D02K, 18P09K04Q22Q, 18P09K09D07L, 18P09K09D07B, 18P09K09D02B, 18P09K04Q17G, 18P09K09D02S, 18P09K09D02C, 18P09K04Q22X, 18P09K04N18M, 18P09K04N18T, 18P09K04N18E, 18P09K04N19G, 18P09K04N19S, 18P09K04N19Y, 18P09K04N20R, 18P09K04N20G, 18P09K04N20Z, 18P09K04P16K, 18P09K04P16G, 18P09K04P16B, 18P09K04P16Z, 18P09K04P17Q, 18P09K04P17K, 18P09K04P17R, 18P09K04P17Z, 18P09K04P17P, 18P09K04P18V, 18P09K04P18G, 18P09K04P18B, 18P09K04P18T, 18P09K09C09W, 18P09K09C04W, 18P09K09C04L, 18P09K09C04B, 18P09K04P24R, 18P09K04P24L, 18P09K09C04H, 18P09K04P24H, 18P09K04P19S, 18P09K04P19C, 18P09K09C14D, 18P09K09C09T, 18P09K04P24Y, 18P09K04P24N, 18P09K09C09U, 18P09K09C04E, 18P09K09C15F, 18P09K09C10K, 18P09K04P25K, 18P09K04P20K, 18P09K09C10L, 18P09K09C05X, 18P09K09C05M, 18P09K04P25R, 18P09K04P25L, 18P09K04P25B, 18P09K04P20M, 18P09K09C15I, 18P09K09C10T, 18P09K09C05T, 18P09K04P25D, 18P09K04P20N, 18P09K04P20D, 18P09K09C15J, 18P09K09C05U, 18P09K04P25J, 18P09K04P20Z, 18P09K09D06A, 18P09K09D01Q, 18P09K09D01F, 18P09K04Q21Q, 18P09K04Q16Q, 18P09K09D11G, 18P09K09D06G, 18P09K09D06B, 18P09K09D01R, 18P09K09D06S, 18P09K04Q21X, 18P09K04Q16X, 18P09K04Q16H, 18P09K04Q21Y, 18P09K04Q16I, 18P09K04Q16D, 18P09K04Q21Z, 18P09K04Q11Z, 18P09K09D02V, 18P09K04Q17K, 18P09K04Q22G, 18P09K09D12H, 18P09K09D07H, 18P09K04Q22M, 18P09K04Q17X, 18P09K04N18X, 18P09K04N18S, 18P09K04N18C, 18P09K04N18P, 18P09K04N19L, 18P09K04N19C, 18P09K04N20V, 18P09K04N20W, 18P09K04N20B, 18P09K04N20C, 18P09K04N20T, 18P09K04P16Q, 18P09K04N20E, 18P09K04P16A, 18P09K04P17A, 18P09K04P18S, 18P09K04P18Y, 18P09K04P18N, 18P09K04P18I, 18P09K04P18Z, 18P09K09C04V, 18P09K04P24Q, 18P09K04P19A, 18P09K09C14B, 18P09K04P24B, 18P09K04P19W, 18P09K09C09X, 18P09K09C09I, 18P09K09C04D, 18P09K09C14E, 18P09K04P20V, 18P09K09C10R, 18P09K09C05L, 18P09K04P25S, 18P09K04P25T, 18P09K04P20T, 18P09K09C15E, 18P09K09C10Z, 18P09K09D01V, 18P09K04Q21V, 18P09K09D06R, 18P09K04Q21G, 18P09K09D11H, 18P09K09D11C, 18P09K09D06X, 18P09K09D06C, 18P09K04Q21H, 18P09K09D01Y, 18P09K09D01I, 18P09K04Q21N, 18P09K04Q21I, 18P09K04Q16T, 18P09K04Q16N, 18P09K09D06P, 18P09K09D12A, 18P09K09D02A, 18P09K04Q22K, 18P09K04Q12V, 18P09K09D12B, 18P09K09D02W, 18P09K09D02R, 18P09K04Q22R, 18P09K04Q17B, 18P09K09D02X, 18P09K04Q22S, 18P09K04Q22C, 18P09K04Q17M, 18P09K04N18Z, 18P09K04N19F, 18P09K04N19J, 18P09K04N19E, 18P09K04N20K, 18P09K04N20F, 18P09K04N20S, 18P09K04N20N, 18P09K04N20J, 18P09K04P16P, 18P09K04P17C, 18P09K04P18C, 18P09K09C09Q, 18P09K09C09A, 18P09K09C04A, 18P09K04P24V, 18P09K04P19V, 18P09K09C09G, 18P09K09C04G, 18P09K09C14H, 18P09K09C09H, 18P09K09C09Y, 18P09K04P19I, 18P09K09C09P, 18P09K04P24J, 18P09K04P19Z, 18P09K09C10Q, 18P09K04P25Q, 18P09K09C15B, 18P09K09C15C, 18P09K09C10H, 18P09K04P20W, 18P09K04P20R, 18P09K04P20S, 18P09K04P20H, 18P09K04P20C, 18P09K09C10N, 18P09K04P25I, 18P09K09C10J, 18P09K09C05J, 18P09K04P20J, 18P09K09D06F, 18P09K04Q16K, 18P09K09D06W, 18P09K09D01B, 18P09K04Q16B, 18P09K09D06M, 18P09K09D06H, 18P09K09D01H, 18P09K09D06N, 18P09K09D11J, 18P09K09D11E, 18P09K09D06J, 18P09K09D06E, 18P09K09D01U, 18P09K04Q16P, 18P09K04Q17V, 18P09K04Q22L, 18P09K04Q12W, 18P09K09D12C, 18P09K09D07S, 18P09K04Q12X, 18P09K04N19M, 18P09K04N19H, 18P09K04N19T, 18P09K04N19N, 18P09K04N19D, 18P09K04N20L, 18P09K04P16L, 18P09K04P16X, 18P09K04P16M, 18P09K04P16C, 18P09K04P16Y, 18P09K04P16I, 18P09K04P17M, 18P09K04P18X, 18P09K04P18H, 18P09K04P18J, 18P09K04P18E, 18P09K09C14F, 18P09K09C14A, 18P09K09C09F, 18P09K09C04K, 18P09K04P24A, 18P09K04P19K, 18P09K04P24G, 18P09K09C09S, 18P09K09C09M, 18P09K09C04C, 18P09K04P19M, 18P09K09C04T, 18P09K09C04I, 18P09K04P19Y, 18P09K09C04P, 18P09K09C04J, 18P09K04P24Z, 18P09K04P19U, 18P09K04P19E, 18P09K09C05V, 18P09K09C05Q, 18P09K09C10M, 18P09K04P25C, 18P09K04P20L, 18P09K09C05Y, 18P09K09C05Z, 18P09K09D06K, 18P09K09D01A, 18P09K04Q16V, 18P09K09D11B, 18P09K09D01W, 18P09K04Q16L, 18P09K04Q11X, 18P09K09D11I, 18P09K09D06Y, 18P09K09D06D, 18P09K04Q16Y, 18P09K04Q16J, 18P09K04Q16E, 18P09K04Q17Q, 18P09K04Q17A, 18P09K09D12G, 18P09K04Q22W, 18P09K04Q17L, 18P09K09D07M, 18P09K09D02H, 18P09K04Q17S'],
                     77
                 );
-            } else  if (Band == 1) {
+            } else if (Band == 1) {
                 MonitorearAreas(
                     "508390",// rECUERDA EL SAHPEFILE DEBE IR CON ESTE MISMO NOMBRE ES DECIR 508390.zip
                     1,
@@ -433,9 +436,18 @@ function Mineria(browser,  Pin) {
                     77
                 );
             }
-           // 18N02M16N08J celta que se retiro para radicar con are 
-
-
+            if (Band == 81) {
+                console.log("FILTRADO  2 " + Filtrado);
+                MonitorearAreas(
+                    IdArea,
+                    1,
+                    "Esto es una celda de prueba",
+                    [Filtrado],
+                    0
+                );
+                // await page.waitForTimeout(50000);
+                // Band=99;
+            }
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
@@ -443,9 +455,14 @@ function Mineria(browser,  Pin) {
             Celda = DetallesCompletos.Celda;
             Area = DetallesCompletos.Area;
             Comas = DetallesCompletos.Comas;
+            ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await continCeldas[1].click();
+            // if(Band == 81 ){
+            //     console.log("prueba");
+            //     await page.waitForTimeout(300000);
+            // }
             console.log(IdArea);
             await page.waitForTimeout(3000);
 
@@ -458,13 +475,85 @@ function Mineria(browser,  Pin) {
                 if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
                     cont = 0;
                 }
-
             }
+
+            /* CODIGO PARA REORGANIZAR AREA CON CELDAS NO DISPONIBLES, INFERIOR A LA INICIAL */
+            // Extraer celdas no disponibles del DOM
+            const celdasNoDisponibles = await page.$$eval('a.errorMsg', links => {
+                return links
+                    .filter(link => link.textContent.includes('Las siguientes celdas de selección no están disponibles:'))
+                    .map(link => link.textContent.split(': ')[1].split(',').map(celda => celda.trim())); // Extrae las celdas y las limpia
+            });
+
+            console.log(`===============================================================================================`.cyan.bold);
+            // console.log(`AREA COMPLETA => ${Area}`);
+            // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
+
+            console.log(`ÁREA COMPLETA => `.magenta.bold);
+            console.log(`[${Area}]`);
+            console.log(`CELDAS NO DISPONIBLES => `.red.bold);
+            console.log(`[${celdasNoDisponibles}]`);
+
+            if (celdasNoDisponibles.length > 0) {
+                // Tipo, Area, Celda
+
+                // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
+                const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
+
+                // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
+                const areaCeldas = ComparacionCeldas;
+
+                // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
+                areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
+
+                //Correo(1, Area, areaFiltrado);
+
+                // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
+                // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
+                // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
+                console.log(`CELDAS DISPONIBLES => `.green.bold);
+                console.log(`["${areaFiltrado.join(', ')}"],`);
+                console.log(`===============================================================================================`.cyan.bold);
+
+                //     page.evaluate(() => {
+                //         document.querySelector('[id="cellIdsTxtId"]').value = "";
+                //     });
+
+                //     MonitorearAreas(
+                //         "007-85M",
+                //         1,
+                //         "Esto es una celda de prueba",
+                //         `["${areaFiltrado.join(', ')}"],`,
+                //         0
+                //     );
+
+                //     IdArea = DetallesCompletos.IdArea;
+                // Aviso = DetallesCompletos.Aviso;
+                // Celda = DetallesCompletos.Celda;
+                // Area = DetallesCompletos.Area;
+                // Comas = DetallesCompletos.Comas;
+                // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
+
+                // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+                // await continCeldas[1].click();
+
+                // Band = 80;
+
+
+                // await page.waitForTimeout(2000000);
+            } else {
+                Band = 80;
+                console.log('No se encontraron celdas no disponibles.');
+                console.log(`===============================================================================================`.cyan.bold);
+            }
+            /* FIN FIN FIN */
+
+            // await page.waitForTimeout(2000000);
             const FechaReapertura = await page.$$eval("a", links =>
                 links.map(link => link.textContent)
             );
             var Reapertura = 0;
-            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA
+            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
             for (let i = 0; i < FechaReapertura.length; i++) {
@@ -475,9 +564,9 @@ function Mineria(browser,  Pin) {
                     console.log("Lo encontre");
                     Reapertura = 1;
                     contreapertura++;
-                    if (contreapertura < 2) {
-                        Correo(3, IdArea, Celda);
-                    }
+                    // if (contreapertura < 2) {
+                    //     Correo(3, IdArea, Celda);
+                    // }
 
 
                     console.log(contreapertura);
@@ -496,10 +585,13 @@ function Mineria(browser,  Pin) {
                     document.querySelector('[id="cellIdsTxtId"]').value = "";
                 });
                 Band++;
-                //Este es la cantidad de areas mas 1
+                //Este es la cantidad de areas mas 1 
                 if (Band == 2) {
                     Band = 1;
                 }
+                // else if (Band == 81){
+
+                // }
 
             } else {
                 Band = 99;
@@ -517,7 +609,7 @@ function Mineria(browser,  Pin) {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 20000);
 
         console.log(page.url());
@@ -972,13 +1064,13 @@ function Mineria(browser,  Pin) {
 
         });
 
-         // SELECCIÓN DE PROFESIONALES => CONTADOR(ES), GEÓLOGO(S), INGENIERO(S) GEÓLOGO(S), INGENIERO(S) DE MINAS
+        // SELECCIÓN DE PROFESIONALES => CONTADOR(ES), GEÓLOGO(S), INGENIERO(S) GEÓLOGO(S), INGENIERO(S) DE MINAS
         // ==============================================================================
         console.log("INICIA LA SELECCIÓN DE LOS PROFESIONALES");
         console.log('================================================================');
         let profesionales = [
             // { tipo: "Geólogo", nombres: ["MARVIN MOSQUERA PALACIOS  (74336)"] },
-             { tipo: "Ingeniero Geólogo", nombres: ["Marvin  Mosquera Palacios (74336)"]},
+            { tipo: "Ingeniero Geólogo", nombres: ["Marvin  Mosquera Palacios (74336)"] },
             //  { tipo: "Ingeniero de Minas", nombres: [""]}
         ];
 
@@ -1020,7 +1112,7 @@ function Mineria(browser,  Pin) {
 
 
 
-//ESTADOS FINACIERS
+            //ESTADOS FINACIERS
             // Check
             // document.querySelector('Input[id="declareIndId0"]').click();
 
@@ -1063,7 +1155,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
 
 
         }, 30000);
@@ -1093,12 +1185,12 @@ function Mineria(browser,  Pin) {
 
         try {
 
-            
-            let ArchivoAmbiental ;
+
+            let ArchivoAmbiental;
             ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
-            
-            
+
+
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1148,12 +1240,12 @@ function Mineria(browser,  Pin) {
                 "p_CaaCataMandatoryDocumentToAttachId8",//8
                 "p_CaaCataMandatoryDocumentToAttachId9",//9
                 "p_CaaCataMandatoryDocumentToAttachId10",//10
-                  "p_CaaCataMandatoryDocumentToAttachId11",//11
-                 "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId11",//11
+                "p_CaaCataMandatoryDocumentToAttachId12",//12
                 "p_CaaCataMandatoryDocumentToAttachId13",//13
                 // "p_CaaCataMandatoryDocumentToAttachId14"//14
             ];
-                console.log(ElementosFile.length);
+            console.log(ElementosFile.length);
             try {
                 for (let i = 0; i < ElementosFile.length; i++) {
                     try {
@@ -1205,7 +1297,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 60000);
 
 
@@ -1220,7 +1312,7 @@ function Mineria(browser,  Pin) {
             console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
         }
 
-        for (let i = 0; i < 1; i+=1) {
+        for (let i = 0; i < 1; i += 1) {
             // await page.keyboard.press('Tab');
             await keyboard.pressKey(Key.Tab);
             console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
@@ -1277,7 +1369,7 @@ function Mineria(browser,  Pin) {
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
-        Mineria(browser,  Pin);
+        Mineria(browser, Pin);
 
 
 
@@ -1310,8 +1402,8 @@ function Correo(Tipo, Area, Celda) {
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-    }else if ( Tipo == 5){
-        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+    } else if (Tipo == 5) {
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
         Color = "#fe1426";
         Texto = "Pestañas";
     }
@@ -1483,34 +1575,34 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
                     await addProfesional[0].click();
                 } catch (error) {
                     console.log("ERR 0");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[1].click();
                 } catch (error) {
                     console.log("ERR 1");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[2].click();
 
                 } catch (error) {
                     console.log("ERR 2");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[3].click();
                 } catch (error) {
                     console.log("ERR 3");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[4].click();
                 } catch (error) {
                     console.log("ERR 4");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
             }
 

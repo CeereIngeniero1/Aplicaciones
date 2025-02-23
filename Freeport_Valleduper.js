@@ -344,29 +344,27 @@ function Mineria(browser,  Pin) {
         var Texto = "";
         var liberadas = 0;
         var Celda = 0;
-
+        var ComparacionCeldas = "";
+        var areaFiltrado;
+        var Filtrado;
         let ComasTotalesPorArea = {};
-      
         while (Band != 99) {
 
-            const Pestanas = await browser.pages();
-            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            if (Pestanas.length >= 4) {
-                EnviarCorreosParaPestanas++;
-                if (EnviarCorreosParaPestanas <= 2) {
-                    // Se realiza envío de correo para alertar
-                    Correo(5, '', '');
-                }
+            if (Band == 81) {
+                console.log("Aviso")
+                Filtrado = `${areaFiltrado.join(', ')}`;
+                //console.log(  `["${areaFiltrado.join(', ')}"],` ) 
+                console.log("FILTRADO " + Filtrado);
+                // await page.waitForTimeout(2000000);
             }
-
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
 
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser,  Pin);
+                Mineria(browser, Pin);
+                clearTimeout(TimeArea);
+
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -384,10 +382,13 @@ function Mineria(browser,  Pin) {
             console.log(contador);
 
             console.log("y este es la bandera = " + Band);
-            let DetallesCompletos;
+            var DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
 
+                // Asegúrate de que Area es un array de celdas sin espacios innecesarios
+                const AreaCeldas = Area[0].split(',').map(celda => celda.trim());
+                console.log(Area);
                 page.evaluate(({ Area }) => {
                     document.querySelector('[id="cellIdsTxtId"]').value = Area.join('');
                     angular.element(document.getElementById('cellIdsTxtId')).triggerHandler('change');
@@ -399,15 +400,17 @@ function Mineria(browser,  Pin) {
                     Aviso: Aviso,
                     Celda: Celda,
                     Area: Area,
-                    Comas: Comas
+                    Comas: Comas,
+                    ComparacionCeldas: AreaCeldas, // Usa el array de celdas limpio
                 }
 
                 return DetallesCompletos;
             }
 
-            // if (Band == 1000) {
+            // CELDA DE PRUEBA, DISPONIBLE
+            // if (Band == 1) {
             //     MonitorearAreas(
-            //         "AreaDePrueba",
+            //         "007-85M",
             //         1,
             //         "Esto es una celda de prueba",
             //         ["18N05N14M12R"],
@@ -433,9 +436,18 @@ function Mineria(browser,  Pin) {
                     77
                 );
             }
-           // 18N02M16N08J celta que se retiro para radicar con are 
-
-
+            if (Band == 81) {
+                console.log("FILTRADO  2 " + Filtrado);
+                MonitorearAreas(
+                    IdArea,
+                    1,
+                    "Esto es una celda de prueba",
+                    [Filtrado],
+                    0
+                );
+                // await page.waitForTimeout(50000);
+                // Band=99;
+            }
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
@@ -443,9 +455,14 @@ function Mineria(browser,  Pin) {
             Celda = DetallesCompletos.Celda;
             Area = DetallesCompletos.Area;
             Comas = DetallesCompletos.Comas;
+            ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await continCeldas[1].click();
+            // if(Band == 81 ){
+            //     console.log("prueba");
+            //     await page.waitForTimeout(300000);
+            // }
             console.log(IdArea);
             await page.waitForTimeout(3000);
 
@@ -458,13 +475,85 @@ function Mineria(browser,  Pin) {
                 if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
                     cont = 0;
                 }
-
             }
+
+            /* CODIGO PARA REORGANIZAR AREA CON CELDAS NO DISPONIBLES, INFERIOR A LA INICIAL */
+            // Extraer celdas no disponibles del DOM
+            const celdasNoDisponibles = await page.$$eval('a.errorMsg', links => {
+                return links
+                    .filter(link => link.textContent.includes('Las siguientes celdas de selección no están disponibles:'))
+                    .map(link => link.textContent.split(': ')[1].split(',').map(celda => celda.trim())); // Extrae las celdas y las limpia
+            });
+
+            console.log(`===============================================================================================`.cyan.bold);
+            // console.log(`AREA COMPLETA => ${Area}`);
+            // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
+
+            console.log(`ÁREA COMPLETA => `.magenta.bold);
+            console.log(`[${Area}]`);
+            console.log(`CELDAS NO DISPONIBLES => `.red.bold);
+            console.log(`[${celdasNoDisponibles}]`);
+
+            if (celdasNoDisponibles.length > 0) {
+                // Tipo, Area, Celda
+
+                // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
+                const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
+
+                // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
+                const areaCeldas = ComparacionCeldas;
+
+                // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
+                areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
+
+                //Correo(1, Area, areaFiltrado);
+
+                // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
+                // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
+                // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
+                console.log(`CELDAS DISPONIBLES => `.green.bold);
+                console.log(`["${areaFiltrado.join(', ')}"],`);
+                console.log(`===============================================================================================`.cyan.bold);
+
+                //     page.evaluate(() => {
+                //         document.querySelector('[id="cellIdsTxtId"]').value = "";
+                //     });
+
+                //     MonitorearAreas(
+                //         "007-85M",
+                //         1,
+                //         "Esto es una celda de prueba",
+                //         `["${areaFiltrado.join(', ')}"],`,
+                //         0
+                //     );
+
+                //     IdArea = DetallesCompletos.IdArea;
+                // Aviso = DetallesCompletos.Aviso;
+                // Celda = DetallesCompletos.Celda;
+                // Area = DetallesCompletos.Area;
+                // Comas = DetallesCompletos.Comas;
+                // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
+
+                // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+                // await continCeldas[1].click();
+
+                // Band = 80;
+
+
+                // await page.waitForTimeout(2000000);
+            } else {
+                Band = 80;
+                console.log('No se encontraron celdas no disponibles.');
+                console.log(`===============================================================================================`.cyan.bold);
+            }
+            /* FIN FIN FIN */
+
+            // await page.waitForTimeout(2000000);
             const FechaReapertura = await page.$$eval("a", links =>
                 links.map(link => link.textContent)
             );
             var Reapertura = 0;
-            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA
+            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
             for (let i = 0; i < FechaReapertura.length; i++) {
@@ -475,9 +564,9 @@ function Mineria(browser,  Pin) {
                     console.log("Lo encontre");
                     Reapertura = 1;
                     contreapertura++;
-                    if (contreapertura < 2) {
-                        Correo(3, IdArea, Celda);
-                    }
+                    // if (contreapertura < 2) {
+                    //     Correo(3, IdArea, Celda);
+                    // }
 
 
                     console.log(contreapertura);
@@ -496,10 +585,13 @@ function Mineria(browser,  Pin) {
                     document.querySelector('[id="cellIdsTxtId"]').value = "";
                 });
                 Band++;
-                //Este es la cantidad de areas mas 1
+                //Este es la cantidad de areas mas 1 
                 if (Band == 2) {
                     Band = 1;
                 }
+                // else if (Band == 81){
+
+                // }
 
             } else {
                 Band = 99;
@@ -507,7 +599,6 @@ function Mineria(browser,  Pin) {
             console.log("limpia el timer");
             clearTimeout(TimeArea);
         }
-
 
 
         console.log("ahhh se salio Y_Y ");
