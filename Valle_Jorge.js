@@ -531,11 +531,12 @@ function Mineria(browser,  Pin) {
                 // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
                 // await continCeldas[1].click();
 
-                Band = 80;
+                
 
 
                 // await page.waitForTimeout(2000000);
             } else {
+                Band = 80;
                 console.log('No se encontraron celdas no disponibles.');
                 console.log(`===============================================================================================`.cyan.bold);
             }
