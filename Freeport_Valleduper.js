@@ -544,7 +544,7 @@ function Mineria(browser,  Pin) {
 
                 // await page.waitForTimeout(2000000);
             } else {
-                Band = 80;
+                // Band = 80;
                 console.log('No se encontraron celdas no disponibles.');
                 console.log(`===============================================================================================`.cyan.bold);
             }
