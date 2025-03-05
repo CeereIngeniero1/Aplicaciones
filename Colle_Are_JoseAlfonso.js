@@ -313,7 +313,12 @@ async function AreaEspecial(browser) {
     }
     console.log("Sali !!!!!!!!!!!!!!!!!!");
 
-
+    let ciclo2 = setTimeout(() => {
+        console.log("ENTRO EN EL Tercerpaso")
+        page.close();
+        AreaEspecial(browser);
+        return "error";
+    }, 15000);
     var contador = 0;
 
     try {
@@ -374,6 +379,7 @@ async function AreaEspecial(browser) {
     } catch (error) {
 
     }
+    clearTimeout(ciclo2);
     //console.log(continuar.length);
     await page.waitForTimeout(15000);
     AreaEspecial(browser);
