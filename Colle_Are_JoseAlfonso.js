@@ -60,6 +60,7 @@ async function AreaEspecial(browser) {
     }, 20000);
     clearTimeout(Primerpaso);
 
+    await page.waitForTimeout(3000);
 
     try {
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
