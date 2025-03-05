@@ -373,6 +373,15 @@ function Mineria(browser, Pin) {
                     0 // comas
                 )
             }
+            else  if (Band == 4) {
+                MonitorearAreas(
+                    "509136",
+                    1,
+                    "",
+                    ["18N05A25G16G"],
+                    0
+                );
+            }  
 
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
@@ -457,7 +466,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 4) {
+                if (Band == 5) {
                     Band = 1;
                 }
 
