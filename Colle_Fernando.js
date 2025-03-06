@@ -381,7 +381,15 @@ function Mineria(browser, Pin) {
                     ["18N05A25G16G"],
                     0
                 );
-            }  
+            }  else  if (Band == 5) {
+                MonitorearAreas(
+                    "CollectiveCAG_141",
+                    1,
+                    "18N05A25N06S",
+                    ["18N05A25N06S, 18N05A25N06R, 18N05A25N06N, 18N05A25N06I, 18N05A25N06K, 18N05A25N06L, 18N05A25N06M, 18N05A25N06T, 18N05A25N06Q, 18N05A25N06H"],
+                    0
+                );
+            } 
 
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
@@ -466,7 +474,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 5) {
+                if (Band == 6) {
                     Band = 1;
                 }
 

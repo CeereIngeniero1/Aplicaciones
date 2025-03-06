@@ -555,7 +555,15 @@ function Mineria(browser,  Pin) {
                     [" 18N05A24Q23G, 18N05A24Q18W, 18N05A24Q18Y, 18N05A24Q23F, 18N05A24Q23A, 18N05A24Q23B, 18N05A24Q18X, 18N05A24Q23D, 18N05A24Q17Z, 18N05A24Q22J, 18N05A24Q18V, 18N05A24Q23H, 18N05A24Q22E, 18N05A24Q23C"],
                     0
                 );
-            }  
+            }  else  if (Band == 22) {
+                MonitorearAreas(
+                    "CollectiveCAG_141",
+                    1,
+                    "18N05A25N06S",
+                    ["18N05A25N06S, 18N05A25N06R, 18N05A25N06N, 18N05A25N06I, 18N05A25N06K, 18N05A25N06L, 18N05A25N06M, 18N05A25N06T, 18N05A25N06Q, 18N05A25N06H"],
+                    0
+                );
+            } 
           
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCESOS
             IdArea = DetallesCompletos.IdArea;
@@ -616,7 +624,7 @@ function Mineria(browser,  Pin) {
                     document.querySelector('[id="cellIdsTxtId"]').value = "";
                 });
                 Band++;
-                if (Band == 22) {
+                if (Band == 23) {
                     Band = 1; 
                 }
 
