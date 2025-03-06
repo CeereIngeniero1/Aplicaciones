@@ -1324,11 +1324,15 @@ function Mineria(browser,  Pin) {
             }else if(IdArea == '509136'  ){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509136.pdf`;
 
+            }else if(IdArea == 'CollectiveCAG_141'  ){
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\CollectiveCAG_141.pdf`;
+
             }
             else{
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
+            
             
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
