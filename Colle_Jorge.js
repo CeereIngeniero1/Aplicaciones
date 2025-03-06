@@ -1090,6 +1090,7 @@ function Mineria(browser, Pin) {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
            }
+           
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
