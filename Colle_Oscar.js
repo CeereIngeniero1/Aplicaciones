@@ -1076,7 +1076,10 @@ function Mineria(browser, Pin) {
            }else if(IdArea == 'CollectiveCAG_141'  ){
                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\CollectiveCAG_141.pdf`;
 
-           }
+           }else if(IdArea == '647_17'  ){
+            ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\647_17.pdf`;
+
+        }
            else{
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
