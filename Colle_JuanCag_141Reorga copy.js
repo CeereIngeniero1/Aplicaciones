@@ -360,7 +360,7 @@ function Mineria(browser, Pin) {
                     "CollectiveCAG_141",
                     1,
                     "18N05A25N06S",
-                    ["18N05A25N06S, 18N05A25N06R, 18N05A25N06N, 18N05A25N06I, 18N05A25N06K, 18N05A25N06L, 18N05A25N06M, 18N05A25N06T, 18N05A25N06Q, 18N05A25N06H"],
+                    ["18N05A25N06S, 18N05A25N06R, 18N05A25N06N, 18N05A25N06I, 18N05A25N06K, 18N05A25N06L, 18N05A25N06M, 18N05A25N06T, 18N05A25N06Q, 18N05A25N06H, 18N05N14M12R"],
                     0
                 );
             }
@@ -455,9 +455,8 @@ function Mineria(browser, Pin) {
                     console.log('No se encontraron celdas no disponibles.');
                     console.log(`===============================================================================================`.cyan.bold);
                 }
+                /* FIN FIN FIN */
             }
-            /* FIN FIN FIN */
-
 
             const FechaReapertura = await page.$$eval("a", links =>
                 links.map(link => link.textContent)
@@ -1208,96 +1207,10 @@ function Mineria(browser, Pin) {
         //CAPTURA DE PANTALLA
         await CapturaPantalla(page);
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
-        await continPag[1].click();
+
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
         });
-        console.log(" si navego ");
-
-
-
-        //CAPTURA DE PANTALLA
-        clearTimeout(Radisegundo);
-
-        let RadiTercero = setTimeout(() => {
-
-            console.log("ENTRO EN EL Radisegundo");
-            //page.close();
-            Mineria(browser, Pin);
-        }, 60000);
-
-
-        const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
-        await HacerClicEnSpanDocumentacionDeSoporte[0].click();
-        const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
-        if (AparecioCaptcha) {
-            console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-            await page.waitForTimeout(500);
-        } else {
-            console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
-        }
-
-        for (let i = 0; i < 1; i += 1) {
-            // await page.keyboard.press('Tab');
-            await keyboard.pressKey(Key.Tab);
-            console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
-        }
-
-        await keyboard.pressKey(Key.Enter);
-
-        // await page.waitForTimeout(1000000);
-
-        while (true) {
-            await page.waitForTimeout(1000);
-            console.log("Chequeando si el captcha está resuelto...");
-
-            const isCaptchaResolved = await page.evaluate(() => {
-                const responseField = document.querySelector('#g-recaptcha-response');
-                return responseField && responseField.value.length > 0;
-            });
-
-            if (isCaptchaResolved) {
-                console.log('El captcha ha sido resuelto.');
-                clearTimeout(RadiTercero);
-                break;
-            } else {
-                console.log('El captcha no ha sido resuelto aún.');
-            }
-        }
-
-
-
-        console.log('51. Bóton Radicar');
-
-        const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
-        console.log("Este es el boton radicar : " + btnRadicar1);
-
-        //await page.waitForTimeout(4000);
-        console.log("Le di click");
-
-        try {
-            await btnRadicar1[0].click();
-        } catch (exepcion) {
-            console.log("La pos 0 No fue ")
-        }
-        try {
-
-            await btnRadicar1[1].click();
-        } catch (exepcion) {
-            console.log("La 1 tampoco Y_Y")
-        }
-
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        //CORREO RADICACION
-        Correo(2, IdArea, Celda);
-        clearTimeout(Radisegundo);
-        await page.waitForTimeout(180000);
-        Mineria(browser, Pin);
-
-
-
-
 
     })();
 }
@@ -1347,8 +1260,8 @@ function Correo(Tipo, Area, Celda) {
     var mensaje = msg;
     var mailOptions = {
         from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: '  Fernando.pala.99@gmail.com',
+        //to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
+        to: '  Fernando.pala.99@gmail.com',
         subject: 'LA AREA ES-> ' + Area,
         text: 'LA AREA ES->  ' + Area + "  " + Celda,
         html: `
