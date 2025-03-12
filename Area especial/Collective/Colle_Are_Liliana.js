@@ -154,7 +154,7 @@ async function AreaEspecial(browser) {
     console.log("LLegue hasta aca");
 
 
-    await page.type('#selectedApplicantInputId', '96458');
+    await page.type('#selectedApplicantInputId', '96474');
 
     await page.waitForTimeout(3000);
 
