@@ -1150,7 +1150,7 @@ function Mineria(browser, Pin) {
         try {
             let ArchivoAmbiental
             if (IdArea == 'OG2_082210_2') {
-                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\OG2-082222X vital.pdf`;
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\OG2_082210_2.pdf`;
             
             } else if (IdArea == 'ARE-509966') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\ARE-509966.pdf`;
