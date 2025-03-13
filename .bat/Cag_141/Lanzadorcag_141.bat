@@ -1,5 +1,5 @@
 @echo off
-set "hora_lanzamiento=0:46:10"
+set "hora_lanzamiento=7:29:47"
 
 :loop
 rem Obtén la hora actual
@@ -13,7 +13,7 @@ echo Hora actual: %hora_actual%
 rem Compara la hora actual con la hora de lanzamiento
 if "%hora_actual%" == "%hora_lanzamiento%" (
     rem Lanza la aplicación (reemplaza "ruta\de\tu_aplicacion.exe" por la ruta de tu aplicación)
-    start "" "C:\Aplicaciones\.bat\505485\Colle505485_Fernando_Reorga.bat"
+    start "" "C:\Aplicaciones\.bat\Cag_141\Lanzadorcag_141.bat"
     exit
 )
 

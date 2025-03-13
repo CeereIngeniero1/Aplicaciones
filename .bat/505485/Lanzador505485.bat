@@ -1,5 +1,5 @@
 @echo off
-set "hora_lanzamiento=0:46:10"
+set "hora_lanzamiento=7:29:47"
 
 :loop
 rem Obtén la hora actual
