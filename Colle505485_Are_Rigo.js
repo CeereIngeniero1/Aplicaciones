@@ -3,7 +3,7 @@ const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
 const user = '96443';
 const pass = 'Rigomazo2024*';
-var Agente = 0;
+var Agente = 1;
 
 Pagina();
 async function Pagina() {
