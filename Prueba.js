@@ -1,1 +1,0 @@
-var monda = 0;

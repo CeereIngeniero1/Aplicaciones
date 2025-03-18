@@ -1,2 +1,1 @@
-var juan ;
-var mon;
+var monda = 0;
