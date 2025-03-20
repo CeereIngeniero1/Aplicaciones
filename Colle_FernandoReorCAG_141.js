@@ -275,8 +275,7 @@ function Mineria(browser, Pin) {
         var contador = 0;
         var Band = 1;
         var IdArea = '';
-        var SoloAviso = 0;
-        ContadorVueltas++;
+        var SoloAviso = 0; 
         var Comas = 0;
         var Texto = "";
         var liberadas = 0;
