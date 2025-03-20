@@ -3,7 +3,7 @@ const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 const colors = require('colors');
 const user = '96232';
 const pass = 'Campeon0624*';
-var Agente = 1;
+var Agente = 0;
 
 Pagina();
 async function Pagina() {
@@ -77,7 +77,7 @@ async function AreaEspecial(browser) {
 
 
 
-            await page.type('#submitterPersonOrganizationNameId', '96458');
+            await page.type('#submitterPersonOrganizationNameId', '96232');
 
             await page.waitForTimeout(3000);
 
@@ -154,7 +154,7 @@ async function AreaEspecial(browser) {
     console.log("LLegue hasta aca");
 
 
-    await page.type('#selectedApplicantInputId', '96458');
+    await page.type('#selectedApplicantInputId', '96232');
 
     await page.waitForTimeout(3000);
 
