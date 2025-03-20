@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+const colors = require('colors');
 // Actualizado
 const os = require('os');
 const NombreEquipo = os.hostname();

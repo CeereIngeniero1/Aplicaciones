@@ -3,6 +3,7 @@ const fs = require('fs');
 const { Console } = require('console');
 const colors = require('colors');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+const colors = require('colors');
 
 const os = require('os');
 const NombreEquipo = os.hostname();
