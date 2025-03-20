@@ -363,31 +363,10 @@ function Mineria(browser, Pin) {
             Comas = DetallesCompletos.Comas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+            await page.waitForTimeout(1000);
             await continCeldas[1].click();
             console.log(IdArea);
-            // let Contador2 = 0;
-
-            //     while (true) {
-            //         try {
-            //             await page.waitForTimeout(1000);
-            //             if (page.url() == 'https://annamineria.anm.gov.co/sigm/index.html#/p_CaaIataInputTechnicalEconomicalDetails') {
-            //                 Band = 99;
-            //                 break
-            //             } else if (Contador2 > 4) {
-            //                 break;
-            //             } else {
-            //                 console.log("Nada no la carga ");
-            //             }
-            //             Contador2++;
-            //         } catch (error) {
-
-            //         } 
-            //     }
-
-
-
-            // console.log("Validar despues de los 3 seg");
-            await page.waitForTimeout(3000);
+            await page.waitForTimeout(2000);
 
             const Todoslosparametros = await page.$$eval("span", links =>
                 links.map(link => link.textContent)
