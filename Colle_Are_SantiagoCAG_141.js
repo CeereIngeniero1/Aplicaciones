@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 const colors = require('colors');
-const user = '76966';
-const pass = 'CollectiveM_2024*';
-
+const user = '96233';
+const pass = 'SuperAgente86*';
+ 
 var Agente = 0;
 
 Pagina();
