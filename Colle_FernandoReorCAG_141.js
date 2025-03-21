@@ -422,8 +422,8 @@ function Mineria(browser, Pin) {
 
             if (Band != 81) {
 
-
-                // Tipo, Area, Celda
+                try {
+     // Tipo, Area, Celda
 
                 // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
                 const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
@@ -452,6 +452,10 @@ function Mineria(browser, Pin) {
                     console.log('No se encontraron celdas no disponibles.');
                     console.log(`===============================================================================================`.cyan.bold);
                 }
+                } catch (error) {
+                    
+                }
+               
             }
             /* FIN FIN FIN */
 
