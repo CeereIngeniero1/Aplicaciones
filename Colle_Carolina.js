@@ -362,10 +362,10 @@ function Mineria(browser,  Pin) {
 
             if (Band == 1) {
                 MonitorearAreas(
-                    "CollectiveCAG_141",
+                    "",
                     1,
-                    "18N05A25N06S",
-                    ["18N05A25N06S, 18N05A25N06R, 18N05A25N06N, 18N05A25N06I, 18N05A25N06K, 18N05A25N06L, 18N05A25N06M, 18N05A25N06T, 18N05A25N06Q, 18N05A25N06H"],
+                    "",
+                    [""],
                     0
                 );
             } 
