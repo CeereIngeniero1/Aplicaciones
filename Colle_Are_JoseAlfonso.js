@@ -266,29 +266,6 @@ async function AreaEspecial(browser) {
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
             MonitorearAreas("AreaDePrueba", ["18N05A20P19T"]);
-        }else if (band == 3) {
-            // Establecer el valor directamente en el input
-            await page.evaluate(() => {
-                const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,5717'; // Usar el valor con punto decimal
-                eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
-
-                const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '5,51955';
-                northingInput.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-
-            // Repetir para los otros inputs
-            await page.evaluate(() => {
-                const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,5717';
-                eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-
-                const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '5,51955';
-                northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-            MonitorearAreas("AreaDePrueba", ["18N05A25N06D"]);
         }
 
 
@@ -326,7 +303,7 @@ async function AreaEspecial(browser) {
             });
             band++;
             //Este es la cantidad de areas mas 1 
-            if (band == 4) {
+            if (band == 3) {
                 band = 1;
             }
 
