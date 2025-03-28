@@ -220,7 +220,7 @@ async function AreaEspecial(browser) {
             return DetallesCompletos;
         }
 
-        if (band == 1) {
+        if (band == 2) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
@@ -243,7 +243,7 @@ async function AreaEspecial(browser) {
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
             MonitorearAreas("AreaDePrueba", ["18N05A24Q23G"]);
-        }else if (band == 2) {
+        }else if (band == 1) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
@@ -303,7 +303,7 @@ async function AreaEspecial(browser) {
             });
             band++;
             //Este es la cantidad de areas mas 1 
-            if (band == 3) {
+            if (band == 2) {
                 band = 1;
             }
 
