@@ -371,7 +371,7 @@ function Mineria(browser, Pin) {
                     "841-17",//Nombre del area
                     1, // aviso
                     "18N05A24P08T", // ceda de correo
-                    ['18N05A24P08T, 18N05A24P08R, 18N05A24P07U, 18N05A24P08Q, 18N05A24P08S, 18N05A24P07T'], // Celdas de area
+                    [' 18N05A24P08R, 18N05A24P07U, 18N05A24P08Q, 18N05A24P08S, 18N05A24P07T'], // Celdas de area
                     0 // comas
                 )
             }else if (Band == 3) {
