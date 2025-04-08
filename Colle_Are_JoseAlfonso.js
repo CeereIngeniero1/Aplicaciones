@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 const colors = require('colors');
-const user = '96458';
+const user = '96232';
 const pass = 'Sarita2025*';
 var Agente = 0;
 
@@ -154,7 +154,7 @@ async function AreaEspecial(browser) {
     console.log("LLegue hasta aca");
 
 
-    await page.type('#selectedApplicantInputId', '96458');
+    await page.type('#selectedApplicantInputId', '96232');
 
     await page.waitForTimeout(3000);
 
