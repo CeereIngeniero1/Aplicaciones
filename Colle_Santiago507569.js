@@ -1,9 +1,8 @@
-
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Console } = require('console');
-const colors = require('colors');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
+const colors = require('colors');
 // Actualizado
 const os = require('os');
 const NombreEquipo = os.hostname();
@@ -23,13 +22,18 @@ const EquiposGenerales = {
 const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Collective';
 var user1 = '76966';
-var pass1 = 'CollectiveM_2024*';
+var pass1 = 'Collective10+';
 var user2 = '96233';
 var pass2 = 'SuperAgente86*';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
+var ContadorVueltas = 0;
+var contComasceldas = 0;
+var Cag = false;
 
+
+// INICIA TODO EL PROCESO
 Pagina();
 async function Pagina() {
     var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
@@ -53,7 +57,7 @@ async function Pagina() {
 
 
     const browser = await puppeteer.launch({
-        // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
         // Reemplaza con la ruta real a tu Google Chrome
         headless: false,
@@ -65,6 +69,7 @@ async function Pagina() {
     });
 
     Mineria(browser, Pin);
+
 }
 
 
@@ -73,17 +78,24 @@ async function Pagina() {
 function Mineria(browser, Pin) {
     (async () => {
 
-        
+        console.log("Esta es la vuelta " + ContadorVueltas);
 
         const page = await browser.newPage();
+
+
         let Primerpaso = setTimeout(() => {
             console.log("ENTRO EN EL PRIMERPASO")
+
             page.close();
             Mineria(browser, Pin);
         }, 20000);
+
+
+
+
+
         await page.setViewport({ width: 1368, height: 620 });
         await page.goto('https://annamineria.anm.gov.co/sigm/');
-
 
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
@@ -117,17 +129,15 @@ function Mineria(browser, Pin) {
             }
         }
         validador = 0;
-
-
+        clearTimeout(Primerpaso);
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
             Mineria(browser, Pin);
-            clearTimeout(Segundopaso);
-        }, 20000);
+        }, 35000);
 
 
-        clearTimeout(Primerpaso);
+
 
 
         const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
@@ -157,19 +167,7 @@ function Mineria(browser, Pin) {
 
 
 
-        await page.waitForSelector('#pinSlctId', { visible: true });
-        await page.waitForTimeout(1000);
-
-
-
-
-
-
-
-
-
-
-        await page.waitForTimeout(2500);
+        await page.waitForTimeout(2500)
         page.setDefaultTimeout(0);
         await page.waitForSelector('select[id="pinSlctId"]');
         const selectPin = await page.$('select[id="pinSlctId"]');
@@ -180,10 +178,6 @@ function Mineria(browser, Pin) {
         const continPin = await page.$x('//span[contains(.,"Continuar")]');
         await continPin[1].click();
         await page.waitForTimeout(1000);
-
-
-
-
 
         const Fallopin = await page.$$eval("span", links =>
 
@@ -209,7 +203,17 @@ function Mineria(browser, Pin) {
             await page.waitForXPath('//span[contains(.,"Continuar")]');
             const continPin = await page.$x('//span[contains(.,"Continuar")]');
             await continPin[1].click();
+            /*
+                        //await page.waitForTimeout(1000)
+                        Primero();
+            
+                        browser.close();*/
+
         }
+
+        /*await page.waitForNavigation({
+           waitUntil: 'networkidle0',
+       });*/
 
         if (await page.$x('//span[contains(.,"Vea los errores a continuación:")]').lenght > 0) {
             console.log('no pasó el pin');
@@ -271,13 +275,21 @@ function Mineria(browser, Pin) {
 
         clearTimeout(Segundopaso);
 
+
+
+        //console.log(Area10);
+        var Aviso = 0;
         var contador = 0;
         var Band = 1;
         var IdArea = '';
         var SoloAviso = 0;
+        ContadorVueltas++;
+        var Comas = 0;
+        var Texto = "";
+        var liberadas = 0;
         var Celda = 0;
 
-
+        let ComasTotalesPorArea = {};
 
         while (Band != 99) {
 
@@ -313,6 +325,8 @@ function Mineria(browser, Pin) {
             console.log(contador);
 
             console.log("y este es la bandera = " + Band);
+
+            // FUNCIÓN PARA EL MONITOREA DE LAS AREAS
             let DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
@@ -333,6 +347,7 @@ function Mineria(browser, Pin) {
 
                 return DetallesCompletos;
             }
+            // FIN FIN FIN
 
             // if (Band == 1000) {
             //     MonitorearAreas(
@@ -343,7 +358,8 @@ function Mineria(browser, Pin) {
             //         0
             //     );
             // }
-            
+
+
             if (Band == 1) {
                 MonitorearAreas(
                     "507569",
@@ -353,8 +369,7 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-
-            // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
+            // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCESOS
             IdArea = DetallesCompletos.IdArea;
             Aviso = DetallesCompletos.Aviso;
             Celda = DetallesCompletos.Celda;
@@ -414,7 +429,6 @@ function Mineria(browser, Pin) {
                     document.querySelector('[id="cellIdsTxtId"]').value = "";
                 });
                 Band++;
-                //Este es la cantidad de areas mas 1 
                 if (Band == 2) {
                     Band = 1;
                 }
@@ -426,8 +440,7 @@ function Mineria(browser, Pin) {
             clearTimeout(TimeArea);
         }
 
-        // console.log("Pase y pase bien ");
-        // await page.waitForTimeout(30000);
+
 
         console.log("ahhh se salio Y_Y ");
         var bandera = 0;
@@ -445,7 +458,7 @@ function Mineria(browser, Pin) {
 
 
 
-            await page.waitForTimeout(500);
+            await page.waitForTimeout(100);
             console.log(page.url());
             if (page.url() == 'https://annamineria.anm.gov.co/sigm/index.html#/p_CaaIataInputTechnicalEconomicalDetails') {
                 bandera = 99;
@@ -485,9 +498,6 @@ function Mineria(browser, Pin) {
 
         //CORREO LIBERADA
         Correo(1, IdArea, Celda);
-        if (SoloAviso == 1) {
-            CorreoAlternativo(1, IdArea);
-        }
 
 
         let RadiPrimero = setTimeout(() => {
@@ -941,7 +951,7 @@ function Mineria(browser, Pin) {
         await page.evaluate(() => {
 
 
-               // Check
+            // Check
             // document.querySelector('Input[id="declareIndId0"]').click();
 
             //Valores
@@ -1011,44 +1021,49 @@ function Mineria(browser, Pin) {
 
         try {
 
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
+            let ArchivoAmbiental;
+            if (IdArea == '509188') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-           }else if(IdArea == '503239'){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
+            } else if (IdArea == '503239') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
-           }else if(IdArea == 'RFE_08211'){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
+            } else if (IdArea == 'RFE_08211') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
-           }else if(IdArea == 'RFE_08A'){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
+            } else if (IdArea == 'RFE_08A') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
 
-           }else if(IdArea == 'RFE_08B'){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
+            } else if (IdArea == 'RFE_08B') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
-           }else if(IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto'){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
+            } else if (IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
 
-           }else if(IdArea == '507948sincelda'  ){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\507948sincelda.pdf`;
+            } else if (IdArea == '507948sincelda') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\507948sincelda.pdf`;
 
-           }else if(IdArea == '509136'  ){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509136.pdf`;
+            } else if (IdArea == '509136') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509136.pdf`;
 
-           }else if(IdArea == 'CollectiveCAG_141'  ){
-               ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\CollectiveCAG_141.pdf`;
+            } else if (IdArea == 'CollectiveCAG_141') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\CollectiveCAG_141.pdf`;
 
-           }else if (IdArea == '507569') {
-            ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\507569.pdf`;
+            } else if (IdArea == 'SJP_11201') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\SJP_11201.pdf`;
 
-        }
-           else{
+            }else if (IdArea == '507569') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\507569.pdf`;
+
+            }
+            else {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
-           }
+            }
 
 
-           
+
+
+
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1139,27 +1154,14 @@ function Mineria(browser, Pin) {
 
         //CAPTURA DE PANTALLA
         await CapturaPantalla(page);
+
+
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
         await continPag[1].click();
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
         });
         console.log(" si navego ");
-        // await page.waitForSelector('#recaptchaContainer');
-        // console.log("lo encontro");
-        // await page.waitForTimeout(2000);
-        // // Obtener todos los iframes en la página
-        // const frames = await page.frames();
-
-        // // Encontrar el iframe que contiene el recaptcha
-        // const recaptchaFrame = frames.find(frame => frame.url().includes('recaptcha'));
-
-        // // Esperar a que el elemento con la clase 'recaptcha-checkbox-border' esté presente
-        // // await page.waitForSelector('#recaptcha-anchor');
-        // const recaptchaCheckbox = await recaptchaFrame.waitForSelector('#recaptcha-anchor');
-
-        // // Hacer clic en el checkbox del recaptcha
-        // await recaptchaCheckbox.click();
 
 
 
@@ -1174,10 +1176,10 @@ function Mineria(browser, Pin) {
         }, 60000);
 
 
-
         const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
         await HacerClicEnSpanDocumentacionDeSoporte[0].click();
         const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
+        
         if (AparecioCaptcha) {
             console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
             await page.waitForTimeout(500);
@@ -1242,9 +1244,6 @@ function Mineria(browser, Pin) {
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
         Mineria(browser, Pin);
-
-
-
 
 
 
@@ -1430,8 +1429,8 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
             } else {
                 selectProfesional = await page.$('select[id="ecoApplicantNameId"]');
             }
-            await page.waitForTimeout(300);
 
+            await page.waitForTimeout(300);
             await selectProfesional.type(nombre);
             // Hacer clic en el botón "Agregar"
 
