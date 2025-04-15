@@ -1430,12 +1430,12 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
             } else {
                 selectProfesional = await page.$('select[id="ecoApplicantNameId"]');
             }
-            await page.waitForTimeout(300);
+            await page.waitForTimeout(800);
 
             await selectProfesional.type(nombre);
             // Hacer clic en el botón "Agregar"
 
-            await page.waitForTimeout(100); // Esperar 100 milisegundos
+            await page.waitForTimeout(800); // Esperar 100 milisegundos
 
             addProfesional = await page.$x('//span[contains(.,"Agregar")]');
             if (Tipo == 1) {
