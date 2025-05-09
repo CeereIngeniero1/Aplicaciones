@@ -1157,6 +1157,9 @@ function Mineria(browser, Pin) {
             } else if (IdArea == 'ARE-509966') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\ARE-509966.pdf`;
             
+            } else if (IdArea == '509971') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509971.pdf`;
+            
             } else {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
            
