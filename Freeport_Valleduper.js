@@ -25,7 +25,7 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 var Empresa = 'Freeport';
 var user1 = '97295';
-var pass1 = 'Freeport2025#';
+var pass1 = 'S1erra4zul2025*';
 var user2 = '75967';
 var pass2 = 'Sierraazulv2024*';
 var Agente = 1;
