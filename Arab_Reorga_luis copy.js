@@ -346,27 +346,23 @@ function Mineria(browser, Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
-        
         while (Band != 99) {
 
-            const Pestanas = await browser.pages();
-            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            if (Pestanas.length >= 4) {
-                EnviarCorreosParaPestanas++;
-                if (EnviarCorreosParaPestanas <= 2) {
-                    // Se realiza envío de correo para alertar
-                    Correo(5, '', '');
-                }
+            if (Band == 81) {
+                console.log("Aviso")
+                Filtrado = `${areaFiltrado.join(', ')}`;
+                //console.log(  `["${areaFiltrado.join(', ')}"],` ) 
+                console.log("FILTRADO " + Filtrado);
+                // await page.waitForTimeout(2000000);
             }
-
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
 
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
                 Mineria(browser, Pin);
+                clearTimeout(TimeArea);
+
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -384,10 +380,13 @@ function Mineria(browser, Pin) {
             console.log(contador);
 
             console.log("y este es la bandera = " + Band);
-            let DetallesCompletos;
+            var DetallesCompletos;
             function MonitorearAreas(IdArea, Aviso, Celda, Area, Comas) {
                 //console.log(IdArea, Aviso, Celda, Comas);
 
+                // Asegúrate de que Area es un array de celdas sin espacios innecesarios
+                const AreaCeldas = Area[0].split(',').map(celda => celda.trim());
+                console.log(Area);
                 page.evaluate(({ Area }) => {
                     document.querySelector('[id="cellIdsTxtId"]').value = Area.join('');
                     angular.element(document.getElementById('cellIdsTxtId')).triggerHandler('change');
@@ -399,15 +398,17 @@ function Mineria(browser, Pin) {
                     Aviso: Aviso,
                     Celda: Celda,
                     Area: Area,
-                    Comas: Comas
+                    Comas: Comas,
+                    ComparacionCeldas: AreaCeldas, // Usa el array de celdas limpio
                 }
 
                 return DetallesCompletos;
             }
 
-            // if (Band == 1000) {
+            // CELDA DE PRUEBA, DISPONIBLE
+            // if (Band == 1) {
             //     MonitorearAreas(
-            //         "AreaDePrueba",
+            //         "007-85M",
             //         1,
             //         "Esto es una celda de prueba",
             //         ["18N05N14M12R"],
@@ -416,17 +417,7 @@ function Mineria(browser, Pin) {
             // }
 
 
-            // if (Band == 1) {
-            //     MonitorearAreas(
-            //         "Area780",
-            //         1,
-            //         "",
-            //         ["18N05A25M09Q, 18N05A25M09R, 18N05A25M09S, 18N05A25M09T, 18N05A25M09U, 18N05A25M09V, 18N05A25M09W, 18N05A25M09X, 18N05A25M09Y, 18N05A25M14B, 18N05A25M14C, 18N05A25M14G, 18N05A25M14H, 18N05A25M14L, 18N05A25M14R, 18N05A25M14W, 18N05A25M19B, 18N05A25M19G, 18N05A25M19L, 18N05A25M19R, 18N05A25M19W, 18N05A25M19X, 18N05A25M24B, 18N05A25M24C, 18N05A25M24G, 18N05A25M24H, 18N05A25M24L, 18N05A25M24M"],
-            //         0
-            //     );
-            // }
-
-            if (Band == 3) {
+             if (Band == 3) {
                 MonitorearAreas(
                     "OG2_082210_2",
                     1,
@@ -449,7 +440,7 @@ function Mineria(browser, Pin) {
                     "ARE-509966",
                     1,
                     "18N05E05A07Q",
-                    ["18N05E04D09S, 18N05E04D09M, 18N05E04D09H"],
+                    ["18N05E05A07Q, 18N05E05A07F, 18N05E05A07C, 18N05E05A07T, 18N05E05A07I, 18N05E05A07D, 18N05E05A08F, 18N05E05A08U, 18N05E05A09V, 18N05E05A09F, 18N05E05A09B, 18N05E05A04R, 18N05E05A09J, 18N05E05A04P, 18N05E05A04E, 18N05E05A06T, 18N05E05A07A, 18N05E05A07S, 18N05E05A08W, 18N05E05A08X, 18N05E05A08S, 18N05E05A08C, 18N05E05A08P, 18N05E05A09K, 18N05E05A04G, 18N05E05A04B, 18N05A25M24S, 18N05E05A04T, 18N05A25M24Y, 18N05E05A09E, 18N05E05A08A, 18N05E05A08Y, 18N05E05A08M, 18N05E05A08N, 18N05E05A09Q, 18N05E05A09W, 18N05A25M24W, 18N05E05A04C, 18N05E05A09T, 18N05E05A04I, 18N05E05A04Z, 18N05E05A06Y, 18N05E05A06N, 18N05E05A06U, 18N05E05A07L, 18N05E05A07G, 18N05E05A07M, 18N05E05A07H, 18N05E05A07Y, 18N05E05A07N, 18N05E05A07Z, 18N05E05A07U, 18N05E05A08K, 18N05E05A08L, 18N05E05A08H, 18N05E05A08Z, 18N05E05A09R, 18N05A25M24R, 18N05E05A09S, 18N05E05A09M, 18N05E05A09H, 18N05E05A04N, 18N05E05A09Z, 18N05E05A07V, 18N05E05A07E, 18N05E05A08G, 18N05E05A04X, 18N05E05A04S, 18N05E05A04M, 18N05E05A04Y, 18N05E05A09P, 18N05E05A06Z, 18N05E05A06P, 18N05E05A06J, 18N05E05A07B, 18N05E05A07X, 18N05E05A08E, 18N05E05A09G, 18N05E05A04W, 18N05E05A09X, 18N05E05A09C, 18N05E05A04H, 18N05A25M24X, 18N05E05A09N, 18N05E05A07K, 18N05E05A07W, 18N05E05A07P, 18N05E05A08V, 18N05E05A08Q, 18N05E05A08B, 18N05E05A08T, 18N05E05A08J, 18N05E05A09A, 18N05E05A09L, 18N05E05A09I, 18N05E05A09D, 18N05E05A04D, 18N05A25M24T, 18N05E05A04U, 18N05E05A04J, 18N05E05A07R, 18N05E05A07J, 18N05E05A08R, 18N05E05A08I, 18N05E05A08D, 18N05E05A04L, 18N05E05A09Y, 18N05E05A09U, 18N05N14M12R"],
                     0
                 );
             }
@@ -462,11 +453,19 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-
-
-
-
-
+            
+            if (Band == 81) {
+                console.log("FILTRADO  2 " + Filtrado);
+                MonitorearAreas(
+                    IdArea,
+                    1,
+                    "Esto es una celda de prueba",
+                    [Filtrado],
+                    0
+                );
+                // await page.waitForTimeout(50000);
+                // Band=99;
+            }
 
             // SE ACCEDE A CADA UNA DE LA INFORMACIÓN RETORNADA EN LA FUNCIÓN MonitorearAreas PARA UTILIZARLA MÁS ADELANTE EN OTROS PROCEOS
             IdArea = DetallesCompletos.IdArea;
@@ -474,6 +473,7 @@ function Mineria(browser, Pin) {
             Celda = DetallesCompletos.Celda;
             Area = DetallesCompletos.Area;
             Comas = DetallesCompletos.Comas;
+            ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
             await page.waitForTimeout(1000);
@@ -490,8 +490,66 @@ function Mineria(browser, Pin) {
                 if (elemento == "Vea los errores a continuación (dentro de las pestañas):") {
                     cont = 0;
                 }
+            }
+
+            /* CODIGO PARA REORGANIZAR AREA CON CELDAS NO DISPONIBLES, INFERIOR A LA INICIAL */
+            // Extraer celdas no disponibles del DOM
+            const celdasNoDisponibles = await page.$$eval('a.errorMsg', links => {
+                return links
+                    .filter(link => link.textContent.includes('Las siguientes celdas de selección no están disponibles:'))
+                    .map(link => link.textContent.split(': ')[1].split(',').map(celda => celda.trim())); // Extrae las celdas y las limpia
+            });
+
+            console.log(`===============================================================================================`.cyan.bold);
+            // console.log(`AREA COMPLETA => ${Area}`);
+            // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
+
+            console.log(`ÁREA COMPLETA => `.magenta.bold);
+            console.log(`[${Area}]`);
+            console.log(`CELDAS NO DISPONIBLES => `.red.bold);
+            console.log(`[${celdasNoDisponibles}]`);
+
+
+            if (Band != 81) {
+
+                try {
+                    // Tipo, Area, Celda
+
+                    // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
+                    const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
+
+                    // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
+                    const areaCeldas = ComparacionCeldas;
+
+                    // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
+                    areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
+
+
+
+                    if (areaFiltrado.length > 0) {
+                        //Correo(1, Area, areaFiltrado);
+
+                        // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
+                        // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
+                        // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
+                        console.log(`CELDAS DISPONIBLES => `.green.bold);
+                        console.log(`["${areaFiltrado.join(', ')}"],`);
+                        console.log(`===============================================================================================`.cyan.bold);
+                        Band = 80;
+
+                    } else {
+
+                        console.log('No se encontraron celdas no disponibles.');
+                        console.log(`===============================================================================================`.cyan.bold);
+                    }
+                } catch (error) {
+
+                }
 
             }
+            /* FIN FIN FIN */
+
+
             const FechaReapertura = await page.$$eval("a", links =>
                 links.map(link => link.textContent)
             );
@@ -507,9 +565,9 @@ function Mineria(browser, Pin) {
                     console.log("Lo encontre");
                     Reapertura = 1;
                     contreapertura++;
-                    if (contreapertura < 2) {
-                        Correo(3, IdArea, Celda);
-                    }
+                    // if (contreapertura < 2) {
+                    //     Correo(3, IdArea, Celda);
+                    // }
 
 
                     console.log(contreapertura);
@@ -532,6 +590,9 @@ function Mineria(browser, Pin) {
                 if (Band == 2) {
                     Band = 1;
                 }
+                // else if (Band == 81){
+
+                // }
 
             } else {
                 Band = 99;
@@ -1253,115 +1314,11 @@ function Mineria(browser, Pin) {
         //CAPTURA DE PANTALLA
         await CapturaPantalla(page);
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
-        await continPag[1].click();
+        
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
         });
-        console.log(" si navego ");
-
-        try {
-            // Bajar hasta el final del scroll
-            await page.evaluate(async () => {
-                await new Promise((resolve, reject) => {
-                    let totalHeight = 0;
-                    let distance = 100; // Ajusta la distancia de desplazamiento
-                    const timer = setInterval(() => {
-                        let scrollHeight = document.body.scrollHeight;
-                        window.scrollBy(0, distance);
-                        totalHeight += distance;
-
-                        if (totalHeight >= scrollHeight) {
-                            clearInterval(timer);
-                            resolve();
-                        }
-                    }, 100); // Ajusta el tiempo de espera entre desplazamientos
-                });
-            });
-        } catch (error) {
-            console.log(error);
-        }
-
-
-
-        //CAPTURA DE PANTALLA
-        clearTimeout(Radisegundo);
-
-        let RadiTercero = setTimeout(() => {
-
-            console.log("ENTRO EN EL Radisegundo");
-            //page.close();
-            Mineria(browser, Pin);
-        }, 60000);
-
-
-        const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
-        await HacerClicEnSpanDocumentacionDeSoporte[0].click();
-        const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
-        if (AparecioCaptcha) {
-            console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-            await page.waitForTimeout(500);
-        } else {
-            console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
-        }
-
-
-        await keyboard.pressKey(Key.Tab);
-        console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN `);
-
-        await keyboard.pressKey(Key.Enter);
-
-        // await page.waitForTimeout(1000000);
-
-        while (true) {
-            await page.waitForTimeout(800);
-            console.log("Chequeando si el captcha está resuelto...");
-
-            const isCaptchaResolved = await page.evaluate(() => {
-                const responseField = document.querySelector('#g-recaptcha-response');
-                return responseField && responseField.value.length > 0;
-            });
-
-            if (isCaptchaResolved) {
-                console.log('El captcha ha sido resuelto.');
-                clearTimeout(RadiTercero);
-                break;
-            } else {
-                console.log('El captcha no ha sido resuelto aún.');
-            }
-        }
-
-
-
-        console.log('51. Bóton Radicar');
-
-        const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
-        console.log("Este es el boton radicar : " + btnRadicar1);
-
-        //await page.waitForTimeout(4000);
-        console.log("Le di click");
-
-        try {
-            await btnRadicar1[0].click();
-        } catch (exepcion) {
-            console.log("La pos 0 No fue ")
-        }
-        try {
-
-            await btnRadicar1[1].click();
-        } catch (exepcion) {
-            console.log("La 1 tampoco Y_Y")
-        }
-
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        //CORREO RADICACION
-        Correo(2, IdArea, Celda);
-        clearTimeout(Radisegundo);
-        await page.waitForTimeout(180000);
-        Mineria(browser, Pin);
-
-
-
+       
 
 
 
@@ -1414,8 +1371,8 @@ function Correo(Tipo, Area, Celda) {
     var mensaje = msg;
     var mailOptions = {
         from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: '  Soporte2ceere@gmail.com',
+        //to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
+        to: '  Soporte2ceere@gmail.com',
         subject: 'LA AREA ES-> ' + Area,
         text: 'LA AREA ES->  ' + Area + "  " + Celda,
         html: `

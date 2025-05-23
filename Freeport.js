@@ -380,6 +380,18 @@ function Mineria(browser, Pin) {
             await selectporCeldas.type('Usando el mapa de selección para dibujar un polígono o ingresar celdas');
             contador++;
 
+            
+            // CELDA DE PRUEBA, DISPONIBLE
+            // if (Band == 1) {
+            //     MonitorearAreas(
+            //         "007-85M",
+            //         1,
+            //         "Esto es una celda de prueba",
+            //         ["18N05N14M12R"],
+            //         0
+            //     );
+            // }
+
 
             console.log(contador);
 
