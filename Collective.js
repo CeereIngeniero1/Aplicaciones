@@ -35,6 +35,7 @@ var Cag = false;
 var Caggrande = false;
 Pagina();
 async function Pagina() {
+    
     var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
         if (error) {
             throw error;
