@@ -153,7 +153,7 @@ function Mineria(browser, Pin) {
             //await page.waitForSelector('select[id="submitterPersonOrganizationNameId"]');
             //const Agente = await page.$('select[id=" submitterPersonOrganizationNameId"]');
 
-            await page.type('#submitterPersonOrganizationNameId', '76966');
+            await page.type('#submitterPersonOrganizationNameId', '45248');
             //await page.type('#submitterPersonOrganizationNameId', '');
 
             await page.waitForTimeout(3000);
