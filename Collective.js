@@ -23,16 +23,14 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
-var pass1 = 'CML2025_Supia';
+var pass1 = 'Collectivemining.2025.';
 var user2 = '83949';
 var pass2 = '*Jcrmh2022#';
 var Agente = 0;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
-var contComasceldas = 0;
-var Cag = false;
-var Caggrande = false;
+
 Pagina();
 async function Pagina() {
     

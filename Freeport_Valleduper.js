@@ -422,15 +422,7 @@ function Mineria(browser,  Pin) {
             // }
 
 
-             if (Band == 1) {
-                MonitorearAreas(
-                    "509537",
-                    1,
-                    "18P09K04N18H",
-                    ['18P09K04B16X'],
-                    77
-                );
-            } else if (Band == 10) {
+            if (Band == 1) {
                 MonitorearAreas(
                     "508391",
                     1,
@@ -610,7 +602,7 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 2) {
+                if (Band == 5) {
                     Band = 1;
                 }
                 // else if (Band == 81){
