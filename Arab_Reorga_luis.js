@@ -426,7 +426,7 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-            else if (Band == 2) {
+            else if (Band == 1) {
                 MonitorearAreas(
                     "509971",
                     1,
@@ -435,7 +435,7 @@ function Mineria(browser, Pin) {
                     0
                 );
             }
-            else if (Band == 1) {
+            else if (Band == 12) {
                 MonitorearAreas(
                     "ARE-509966",
                     1,
