@@ -426,7 +426,7 @@ function Mineria(browser, Pin) {
             //     );
             // }
 
-            if (Band == 3) {
+            if (Band == 1) {
                 MonitorearAreas(
                     "OG2_082210_2",
                     1,
@@ -436,24 +436,6 @@ function Mineria(browser, Pin) {
                 );
             }
             else if (Band == 2) {
-                MonitorearAreas(
-                    "509971",
-                    1,
-                    "18N05E04D09S",
-                    ["18N05E04D09S, 18N05E04D09M, 18N05E04D09H"],
-                    0
-                );
-            }
-            else if (Band == 1) {
-                MonitorearAreas(
-                    "ARE-509966",
-                    1,
-                    "18N05E05A07Q",
-                    ["18N05E04D09S, 18N05E04D09M, 18N05E04D09H"],
-                    0
-                );
-            }
-            else if (Band == 4) {
                 MonitorearAreas(
                     "843-17",
                     1,
@@ -529,7 +511,7 @@ function Mineria(browser, Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1 
-                if (Band == 2) {
+                if (Band == 3) {
                     Band = 1;
                 }
 
