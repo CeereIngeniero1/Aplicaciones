@@ -666,10 +666,8 @@ function Mineria(browser,  Pin) {
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
             for (let i = 0; i < FechaReapertura.length; i++) {
-
-
-                var Text = FechaReapertura[i].substring(24, 120);
-                if (Text == "Las siguientes celdas de selección no están disponibles ya que la fecha de reapertura es futura:") {
+                var Text = FechaReapertura[i].substring(116, 135);
+                if (Text == "CELL_REOPENING_DATE") {
                     console.log("Lo encontre");
                     Reapertura = 1;
                     contreapertura++;

@@ -571,17 +571,15 @@ function Mineria(browser, Pin) {
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-            for (let i = 0; i < FechaReapertura.length; i++) {
-
-
-                var Text = FechaReapertura[i].substring(24, 120);
-                if (Text == "Las siguientes celdas de selección no están disponibles ya que la fecha de reapertura es futura:") {
+             for (let i = 0; i < FechaReapertura.length; i++) {
+                var Text = FechaReapertura[i].substring(116, 135);
+                if (Text == "CELL_REOPENING_DATE") {
                     console.log("Lo encontre");
                     Reapertura = 1;
                     contreapertura++;
-                    // if (contreapertura < 2) {
-                    //     Correo(3, IdArea, Celda);
-                    // }
+                    if (contreapertura < 2) {
+                        Correo(3, IdArea, Celda);
+                    }
 
 
                     console.log(contreapertura);
@@ -1440,7 +1438,7 @@ function Correo(Tipo, Area, Celda) {
     var mensaje = msg;
     var mailOptions = {
         from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com, camilodesarrollador@outlook.com, ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
+        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
         //to: '  Soporte2ceere@gmail.com',
         subject: 'LA AREA ES-> ' + Area,
         text: 'LA AREA ES->  ' + Area + "  " + Celda,
