@@ -34,6 +34,23 @@ var pass2 = 'C1000191991*';
 
 
 
+<!-- nuevos -->
+70164
+Cuello_1606
+
+79474
+Camila04!! no es la contraseña
+
+97564
+Diego123184*
+
+79948
+Rubengaviria2*
+
+
+
+
+
 
 
 
