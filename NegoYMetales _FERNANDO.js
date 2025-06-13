@@ -42,7 +42,7 @@ async function Pagina() {
         }
     });
     for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'NM:') {
+        if (Pines.substring(i + 1, i + 4) == 'N3:') {
             console.log(Pines.substring(i + 1, i + 4));
             Pin = Pines.substring(i + 4, i + 31);
             break
@@ -1042,7 +1042,7 @@ function Mineria(browser,  Pin) {
             angular.element(document.getElementById('activoTotalId0')).triggerHandler('change');
 
             // document.getElementById('totalLiabilitiesId0').value = '15401226207' // OLD
-            document.getElementById('pasivoTotalId0').value = '1501296112 ';
+            document.getElementById('pasivoTotalId0').value = '1501296112';
 
             angular.element(document.getElementById('pasivoTotalId0')).triggerHandler('change');
         });
