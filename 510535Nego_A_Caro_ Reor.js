@@ -592,7 +592,6 @@ function Mineria(browser,  Pin) {
 
 
 
-        clearTimeout(TimeNOpaso);
 
 
 
