@@ -1105,7 +1105,7 @@ function Mineria(browser,  Pin) {
 
             
             let ArchivoAmbiental ;
-            if(IdArea == '510535'){
+            if(IdArea == '510535PARTE A'){
                  ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\510535.pdf`;
             }else if(IdArea == '510538'){
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\510538.pdf`;
