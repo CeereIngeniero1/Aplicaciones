@@ -25,10 +25,9 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Freeport';
 var user1 = '97295';
 var pass1 = 'Freeport2025#';
-var user2 = '77008';
-var pass2 = 'S13rra4zul202505#';
-var pass2 = 'S13rra4zul202505#';
-var Agente = 1;
+var user2 = '83949';
+var pass2 = '*Jcrmh2022#';
+var Agente = 0;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
@@ -381,6 +380,18 @@ function Mineria(browser, Pin) {
             await selectporCeldas.type('Usando el mapa de selección para dibujar un polígono o ingresar celdas');
             contador++;
 
+            
+            // CELDA DE PRUEBA, DISPONIBLE
+            // if (Band == 1) {
+            //     MonitorearAreas(
+            //         "007-85M",
+            //         1,
+            //         "Esto es una celda de prueba",
+            //         ["18N05N14M12R"],
+            //         0
+            //     );
+            // }
+
 
             console.log(contador);
 
@@ -410,7 +421,7 @@ function Mineria(browser, Pin) {
                 return DetallesCompletos;
             }
 
-               if (Band == 1) {
+              if (Band == 1) {
                 MonitorearAreas(
                     "508391",
                     1,
@@ -560,7 +571,7 @@ function Mineria(browser, Pin) {
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-            for (let i = 0; i < FechaReapertura.length; i++) {
+             for (let i = 0; i < FechaReapertura.length; i++) {
                 var Text = FechaReapertura[i].substring(116, 135);
                 if (Text == "CELL_REOPENING_DATE") {
                     console.log("Lo encontre");
@@ -1427,8 +1438,8 @@ function Correo(Tipo, Area, Celda) {
     var mensaje = msg;
     var mailOptions = {
         from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Fernando.pala.99@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: '  Fernando.pala.99@gmail.com',
+        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
+        //to: '  Soporte2ceere@gmail.com',
         subject: 'LA AREA ES-> ' + Area,
         text: 'LA AREA ES->  ' + Area + "  " + Celda,
         html: `
