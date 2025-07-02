@@ -34,8 +34,9 @@ var pass2 = 'C1000191991*';
 var user2 = '98908';
 var pass2 = 'Sebas2025?';
 
-
-
+<!-- Alejandra -->
+var user2 = '76467';
+var pass2 = 'Simon1998.2022.';
 
 
 <!-- nuevos -->
