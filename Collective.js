@@ -658,7 +658,7 @@ function Mineria(browser,  Pin) {
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-             for (let i = 0; i < FechaReapertura.length; i++) {
+           for (let i = 0; i < FechaReapertura.length; i++) {
                 var Text = FechaReapertura[i].substring(116, 135);
                 if (Text == "CELL_REOPENING_DATE") {
                     console.log("Lo encontre");
