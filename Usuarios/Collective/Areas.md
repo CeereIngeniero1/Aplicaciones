@@ -16,7 +16,7 @@ var pass2 = 'Camilo$0307';
 
 <!-- Jorge  -->
 var user2 = '83949';
-var pass2 = '*Jcrmh2022#';
+var pass2 = 'Jorgec2025.';
 
 <!-- Jonathan -->
 var user2 = '85127';
