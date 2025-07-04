@@ -418,6 +418,7 @@ function Mineria(browser,  Pin) {
 
              if (Band == 1) {
                 MonitorearAreas(
+<<<<<<< HEAD
                     "Area14",
                     1,
                     "18N05A25G21R",
@@ -554,6 +555,8 @@ function Mineria(browser,  Pin) {
                 )
             } else if (Band == 16) {
                 MonitorearAreas(
+=======
+>>>>>>> 0b512ed7115f009a9252bf3d073540fbeba74e85
                     "502172",//Nombre del area
                     1, // aviso
                     "18N05E04D03F", // ceda de correo
@@ -561,6 +564,7 @@ function Mineria(browser,  Pin) {
                      0 // comas
                 )
             }
+<<<<<<< HEAD
             else  if (Band == 17) {
                 MonitorearAreas(
                     "509188",
@@ -623,6 +627,8 @@ function Mineria(browser,  Pin) {
                 );
             } 
           
+=======
+>>>>>>> 0b512ed7115f009a9252bf3d073540fbeba74e85
 
 
 
@@ -686,7 +692,11 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1
+<<<<<<< HEAD
                 if (Band == 26) {
+=======
+                if (Band == 2) {
+>>>>>>> 0b512ed7115f009a9252bf3d073540fbeba74e85
                     Band = 1;
                 }
 
