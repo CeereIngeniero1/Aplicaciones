@@ -6,6 +6,10 @@ var pass1 = 'Collectivemining.2025.';
 var user2 = '96233';
 var pass2 = 'SuperAgente86*';
 
+<!-- Juan pablo -->
+var user2 = '99401';
+var pass2 = 'JU9*-2024&';
+
 <!-- Oscar -->
 var user2 = '96232';
 var pass2 = 'OscarM_2025*';
