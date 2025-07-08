@@ -449,7 +449,7 @@ function Mineria(browser,  Pin) {
             await page.waitForTimeout(1000);
             await continCeldas[1].click();
             console.log(IdArea);
-            await page.waitForTimeout(2000);
+            await page.waitForTimeout(500);
 
             const Todoslosparametros = await page.$$eval("span", links =>
                 links.map(link => link.textContent)
