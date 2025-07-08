@@ -976,22 +976,22 @@ function Mineria(browser,  Pin) {
 
             //Valores
             // document.getElementById('currentAssetId0').value = '42539369275' // OLD
-            document.getElementById('activoCorrienteId0').value = '1850519000';
+           document.getElementById('activoCorrienteId0').value = '1020635000';
 
             angular.element(document.getElementById('activoCorrienteId0')).triggerHandler('change');
 
             // document.getElementById('currentLiabilitiesId0').value = '15184416062' // OLD
-            document.getElementById('pasivoCorrienteId0').value = '373226000';
+            document.getElementById('pasivoCorrienteId0').value = '8589951000';
 
             angular.element(document.getElementById('pasivoCorrienteId0')).triggerHandler('change');
 
             // document.getElementById('totalAssetId0').value = '48322540755' // OLD
-            document.getElementById('activoTotalId0').value = '56658435000';
+            document.getElementById('activoTotalId0').value = '70675553000';
 
             angular.element(document.getElementById('activoTotalId0')).triggerHandler('change');
 
             // document.getElementById('totalLiabilitiesId0').value = '15401226207' // OLD
-            document.getElementById('pasivoTotalId0').value = '5247940000';
+            document.getElementById('pasivoTotalId0').value = '9140193000';
 
             angular.element(document.getElementById('pasivoTotalId0')).triggerHandler('change');
         });
