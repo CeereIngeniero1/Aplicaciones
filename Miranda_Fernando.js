@@ -416,6 +416,8 @@ function Mineria(browser,  Pin) {
             Comas = DetallesCompletos.Comas;
 
              const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+            await page.waitForTimeout(1000);
+
             await continCeldas[1].click();
             console.log(IdArea);
             await page.waitForTimeout(1000);
