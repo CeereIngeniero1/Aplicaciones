@@ -529,7 +529,7 @@ function Mineria(browser, Pin) {
                 // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
                 areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
 
-                //Correo(1, Area, areaFiltrado);
+
 
                 // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
                 // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
@@ -579,24 +579,7 @@ function Mineria(browser, Pin) {
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-             for (let i = 0; i < FechaReapertura.length; i++) {
-                var Text = FechaReapertura[i].substring(116, 135);
-                if (Text == "CELL_REOPENING_DATE") {
-                    console.log("Lo encontre");
-                    Reapertura = 1;
-                    contreapertura++;
-                    if (contreapertura < 2) {
-                        Correo(3, IdArea, Celda);
-                    }
-
-
-                    console.log(contreapertura);
-                } else {
-                    var Text = FechaReapertura[i].substring(24, 140);
-                }
-
-            }
-
+         
 
 
 
@@ -677,8 +660,6 @@ function Mineria(browser, Pin) {
         const btnInfoTecnica = await page.$x('//a[contains(.,"Información t")]');
         await btnInfoTecnica[0].click();
 
-        //CORREO LIBERADA
-        Correo(1, IdArea, Celda);
 
 
         let RadiPrimero = setTimeout(() => {
@@ -1306,8 +1287,7 @@ function Mineria(browser, Pin) {
         }
 
 
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
+ 
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
         await continPag[1].click();
         await page.waitForNavigation({
@@ -1390,10 +1370,8 @@ function Mineria(browser, Pin) {
             console.log("La 1 tampoco Y_Y")
         }
 
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        //CORREO RADICACION
-        Correo(2, IdArea, Celda);
+    
+      
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
         Mineria(browser, Pin);
@@ -1409,157 +1387,9 @@ function Mineria(browser, Pin) {
 
 
 // FUNCIÓN PARA ENVÍO DE CORREO SEGÚN LA SITUACIÓN
-function Correo(Tipo, Area, Celda) {
-    // 1. Liberada 2. radicada 3. Fecha reapertura
-    var msg = "";
-    var Color = "";
-    var Texto = "";
-    //Area = "Tranquilos area de prueba";
-    if (Tipo == 1) {
-        msg = "¡¡¡Posible Area Liberada!!! " + EquipoActual + " " + Area + " " + Empresa;
-        Color = "#4CAF50";
-        Texto = "POSIBLE AREA LIBERADA";
-    } else if (Tipo == 2) {
-        msg = "¡¡¡Posible Area Radicada!!! " + EquipoActual + " " + Area + " " + Empresa;
-        Color = "#D4AF37";
-        Texto = "POSIBLE AREA RADICADA";
-    } else if (Tipo == 3) {
-        msg = "¡¡¡Area Con fecha de Reapertura!!! " + EquipoActual + " " + Area + " " + Empresa;
-        Color = "#2196F3";
-        Texto = "AREA CON REAPERTURA";
-    } else if (Tipo == 4) {
-        msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-    } else if (Tipo == 5) {
-        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
-        Color = "#fe1426";
-        Texto = "Pestañas";
-    }
 
-    var nodemailer = require('nodemailer');
 
-    var transporter = nodemailer.createTransport({
-        host: "mail.ceere.net", // hostname
-        secureConnection: false,
-        port: 465,
-        tls: {
-            ciphers: 'SSLv3'
-        },
-        auth: {
-            user: 'correomineria2@ceere.net',
-            pass: '1998Ceere*'
-        }
-    });
-    var mensaje = msg;
-    var mailOptions = {
-        from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas 
-        to: 'jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com',
-        //to: '  Soporte2ceere@gmail.com',
-        subject: 'LA AREA ES-> ' + Area,
-        text: 'LA AREA ES->  ' + Area + "  " + Celda,
-        html: `
-            <html>
-                <head>
-                    <style>
-                        .container {
-                            font-family: Arial, sans-serif;
-                            max-width: 600px;
-                            margin: auto;
-                            padding: 20px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                            background-color: #f9f9f9;
-                        }
-                        .header {
-                            background-color: ${Color};
-                            color: white;
-                            padding: 10px;
-                            text-align: center;
-                            border-radius: 5px 5px 0 0;
-                        }
-                        .content {
-                            margin: 20px 0;
-                        }
-                        .footer {
-                            text-align: center;
-                            padding: 10px;
-                            font-size: 12px;
-                            color: #777;
-                            border-top: 1px solid #ddd;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h3> ${Texto} </h3>
-                        </div>
-                        <div class="content">
-                            <p><strong>Detalles:</strong></p>
-                            <ul>
-                                <li><strong>Empresa: </strong><br>${Empresa}</li>
-                                <li><strong>Area:</strong><br>${Area}</li>
-                                <li><strong>Celda:</strong><br>${Celda}</li>
-                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
-                            </ul>
-                        </div>
-                        <div class="footer">
-                            <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
-                        </div>
-                    </div>
-                </body>
-            </html>
-        `
-    };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            return console.log(error);
-        }
-
-        console.log('Message sent: ' + info.response);
-    });
-}
-
-// FUNCIÓN PARA LA CAPTURA DE PANTALLA AL MOMENTO DE LA RADICACIÓN
-async function CapturaPantalla(page) {
-
-    const FechaGeneral = new Date();
-
-    let Dia = FechaGeneral.getDate();
-    let Mes = FechaGeneral.getMonth();
-    let Anio = FechaGeneral.getFullYear();
-    let Hora = FechaGeneral.getHours();
-    let Minuto = FechaGeneral.getMinutes();
-    let Segundo = FechaGeneral.getSeconds();
-    let DiaFinal, MesFinal, HoraFinal, MinutoFinal, SegundoFinal;
-
-    Mes = Mes + 1; // PORQUE COMIENZA EN 0 Y TERMNA EN 11, POR ESTA REZÓN SE LE SUMA 1, PARA QUE QUEDE EN EL MES ACTUAL
-    DiaFinal = Dia < 10 ? '0' + Dia : Dia;
-    MesFinal = Mes < 10 ? '0' + Mes : Mes;
-    HoraFinal = Hora < 10 ? '0' + Hora : Hora;
-    MinutoFinal = Minuto < 10 ? '0' + Minuto : Minuto;
-    SegundoFinal = Segundo < 10 ? '0' + Segundo : Segundo;
-
-    let Fecha = `${DiaFinal}-${MesFinal}-${Anio} --- ${HoraFinal}-${MinutoFinal}-${SegundoFinal}`;
-
-    const { mkdir, access } = require('fs/promises');
-
-    let NombreCarpeta = "ScreenShots";
-    let pathProduccion = `C:\\Aplicaciones\\${NombreCarpeta}`;
-
-    try {
-        // Verificar si la carpeta ya existe
-        await access(pathProduccion);
-        console.log(`La carpeta ${NombreCarpeta} ya existe en la dirección ${pathProduccion}`);
-    } catch (error) {
-        // Si no existe, crearla
-        await mkdir(pathProduccion);
-        console.log(`La carpeta fue creada en la dirección ${pathProduccion} con el nombre ${NombreCarpeta}`);
-    }
-
-    await page.screenshot({ path: `C:\\Aplicaciones\\ScreenShots\\Imagen Tomada El ${Fecha}.png`, type: 'png' })
-    console.log("El ScreenShot fue guardado");
-}
 
 
 async function seleccionar_Profesional(profesionales, page, Tipo) {
@@ -1637,62 +1467,4 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
     }
 }
 
-var CorreoEnviado = false;
-var PrimerCorreoEnviado = false;
-// FUNCIÓN PARA VERIFICAR VENCIMIENTO DE PIN Y ENVIAR RECORDATORIO
-function VerificarVencimientoPin(selectedText, TextoDeOpcionSeleccionadaEnCampoPin) {
-
-    const input = TextoDeOpcionSeleccionadaEnCampoPin;
-
-    // Separar la fecha después de la coma
-    const dateString = input.split(',')[1].trim();
-
-    // Crear un objeto de fecha a partir de la cadena
-    const targetDate = new Date(dateString);
-
-    // Obtener la fecha actual
-    const currentDate = new Date();
-
-    // Calcular la diferencia en milisegundos
-    const diffInMs = targetDate - currentDate;
-
-    // Convertir la diferencia en días
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-
-    const diaSemana = targetDate.toLocaleString('es-Es', { weekday: 'long' });
-    console.log(`¡¡¡ DIFERENCIA EN DÍAS PIN: ${diffInDays}`);
-    const Description = `El pin vence en ${diffInDays} días, es decir, tiene vigencia hasta el día ${diaSemana} - ${dateString}`;
-
-    // Se captura la hora del día actual
-    const HoraActual = currentDate.getHours();
-
-    // Se captura el minuto actual
-    const MinutoActual = currentDate.getMinutes();
-
-    // Se captura el segundo actual
-    const SegundoActual = currentDate.getSeconds();
-
-    // Se verifica si la diferencia de días es igual a 5 y si la hora actual contiene 7 de la mañana ó contiene 3 de la tarde. Para hacer 2 envíos de recordatorio el día que se cumplan todas las condiciones
-
-    // Primer envío: 07:00 am
-    if ((diffInDays === 5) && ([7].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false) && !PrimerCorreoEnviado) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL PRIMER CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = true;
-    }
-
-    // Resetear el flag solo una vez después del primer correo
-    if ((diffInDays === 5) && ((HoraActual > 7) && (HoraActual < 15)) && (MinutoActual === 0) && PrimerCorreoEnviado && CorreoEnviado) {
-        CorreoEnviado = false;
-        console.log("LA VARIABLE DE CORREO ENVIADO SE HIZO FALSA");
-    }
-
-    // Segundo envío: 03:00 pm
-    if ((diffInDays === 5) && ([15].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false)) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL SEGUNDO CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = false;
-    }
-}
+ 
