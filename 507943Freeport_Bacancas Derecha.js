@@ -25,8 +25,8 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Freeport';
 var user1 = '97295';
 var pass1 = 'Freeport2025#';
-var user2 = '75967';
-var pass2 = 'ANM2020ANNA*';
+var user2 = '77008';
+var pass2 = 'S13rra4zul202505#';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
@@ -44,7 +44,7 @@ async function Pagina() {
         }
     });
     for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'F1:') {
+        if (Pines.substring(i + 1, i + 4) == 'Fr:') {
             console.log(Pines.substring(i + 1, i + 4));
             Pin = Pines.substring(i + 4, i + 31);
             break
@@ -426,7 +426,7 @@ function Mineria(browser, Pin) {
                     "507943",
                     1,
                     "18P09K04B10N",
-                    ['18P09K04B10N, 18P09K04B20E, 18P09K04C06V, 18P09K04C11S, 18P09K04C11T, 18P09K04C11D, 18P09K04C06N, 18P09K04B10T, 18P09K04C06F, 18P09K04C06G, 18P09K04C16D, 18P09K04C06T, 18P09K04B15N, 18P09K04C11K, 18P09K04B10Z, 18P09K04C06K, 18P09K04C16B, 18P09K04C11R, 18P09K04C06W, 18P09K04C16C, 18P09K04C06X, 18P09K04B10Y, 18P09K04B15E, 18P09K04C06Q, 18P09K04B10J, 18P09K04C11G, 18P09K04C11B, 18P09K04C06S, 18P09K04C11Y, 18P09K04C11N, 18P09K04C06I, 18P09K04B20I, 18P09K04B20D, 18P09K04B15T, 18P09K04B15Z, 18P09K04C11Q, 18P09K04C11A, 18P09K04C11W, 18P09K04C11L, 18P09K04C06L, 18P09K04C11M, 18P09K04C11I, 18P09K04B15I, 18P09K04B10I, 18P09K04B20J, 18P09K04B10P, 18P09K04C06M, 18P09K04C16I, 18P09K04B15Y, 18P09K04C16F, 18P09K04C11V, 18P09K04B15U, 18P09K04C11F, 18P09K04B10U, 18P09K04C11X, 18P09K04B15D, 18P09K04C16A, 18P09K04B15P, 18P09K04B15J, 18P09K04C16G, 18P09K04C06R, 18P09K04C16H, 18P09K04C11H, 18P09K04C11C, 18P09K04C06H, 18P09K04C06Y'],
+                    ['18P09K04C16E, 18P09K04C11J, 18P09K04C17A, 18P09K04C12Q, 18P09K04C12K, 18P09K04C12R, 18P09K04C12G, 18P09K04C07R, 18P09K04C07G, 18P09K04C12H, 18P09K04C12C, 18P09K04C07H, 18P09K04C07N, 18P09K04C11U, 18P09K04C12F, 18P09K04C12L, 18P09K04C12B, 18P09K04C17H, 18P09K04C07X, 18P09K04C12I, 18P09K04C07Y, 18P09K04C17J, 18P09K04C07Z, 18P09K04C11E, 18P09K04C17F, 18P09K04C12A, 18P09K04C17B, 18P09K04C12D, 18P09K04C07T, 18P09K04C12J, 18P09K04C07P, 18P09K04C07F, 18P09K04C12W, 18P09K04C07M, 18P09K04C17I, 18P09K04C12U, 18P09K04C07U, 18P09K04C12V, 18P09K04C17G, 18P09K04C07W, 18P09K04C17C, 18P09K04C12M, 18P09K04C07S, 18P09K04C12Z, 18P09K04C07J, 18P09K04C11Z, 18P09K04C11P, 18P09K04C06U, 18P09K04C07V, 18P09K04C07Q, 18P09K04C16J, 18P09K04C06Z, 18P09K04C06P, 18P09K04C06J, 18P09K04C12X, 18P09K04C17D, 18P09K04C12Y, 18P09K04C12T, 18P09K04C17E, 18P09K04C12P, 18P09K04C07K, 18P09K04C07L, 18P09K04C12S, 18P09K04C12N, 18P09K04C07I, 18P09K04C12E'],
                     0
                 );
             } else if (Band == 20) {
@@ -529,6 +529,7 @@ function Mineria(browser, Pin) {
                 // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
                 areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
 
+         
 
                 // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
                 // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
@@ -578,7 +579,7 @@ function Mineria(browser, Pin) {
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-            
+          
 
 
 
@@ -659,7 +660,6 @@ function Mineria(browser, Pin) {
 
         const btnInfoTecnica = await page.$x('//a[contains(.,"Información t")]');
         await btnInfoTecnica[0].click();
-
 
 
 
@@ -1288,7 +1288,6 @@ function Mineria(browser, Pin) {
         }
 
 
-      
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
         await continPag[1].click();
         await page.waitForNavigation({
@@ -1371,8 +1370,6 @@ function Mineria(browser, Pin) {
             console.log("La 1 tampoco Y_Y")
         }
 
-
-    
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
         Mineria(browser, Pin);
@@ -1385,8 +1382,6 @@ function Mineria(browser, Pin) {
 
     })();
 }
-
-
 
 
 
@@ -1466,4 +1461,3 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
         }
     }
 }
-

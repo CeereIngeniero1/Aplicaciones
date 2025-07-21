@@ -484,10 +484,10 @@ function Mineria(browser, Pin) {
             ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
-            await page.waitForTimeout(1000);
+            await page.waitForTimeout(500);
             await continCeldas[1].click();
             console.log(IdArea);
-            await page.waitForTimeout(2000);
+            await page.waitForTimeout(1000);
 
             const Todoslosparametros = await page.$$eval("span", links =>
                 links.map(link => link.textContent)
