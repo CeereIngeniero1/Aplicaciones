@@ -24,8 +24,8 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Collective';
 var user1 = '76966';
 var pass1 = 'Collectivemining.2025.';
-var user2 = '84928';
-var pass2 = 'C1000191991*';
+var user2 = '99401';
+var pass2 = 'JU9*-2024&';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
@@ -349,18 +349,8 @@ function Mineria(browser, Pin) {
 
         while (Band != 99) {
 
-            const Pestanas = await browser.pages();
-            console.log(`HAY ${Pestanas.length} PESTAÑAS ABIERTAS`);
-            if (Pestanas.length >= 4) {
-                EnviarCorreosParaPestanas++;
-                if (EnviarCorreosParaPestanas <= 2) {
-                    // Se realiza envío de correo para alertar
-                    Correo(5, '', '');
-                }
-            }
+            
 
-            // VerificarVencimientoPin(selectedText, input);
-            VerificarVencimientoPin(closestDateOption, input);
 
             console.log("Inicia el timer");
             let TimeArea = setTimeout(() => {
@@ -454,31 +444,7 @@ function Mineria(browser, Pin) {
                 }
 
             }
-            const FechaReapertura = await page.$$eval("a", links =>
-                links.map(link => link.textContent)
-            );
-            var Reapertura = 0;
-            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA
-            //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
-
-            for (let i = 0; i < FechaReapertura.length; i++) {
-                var Text = FechaReapertura[i].substring(116, 135);
-                if (Text == "CELL_REOPENING_DATE") {
-                    console.log("Lo encontre");
-                    Reapertura = 1;
-                    contreapertura++;
-                    if (contreapertura < 2) {
-                        Correo(3, IdArea, Celda);
-                    }
-
-
-                    console.log(contreapertura);
-                } else {
-                    var Text = FechaReapertura[i].substring(24, 140);
-                }
-
-            }
-
+           
 
 
 
@@ -1215,8 +1181,7 @@ function Mineria(browser, Pin) {
         }
 
 
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
+     
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
         await continPag[1].click();
         await page.waitForNavigation({
@@ -1226,7 +1191,7 @@ function Mineria(browser, Pin) {
 
 
 
-        //CAPTURA DE PANTALLA
+       
         clearTimeout(Radisegundo);
 
         let RadiTercero = setTimeout(() => {
@@ -1299,10 +1264,7 @@ function Mineria(browser, Pin) {
             console.log("La 1 tampoco Y_Y")
         }
 
-        //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
-        //CORREO RADICACION
-        Correo(2, IdArea, Celda);
+      
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
         Mineria(browser, Pin);
@@ -1429,46 +1391,7 @@ function Correo(Tipo, Area, Celda) {
     });
 }
 
-// FUNCIÓN PARA LA CAPTURA DE PANTALLA AL MOMENTO DE LA RADICACIÓN
-async function CapturaPantalla(page) {
 
-    const FechaGeneral = new Date();
-
-    let Dia = FechaGeneral.getDate();
-    let Mes = FechaGeneral.getMonth();
-    let Anio = FechaGeneral.getFullYear();
-    let Hora = FechaGeneral.getHours();
-    let Minuto = FechaGeneral.getMinutes();
-    let Segundo = FechaGeneral.getSeconds();
-    let DiaFinal, MesFinal, HoraFinal, MinutoFinal, SegundoFinal;
-
-    Mes = Mes + 1; // PORQUE COMIENZA EN 0 Y TERMNA EN 11, POR ESTA REZÓN SE LE SUMA 1, PARA QUE QUEDE EN EL MES ACTUAL
-    DiaFinal = Dia < 10 ? '0' + Dia : Dia;
-    MesFinal = Mes < 10 ? '0' + Mes : Mes;
-    HoraFinal = Hora < 10 ? '0' + Hora : Hora;
-    MinutoFinal = Minuto < 10 ? '0' + Minuto : Minuto;
-    SegundoFinal = Segundo < 10 ? '0' + Segundo : Segundo;
-
-    let Fecha = `${DiaFinal}-${MesFinal}-${Anio} --- ${HoraFinal}-${MinutoFinal}-${SegundoFinal}`;
-
-    const { mkdir, access } = require('fs/promises');
-
-    let NombreCarpeta = "ScreenShots";
-    let pathProduccion = `C:\\Aplicaciones\\${NombreCarpeta}`;
-
-    try {
-        // Verificar si la carpeta ya existe
-        await access(pathProduccion);
-        console.log(`La carpeta ${NombreCarpeta} ya existe en la dirección ${pathProduccion}`);
-    } catch (error) {
-        // Si no existe, crearla
-        await mkdir(pathProduccion);
-        console.log(`La carpeta fue creada en la dirección ${pathProduccion} con el nombre ${NombreCarpeta}`);
-    }
-
-    await page.screenshot({ path: `C:\\Aplicaciones\\ScreenShots\\Imagen Tomada El ${Fecha}.png`, type: 'png' })
-    console.log("El ScreenShot fue guardado");
-}
 
 
 async function seleccionar_Profesional(profesionales, page, Tipo) {
@@ -1546,62 +1469,3 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
     }
 }
 
-var CorreoEnviado = false;
-var PrimerCorreoEnviado = false;
-// FUNCIÓN PARA VERIFICAR VENCIMIENTO DE PIN Y ENVIAR RECORDATORIO
-function VerificarVencimientoPin(selectedText, TextoDeOpcionSeleccionadaEnCampoPin) {
-
-    const input = TextoDeOpcionSeleccionadaEnCampoPin;
-
-    // Separar la fecha después de la coma
-    const dateString = input.split(',')[1].trim();
-
-    // Crear un objeto de fecha a partir de la cadena
-    const targetDate = new Date(dateString);
-
-    // Obtener la fecha actual
-    const currentDate = new Date();
-
-    // Calcular la diferencia en milisegundos
-    const diffInMs = targetDate - currentDate;
-
-    // Convertir la diferencia en días
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-
-    const diaSemana = targetDate.toLocaleString('es-Es', { weekday: 'long' });
-    console.log(`¡¡¡ DIFERENCIA EN DÍAS PIN: ${diffInDays}`);
-    const Description = `El pin vence en ${diffInDays} días, es decir, tiene vigencia hasta el día ${diaSemana} - ${dateString}`;
-
-    // Se captura la hora del día actual
-    const HoraActual = currentDate.getHours();
-
-    // Se captura el minuto actual
-    const MinutoActual = currentDate.getMinutes();
-
-    // Se captura el segundo actual
-    const SegundoActual = currentDate.getSeconds();
-
-    // Se verifica si la diferencia de días es igual a 5 y si la hora actual contiene 7 de la mañana ó contiene 3 de la tarde. Para hacer 2 envíos de recordatorio el día que se cumplan todas las condiciones
-
-    // Primer envío: 07:00 am
-    if ((diffInDays === 5) && ([7].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false) && !PrimerCorreoEnviado) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL PRIMER CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = true;
-    }
-
-    // Resetear el flag solo una vez después del primer correo
-    if ((diffInDays === 5) && ((HoraActual > 7) && (HoraActual < 15)) && (MinutoActual === 0) && PrimerCorreoEnviado && CorreoEnviado) {
-        CorreoEnviado = false;
-        console.log("LA VARIABLE DE CORREO ENVIADO SE HIZO FALSA");
-    }
-
-    // Segundo envío: 03:00 pm
-    if ((diffInDays === 5) && ([15].includes(HoraActual)) && (MinutoActual === 0) && (CorreoEnviado === false)) {
-        console.log("TODAS LAS CONDICIONES SE CUMPLIERON, SE ENVIARÁ EL SEGUNDO CORREO RECORDANDO EL VENCIMIENTO DEL PIN SELECCIONADO...");
-        Correo(4, selectedText, Description);
-        CorreoEnviado = true;
-        PrimerCorreoEnviado = false;
-    }
-}
