@@ -426,7 +426,7 @@ function Mineria(browser, Pin) {
                     "507943",
                     1,
                     "18P09K04B10N",
-                    ['18P09K04C16E, 18P09K04C11J, 18P09K04C17A, 18P09K04C12Q, 18P09K04C12K, 18P09K04C12R, 18P09K04C12G, 18P09K04C07R, 18P09K04C07G, 18P09K04C12H, 18P09K04C12C, 18P09K04C07H, 18P09K04C07N, 18P09K04C11U, 18P09K04C12F, 18P09K04C12L, 18P09K04C12B, 18P09K04C17H, 18P09K04C07X, 18P09K04C12I, 18P09K04C07Y, 18P09K04C17J, 18P09K04C07Z, 18P09K04C11E, 18P09K04C17F, 18P09K04C12A, 18P09K04C17B, 18P09K04C12D, 18P09K04C07T, 18P09K04C12J, 18P09K04C07P, 18P09K04C07F, 18P09K04C12W, 18P09K04C07M, 18P09K04C17I, 18P09K04C12U, 18P09K04C07U, 18P09K04C12V, 18P09K04C17G, 18P09K04C07W, 18P09K04C17C, 18P09K04C12M, 18P09K04C07S, 18P09K04C12Z, 18P09K04C07J, 18P09K04C11Z, 18P09K04C11P, 18P09K04C06U, 18P09K04C07V, 18P09K04C07Q, 18P09K04C16J, 18P09K04C06Z, 18P09K04C06P, 18P09K04C06J, 18P09K04C12X, 18P09K04C17D, 18P09K04C12Y, 18P09K04C12T, 18P09K04C17E, 18P09K04C12P, 18P09K04C07K, 18P09K04C07L, 18P09K04C12S, 18P09K04C12N, 18P09K04C07I, 18P09K04C12E'],
+                    ['18N05N14M12R'],
                     0
                 );
             } else if (Band == 20) {
@@ -508,74 +508,74 @@ function Mineria(browser, Pin) {
                     .map(link => link.textContent.split(': ')[1].split(',').map(celda => celda.trim())); // Extrae las celdas y las limpia
             });
 
-            // console.log(`===============================================================================================`.cyan.bold);
-            // // console.log(`AREA COMPLETA => ${Area}`);
-            // // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
+            console.log(`===============================================================================================`.cyan.bold);
+            // console.log(`AREA COMPLETA => ${Area}`);
+            // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
 
-            // console.log(`ÁREA COMPLETA => `.magenta.bold);
-            // console.log(`[${Area}]`);
-            // console.log(`CELDAS NO DISPONIBLES => `.red.bold);
-            // console.log(`[${celdasNoDisponibles}]`);
+            console.log(`ÁREA COMPLETA => `.magenta.bold);
+            console.log(`[${Area}]`);
+            console.log(`CELDAS NO DISPONIBLES => `.red.bold);
+            console.log(`[${celdasNoDisponibles}]`);
 
-            // if (celdasNoDisponibles.length > 0) {
-            //     // Tipo, Area, Celda
+            if (celdasNoDisponibles.length > 0) {
+                // Tipo, Area, Celda
 
-            //     // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
-            //     const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
+                // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
+                const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
 
-            //     // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
-            //     const areaCeldas = ComparacionCeldas;
+                // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
+                const areaCeldas = ComparacionCeldas;
 
-            //     // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
-            //     areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
+                // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
+                areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
 
          
 
-            //     // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
-            //     // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
-            //     // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
-            //     console.log(`CELDAS DISPONIBLES => `.green.bold);
-            //     console.log(`["${areaFiltrado.join(', ')}"],`);
-            //     console.log(`===============================================================================================`.cyan.bold);
+                // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
+                // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
+                // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
+                console.log(`CELDAS DISPONIBLES => `.green.bold);
+                console.log(`["${areaFiltrado.join(', ')}"],`);
+                console.log(`===============================================================================================`.cyan.bold);
 
-            //     //     page.evaluate(() => {
-            //     //         document.querySelector('[id="cellIdsTxtId"]').value = "";
-            //     //     });
+                //     page.evaluate(() => {
+                //         document.querySelector('[id="cellIdsTxtId"]').value = "";
+                //     });
 
-            //     //     MonitorearAreas(
-            //     //         "007-85M",
-            //     //         1,
-            //     //         "Esto es una celda de prueba",
-            //     //         `["${areaFiltrado.join(', ')}"],`,
-            //     //         0
-            //     //     );
+                //     MonitorearAreas(
+                //         "007-85M",
+                //         1,
+                //         "Esto es una celda de prueba",
+                //         `["${areaFiltrado.join(', ')}"],`,
+                //         0
+                //     );
 
-            //     //     IdArea = DetallesCompletos.IdArea;
-            //     // Aviso = DetallesCompletos.Aviso;
-            //     // Celda = DetallesCompletos.Celda;
-            //     // Area = DetallesCompletos.Area;
-            //     // Comas = DetallesCompletos.Comas;
-            //     // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
+                //     IdArea = DetallesCompletos.IdArea;
+                // Aviso = DetallesCompletos.Aviso;
+                // Celda = DetallesCompletos.Celda;
+                // Area = DetallesCompletos.Area;
+                // Comas = DetallesCompletos.Comas;
+                // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
-            //     // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
-            //     // await continCeldas[1].click();
+                // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+                // await continCeldas[1].click();
 
-            //     // Band = 80;
+                // Band = 80;
 
 
-            //     // await page.waitForTimeout(2000000);
-            // } else {
-            //     Band = 80;
-            //     console.log('No se encontraron celdas no disponibles.');
-            //     console.log(`===============================================================================================`.cyan.bold);
-            // }
-            // /* FIN FIN FIN */
+                // await page.waitForTimeout(2000000);
+            } else {
+                Band = 80;
+                console.log('No se encontraron celdas no disponibles.');
+                console.log(`===============================================================================================`.cyan.bold);
+            }
+            /* FIN FIN FIN */
 
             // await page.waitForTimeout(2000000);
-            // const FechaReapertura = await page.$$eval("a", links =>
-            //     links.map(link => link.textContent)
-            // );
-            // var Reapertura = 0;
+            const FechaReapertura = await page.$$eval("a", links =>
+                links.map(link => link.textContent)
+            );
+            var Reapertura = 0;
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
@@ -1289,86 +1289,12 @@ function Mineria(browser, Pin) {
 
 
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
-        await continPag[1].click();
+   
         await page.waitForNavigation({
             waitUntil: 'networkidle0',
         });
         console.log(" si navego ");
 
-
-
-        //CAPTURA DE PANTALLA
-        clearTimeout(Radisegundo);
-
-        let RadiTercero = setTimeout(() => {
-
-            console.log("ENTRO EN EL Radisegundo");
-            //page.close();
-            Mineria(browser, Pin);
-        }, 60000);
-
-
-
-        const HacerClicEnSpanDocumentacionDeSoporte = await page.$x('//a[contains(.,"Documentac")]');
-        await HacerClicEnSpanDocumentacionDeSoporte[0].click();
-        const AparecioCaptcha = await page.waitForSelector('iframe[title="reCAPTCHA"]');
-        if (AparecioCaptcha) {
-            console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-            await page.waitForTimeout(500);
-        } else {
-            console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
-        }
-
-        for (let i = 0; i < 1; i += 1) {
-            // await page.keyboard.press('Tab');
-            await keyboard.pressKey(Key.Tab);
-            console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
-        }
-
-        await keyboard.pressKey(Key.Enter);
-
-        // await page.waitForTimeout(1000000);
-
-
-        while (true) {
-            await page.waitForTimeout(1000);
-            console.log("Chequeando si el captcha está resuelto...");
-
-            const isCaptchaResolved = await page.evaluate(() => {
-                const responseField = document.querySelector('#g-recaptcha-response');
-                return responseField && responseField.value.length > 0;
-            });
-
-            if (isCaptchaResolved) {
-                console.log('El captcha ha sido resuelto.');
-                clearTimeout(RadiTercero);
-                break;
-            } else {
-                console.log('El captcha no ha sido resuelto aún.');
-            }
-        }
-
-
-
-        console.log('51. Bóton Radicar');
-
-        const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
-        console.log("Este es el boton radicar : " + btnRadicar1);
-
-        //await page.waitForTimeout(4000);
-        console.log("Le di click");
-
-        try {
-            await btnRadicar1[0].click();
-        } catch (exepcion) {
-            console.log("La pos 0 No fue ")
-        }
-        try {
-
-            await btnRadicar1[1].click();
-        } catch (exepcion) {
-            console.log("La 1 tampoco Y_Y")
-        }
 
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
