@@ -15,7 +15,7 @@ const EquiposGenerales = {
     'LAPTOP-JL0BL28F': "JORGE EQUIPO",
     'MERCADEO': "MERCADEO",
     'DESKTOP-RF3NUO3': "PIXEL",
-    'HPRED241':"FERCHO ingeniero en sistemas best"
+    'HPRED241': "FERCHO ingeniero en sistemas best"
 }
 
 
@@ -24,16 +24,16 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = 'Collective';
 var user1 = '76966';
 var pass1 = 'Collectivemining.2025.';
-var user2 = '83949';
-var pass2 = '*Jcrmh2022#';
-var Agente = 0;
+var user2 = '84928';
+var pass2 = 'C1000191991*';
+var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
 
 Pagina();
 async function Pagina() {
-    
+
     var Pines = fs.readFileSync('Pin.txt', 'utf-8', prueba = (error, datos) => {
         if (error) {
             throw error;
@@ -66,14 +66,14 @@ async function Pagina() {
         devtools: false
     });
 
-        Mineria(browser, Pin);
+    Mineria(browser, Pin);
 
 }
 
 
 
 
-function Mineria(browser,  Pin) {
+function Mineria(browser, Pin) {
     (async () => {
 
         console.log("Esta es la vuelta " + ContadorVueltas);
@@ -83,7 +83,7 @@ function Mineria(browser,  Pin) {
             console.log("ENTRO EN EL PRIMERPASO")
 
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
 
         }, 20000);
 
@@ -97,19 +97,19 @@ function Mineria(browser,  Pin) {
         let user = (Agente == 0) ? user1 : user2;
         let pass = (Agente == 0) ? pass1 : pass2;
 
-            try {
+        try {
 
-                console.log(user);
-                console.log(pass);
-                await page.type('#username', user);
-                await page.type('#password', pass);
+            console.log(user);
+            console.log(pass);
+            await page.type('#username', user);
+            await page.type('#password', pass);
 
-                page.click("#loginButton");
+            page.click("#loginButton");
 
 
-            } catch (ex) {
-                console.log("Entro en el catch");
-            }
+        } catch (ex) {
+            console.log("Entro en el catch");
+        }
 
         page.setDefaultTimeout(0);
         try {
@@ -130,7 +130,7 @@ function Mineria(browser,  Pin) {
         let Segundopaso = setTimeout(() => {
             console.log("ENTRO EN EL Segundopaso")
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 35000);
 
 
@@ -172,62 +172,62 @@ function Mineria(browser,  Pin) {
         console.log(Pin);
 
         /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-            // Capturar todas las opciones de un select
-            const allOptions = await page.evaluate(select => {
-                const options = Array.from(select.options); // Convierte las opciones a un array
-                return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
-            }, selectPin);
+        // Capturar todas las opciones de un select
+        const allOptions = await page.evaluate(select => {
+            const options = Array.from(select.options); // Convierte las opciones a un array
+            return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
+        }, selectPin);
 
-            console.log('Todas las opciones:', allOptions);
+        console.log('Todas las opciones:', allOptions);
 
-            const closestDateOption = await page.evaluate(() => {
-                const select = document.querySelector('select');
+        const closestDateOption = await page.evaluate(() => {
+            const select = document.querySelector('select');
 
-                const monthMap = {
-                    "ENE": "01",
-                    "FEB": "02",
-                    "MAR": "03",
-                    "ABR": "04",
-                    "MAY": "05",
-                    "JUN": "06",
-                    "JUL": "07",
-                    "AGO": "08",
-                    "SEP": "09",
-                    "OCT": "10",
-                    "NOV": "11",
-                    "DIC": "12"
-                };
+            const monthMap = {
+                "ENE": "01",
+                "FEB": "02",
+                "MAR": "03",
+                "ABR": "04",
+                "MAY": "05",
+                "JUN": "06",
+                "JUL": "07",
+                "AGO": "08",
+                "SEP": "09",
+                "OCT": "10",
+                "NOV": "11",
+                "DIC": "12"
+            };
 
-                const options = Array.from(select.options).map(option => {
-                    const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
-                    const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
+            const options = Array.from(select.options).map(option => {
+                const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
+                const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
 
-                    const [day, monthName, year] = dateText.split('/');
-                    const month = monthMap[monthName];
-                    const formattedDate = new Date(`${year}-${month}-${day}`);
+                const [day, monthName, year] = dateText.split('/');
+                const month = monthMap[monthName];
+                const formattedDate = new Date(`${year}-${month}-${day}`);
 
-                    return { text, date: formattedDate };
-                });
-
-                const now = new Date();
-
-                const differences = options.map(option => {
-                    const diff = Math.abs(option.date - now);
-                    return { text: option.text, diff }; // Retornar la diferencia y el texto
-                });
-
-                console.log('Diferencias calculadas:', differences);
-
-                // Reducir para encontrar la fecha más cercana
-                const closest = options.reduce((prev, curr) => {
-                    return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
-                });
-
-                return closest.text;
+                return { text, date: formattedDate };
             });
 
-            console.log('Opción más cercana a la fecha actual:', closestDateOption);
-            const input = closestDateOption;
+            const now = new Date();
+
+            const differences = options.map(option => {
+                const diff = Math.abs(option.date - now);
+                return { text: option.text, diff }; // Retornar la diferencia y el texto
+            });
+
+            console.log('Diferencias calculadas:', differences);
+
+            // Reducir para encontrar la fecha más cercana
+            const closest = options.reduce((prev, curr) => {
+                return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
+            });
+
+            return closest.text;
+        });
+
+        console.log('Opción más cercana a la fecha actual:', closestDateOption);
+        const input = closestDateOption;
         /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
 
         await page.waitForXPath('//span[contains(.,"Continuar")]');
@@ -346,7 +346,7 @@ function Mineria(browser,  Pin) {
         var Celda = 0;
 
         let ComasTotalesPorArea = {};
-      
+
         while (Band != 99) {
 
             const Pestanas = await browser.pages();
@@ -366,7 +366,7 @@ function Mineria(browser,  Pin) {
             let TimeArea = setTimeout(() => {
                 console.log("ENTRO EN EL TimeArea");
                 page.close();
-                Mineria(browser,  Pin);
+                Mineria(browser, Pin);
             }, 25000);
 
             const selectArea = await page.$('select[name="areaOfConcessionSlct"]');
@@ -415,17 +415,17 @@ function Mineria(browser,  Pin) {
             //     );
             // }
 
-
-             if (Band == 1) {
+            if (Band == 1) {
                 MonitorearAreas(
-                    "AREAJORGE",
-                    1,
-                    "18N05A25G21R",
-                    ['18N05A24J15C, 18N05A24J10T, 18N05A24J10M, 18N05A24J10X, 18N05A24J10R, 18N05A24J10Y, 18N05A24J10I, 18N05A24J10N, 18N05A24J10S, 18N05A24J10L, 18N05A24J15H, 18N05A24J10H'],
-                    77
-                );
+                    "502172",//Nombre del area
+                    1, // aviso
+                    "18N05E04D03F", // ceda de correo
+                    ['18N05E04D03F, 18N05A24Q23V, 18N05E04D03B, 18N05E04D03C, 18N05A24Q23U, 18N05A24Q24R, 18N05E04D02U, 18N05E04D03A, 18N05A24Q23S, 18N05A24Q23T, 18N05A24Q23N, 18N05A24Q23Z, 18N05A24Q24L, 18N05E04D02J, 18N05E04D02E, 18N05A24Q23Q, 18N05A24Q23M, 18N05A24Q23P, 18N05A24Q24Q, 18N05A24Q22U, 18N05A24Q23K, 18N05E04D03D, 18N05E04D03E, 18N05E04D04B, 18N05A24Q24V, 18N05A24Q24W, 18N05A24Q23L, 18N05A24Q23X, 18N05A24Q24X, 18N05E04D03L, 18N05E04D04A, 18N05A24Q24K, 18N05E04D04C, 18N05A24Q24M, 18N05A24Q22Z, 18N05E04D03G, 18N05A24Q23W, 18N05A24Q23R, 18N05A24Q23Y, 18N05E04D02P, 18N05A24Q22P, 18N05E04D03K, 18N05E04D03H, 18N05A24Q24S'], // Celdas de area
+                     0 // comas
+                )
             }
-          
+            
+
 
 
 
@@ -438,10 +438,10 @@ function Mineria(browser,  Pin) {
             Comas = DetallesCompletos.Comas;
 
             const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
-            await page.waitForTimeout(1000);
+            await page.waitForTimeout(500);
             await continCeldas[1].click();
             console.log(IdArea);
-            await page.waitForTimeout(2000);
+            await page.waitForTimeout(1000);
 
             const Todoslosparametros = await page.$$eval("span", links =>
                 links.map(link => link.textContent)
@@ -461,7 +461,7 @@ function Mineria(browser,  Pin) {
             //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA
             //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
-           for (let i = 0; i < FechaReapertura.length; i++) {
+            for (let i = 0; i < FechaReapertura.length; i++) {
                 var Text = FechaReapertura[i].substring(116, 135);
                 if (Text == "CELL_REOPENING_DATE") {
                     console.log("Lo encontre");
@@ -489,7 +489,7 @@ function Mineria(browser,  Pin) {
                 });
                 Band++;
                 //Este es la cantidad de areas mas 1
-                if (Band == 26) {
+                if (Band == 2) {
                     Band = 1;
                 }
 
@@ -509,7 +509,7 @@ function Mineria(browser,  Pin) {
             bandera = 99;
             console.log("ENTRO EN EL TimeNOpaso");
             page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 20000);
 
         console.log(page.url());
@@ -1053,7 +1053,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
 
 
         }, 30000);
@@ -1083,50 +1083,50 @@ function Mineria(browser,  Pin) {
 
         try {
 
-            
-            let ArchivoAmbiental ;
-            if(IdArea == '509188'){
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-            }else if(IdArea == '503239'){
+
+            let ArchivoAmbiental;
+            if (IdArea == '509188') {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
+            } else if (IdArea == '503239') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
 
-            }else if(IdArea == 'RFE_08211'){
+            } else if (IdArea == 'RFE_08211') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
 
-            }else if(IdArea == 'RFE_08A'){
+            } else if (IdArea == 'RFE_08A') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
 
-            }else if(IdArea == 'RFE_08B'){
+            } else if (IdArea == 'RFE_08B') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
 
-            }else if(IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto'){
+            } else if (IdArea == 'Riosucio598' || IdArea == 'supia' || IdArea == 'supiaincompleto') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
 
-            }else if(IdArea == '507948sincelda'  ){
+            } else if (IdArea == '507948sincelda') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\507948sincelda.pdf`;
 
-            }else if(IdArea == '509136'  ){
+            } else if (IdArea == '509136') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509136.pdf`;
 
-            }else if(IdArea == 'CollectiveCAG_141'  ){
+            } else if (IdArea == 'CollectiveCAG_141') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\CollectiveCAG_141.pdf`;
 
-            }else if(IdArea == '697_17'  ){
+            } else if (IdArea == '697_17') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\697_17.pdf`;
 
-            }else if(IdArea == '502172'  ){
+            } else if (IdArea == '502172') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\502172.pdf`;
 
-            }else if(IdArea == '671_17'  ){
+            } else if (IdArea == '671_17') {
                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\671_17.pdf`;
 
             }
-            else{
-                 ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+            else {
+                ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
 
             }
-            
-            
+
+
             await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
             const RutaDelArchivoo = ArchivoAmbiental;
             const ElementoControladorDeCargaaa = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1176,12 +1176,12 @@ function Mineria(browser,  Pin) {
                 "p_CaaCataMandatoryDocumentToAttachId8",//8
                 "p_CaaCataMandatoryDocumentToAttachId9",//9
                 "p_CaaCataMandatoryDocumentToAttachId10",//10
-                  "p_CaaCataMandatoryDocumentToAttachId11",//11
-                 "p_CaaCataMandatoryDocumentToAttachId12",//12
+                "p_CaaCataMandatoryDocumentToAttachId11",//11
+                "p_CaaCataMandatoryDocumentToAttachId12",//12
                 "p_CaaCataMandatoryDocumentToAttachId13",//13
                 // "p_CaaCataMandatoryDocumentToAttachId14"//14
             ];
-                console.log(ElementosFile.length);
+            console.log(ElementosFile.length);
             try {
                 for (let i = 0; i < ElementosFile.length; i++) {
                     try {
@@ -1233,7 +1233,7 @@ function Mineria(browser,  Pin) {
 
             console.log("ENTRO EN EL Radisegundo");
             //page.close();
-            Mineria(browser,  Pin);
+            Mineria(browser, Pin);
         }, 60000);
 
 
@@ -1248,7 +1248,7 @@ function Mineria(browser,  Pin) {
             console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
         }
 
-        for (let i = 0; i < 1; i+=1) {
+        for (let i = 0; i < 1; i += 1) {
             // await page.keyboard.press('Tab');
             await keyboard.pressKey(Key.Tab);
             console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
@@ -1305,7 +1305,7 @@ function Mineria(browser,  Pin) {
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);
         await page.waitForTimeout(180000);
-        Mineria(browser,  Pin);
+        Mineria(browser, Pin);
 
 
 
@@ -1338,8 +1338,8 @@ function Correo(Tipo, Area, Celda) {
         Texto = "AREA CON REAPERTURA";
     } else if (Tipo == 4) {
         msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-    }else if ( Tipo == 5){
-        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual ;
+    } else if (Tipo == 5) {
+        msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
         Color = "#fe1426";
         Texto = "Pestañas";
     }
@@ -1511,34 +1511,34 @@ async function seleccionar_Profesional(profesionales, page, Tipo) {
                     await addProfesional[0].click();
                 } catch (error) {
                     console.log("ERR 0");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[1].click();
                 } catch (error) {
                     console.log("ERR 1");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
                     await addProfesional[2].click();
 
                 } catch (error) {
                     console.log("ERR 2");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[3].click();
                 } catch (error) {
                     console.log("ERR 3");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
                 try {
 
                     await addProfesional[4].click();
                 } catch (error) {
                     console.log("ERR 4");
-                    console.log (`Bro manito sabe que  pilke -> ${error}`)
+                    console.log(`Bro manito sabe que  pilke -> ${error}`)
                 }
             }
 
