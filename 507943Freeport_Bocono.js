@@ -508,76 +508,76 @@ function Mineria(browser, Pin) {
                     .map(link => link.textContent.split(': ')[1].split(',').map(celda => celda.trim())); // Extrae las celdas y las limpia
             });
 
-            console.log(`===============================================================================================`.cyan.bold);
-            // console.log(`AREA COMPLETA => ${Area}`);
-            // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
+            // console.log(`===============================================================================================`.cyan.bold);
+            // // console.log(`AREA COMPLETA => ${Area}`);
+            // // console.log(`CELDAS NO DISPONIBLES => ${celdasNoDisponibles}`);
 
-            console.log(`ÁREA COMPLETA => `.magenta.bold);
-            console.log(`[${Area}]`);
-            console.log(`CELDAS NO DISPONIBLES => `.red.bold);
-            console.log(`[${celdasNoDisponibles}]`);
+            // console.log(`ÁREA COMPLETA => `.magenta.bold);
+            // console.log(`[${Area}]`);
+            // console.log(`CELDAS NO DISPONIBLES => `.red.bold);
+            // console.log(`[${celdasNoDisponibles}]`);
 
-            if (celdasNoDisponibles.length > 0) {
-                // Tipo, Area, Celda
+            // if (celdasNoDisponibles.length > 0) {
+            //     // Tipo, Area, Celda
 
-                // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
-                const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
+            //     // Crear una lista de celdas no disponibles (eliminando espacios innecesarios)
+            //     const celdasNoDisponiblesLimpias = celdasNoDisponibles[0].map(celda => celda.trim());
 
-                // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
-                const areaCeldas = ComparacionCeldas;
+            //     // Asegurarse de que 'ComparacionCeldas' esté correctamente dividido en celdas
+            //     const areaCeldas = ComparacionCeldas;
 
-                // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
-                areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
-
-
-
-                // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
-                // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
-                // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
-                console.log(`CELDAS DISPONIBLES => `.green.bold);
-                console.log(`["${areaFiltrado.join(', ')}"],`);
-                console.log(`===============================================================================================`.cyan.bold);
-
-                //     page.evaluate(() => {
-                //         document.querySelector('[id="cellIdsTxtId"]').value = "";
-                //     });
-
-                //     MonitorearAreas(
-                //         "007-85M",
-                //         1,
-                //         "Esto es una celda de prueba",
-                //         `["${areaFiltrado.join(', ')}"],`,
-                //         0
-                //     );
-
-                //     IdArea = DetallesCompletos.IdArea;
-                // Aviso = DetallesCompletos.Aviso;
-                // Celda = DetallesCompletos.Celda;
-                // Area = DetallesCompletos.Area;
-                // Comas = DetallesCompletos.Comas;
-                // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
-
-                // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
-                // await continCeldas[1].click();
-
-                // Band = 80;
+            //     // Filtrar el arreglo 'areaCeldas' para excluir las celdas no disponibles
+            //     areaFiltrado = areaCeldas.filter(celda => !celdasNoDisponiblesLimpias.includes(celda));
 
 
-                // await page.waitForTimeout(2000000);
-            } else {
-                Band = 80;
-                console.log('No se encontraron celdas no disponibles.');
-                console.log(`===============================================================================================`.cyan.bold);
-            }
+
+            //     // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
+            //     // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
+            //     // console.log(`ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => `.green.bold);
+            //     console.log(`CELDAS DISPONIBLES => `.green.bold);
+            //     console.log(`["${areaFiltrado.join(', ')}"],`);
+            //     console.log(`===============================================================================================`.cyan.bold);
+
+            //     //     page.evaluate(() => {
+            //     //         document.querySelector('[id="cellIdsTxtId"]').value = "";
+            //     //     });
+
+            //     //     MonitorearAreas(
+            //     //         "007-85M",
+            //     //         1,
+            //     //         "Esto es una celda de prueba",
+            //     //         `["${areaFiltrado.join(', ')}"],`,
+            //     //         0
+            //     //     );
+
+            //     //     IdArea = DetallesCompletos.IdArea;
+            //     // Aviso = DetallesCompletos.Aviso;
+            //     // Celda = DetallesCompletos.Celda;
+            //     // Area = DetallesCompletos.Area;
+            //     // Comas = DetallesCompletos.Comas;
+            //     // ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
+
+            //     // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
+            //     // await continCeldas[1].click();
+
+            //     // Band = 80;
+
+
+            //     // await page.waitForTimeout(2000000);
+            // } else {
+            //     Band = 80;
+            //     console.log('No se encontraron celdas no disponibles.');
+            //     console.log(`===============================================================================================`.cyan.bold);
+            // }
             /* FIN FIN FIN */
 
-            // await page.waitForTimeout(2000000);
-            const FechaReapertura = await page.$$eval("a", links =>
-                links.map(link => link.textContent)
-            );
-            var Reapertura = 0;
-            //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
-            //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
+            // // await page.waitForTimeout(2000000);
+            // const FechaReapertura = await page.$$eval("a", links =>
+            //     links.map(link => link.textContent)
+            // );
+            // var Reapertura = 0;
+            // //EL DIA DE MAÑANA 12 04 2022 SE REALIZARA LA PRUEBA 
+            // //PARA ASI VALIDAR CUANDO APAREZCA ALGO DIFERENTE A "Las siguientes celdas de selección no están disponibles:"
 
          
 
