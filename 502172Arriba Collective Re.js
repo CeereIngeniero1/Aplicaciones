@@ -554,7 +554,7 @@ function Mineria(browser, Pin) {
         // const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
         // await continCeldas[1].click();
 
-        // Band = 80;
+        Band = 80;
 
         // await page.waitForTimeout(2000000);
       } else {
