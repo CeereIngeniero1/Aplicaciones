@@ -23,8 +23,8 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = "Collective";
 var user1 = "76966";
 var pass1 = "Collectivemining.2025.";
-var user2 = "98908";
-var pass2 = "Sebas2025?";
+var user2 = '76467';
+var pass2 = 'Simon1998.2022.';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
@@ -44,7 +44,7 @@ async function Pagina() {
     })
   );
   for (let i = 0; i < Pines.length; i++) {
-    if (Pines.substring(i + 1, i + 4) == "Co:") {
+    if (Pines.substring(i + 1, i + 4) == "C3:") {
       console.log(Pines.substring(i + 1, i + 4));
       Pin = Pines.substring(i + 4, i + 31);
       break;
@@ -425,11 +425,11 @@ function Mineria(browser, Pin) {
       }
       if (Band == 1) {
         MonitorearAreas(
-          "502172", //Nombre del area
+          "500391", //Nombre del area
           1, // aviso
-          "18N05A24Q23V", // ceda de correo
+          "18N08E25D23R", // ceda de correo
           [
-            "18N05A24Q23V, 18N05A24Q23U, 18N05A24Q24R, 18N05A24Q23S, 18N05A24Q23T, 18N05A24Q23N, 18N05A24Q23Z, 18N05A24Q24L, 18N05A24Q23Q, 18N05A24Q23M, 18N05A24Q23P, 18N05A24Q24Q, 18N05A24Q22U, 18N05A24Q23K, 18N05A24Q24V, 18N05A24Q24W, 18N05A24Q23L, 18N05A24Q23X, 18N05A24Q24X, 18N05A24Q24K, 18N05A24Q24M, 18N05A24Q22Z, 18N05A24Q23W, 18N05A24Q23R, 18N05A24Q23Y, 18N05A24Q22P, 18N05A24Q24S",
+            "18N08E25D23R, 18N08E25H03C, 18N08E25D23T, 18N08E25D22U, 18N08E25H03K, 18N08E25D23K, 18N08E25H03L, 18N08E25H03G, 18N08E25D23W, 18N08E25H03J, 18N08E25D23Z, 18N08E25D23V, 18N08E25H03D, 18N08E25H04F, 18N08E25D23Y, 18N08E25D23P, 18N08E25H02P, 18N08E25H02E, 18N08E25H03B, 18N08E25H03I, 18N08E25H04A, 18N08E25D24V, 18N08E25D22P, 18N08E25H03H, 18N08E25D23S, 18N08E25D23N, 18N08E25D24K, 18N08E25H02J, 18N08E25D22Z, 18N08E25D23Q, 18N08E25D23U, 18N08E25D24Q, 18N08E25H03F, 18N08E25H03A, 18N08E25D23L, 18N08E25D23X, 18N08E25D23M, 18N08E25H03E",
           ], // Celdas de area
           0 // comas
         );
@@ -1329,36 +1329,10 @@ function Mineria(browser, Pin) {
 
     try {
       let ArchivoAmbiental;
-      if (IdArea == "509188") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509188.pdf`;
-      } else if (IdArea == "503239") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\503239.pdf`;
-      } else if (IdArea == "RFE_08211") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08211.pdf`;
-      } else if (IdArea == "RFE_08A") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08A.pdf`;
-      } else if (IdArea == "RFE_08B") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\RFE_08B.pdf`;
-      } else if (
-        IdArea == "Riosucio598" ||
-        IdArea == "supia" ||
-        IdArea == "supiaincompleto"
-      ) {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\QCO-08032.pdf`;
-      } else if (IdArea == "507948sincelda") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\507948sincelda.pdf`;
-      } else if (IdArea == "509136") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\509136.pdf`;
-      } else if (IdArea == "CollectiveCAG_141") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\CollectiveCAG_141.pdf`;
-      } else if (IdArea == "697_17") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\697_17.pdf`;
-      } else if (IdArea == "502172") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\502172.pdf`;
-      } else if (IdArea == "671_17") {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\671_17.pdf`;
+      if (IdArea == "500391") {
+        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\500391.pdf`;
       } else {
-        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+        ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\500391.pdf`;
       }
 
       await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
