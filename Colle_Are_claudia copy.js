@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const { keyboard, mouse, Key, clipboard } = require('@nut-tree-fork/nut-js');
 
-const user = '96474';
-const pass = 'Victor2025*';
+const user = '98819';
+const pass = 'Laestrella2025_';
 var Agente = 0;
 
 Pagina();
@@ -77,9 +77,9 @@ async function AreaEspecial(browser) {
 
 
 
-            await page.type('#submitterPersonOrganizationNameId', '96474');
+            await page.type('#submitterPersonOrganizationNameId', '98893');
 
-            await page.waitForTimeout(3000);
+            await page.waitForTimeout(5000);
 
             await page.keyboard.press("Enter");
 
@@ -154,7 +154,7 @@ async function AreaEspecial(browser) {
     console.log("LLegue hasta aca");
 
 
-    await page.type('#selectedApplicantInputId', '96474');
+    await page.type('#selectedApplicantInputId', '98893');
 
     await page.waitForTimeout(3000);
 
@@ -247,22 +247,22 @@ async function AreaEspecial(browser) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,53174'; // Usar el valor con punto decimal
+                eastingInput.value = '-75,61355'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '5,60655';
+                northingInput.value = '5,49962';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,53174';
+                eastingInput2.value = '-75,61355';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '5,60655';
+                northingInput2.value = '5,49962';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
             MonitorearAreas("AreaDePrueba", ["18N05E04D03B"]);
@@ -270,22 +270,22 @@ async function AreaEspecial(browser) {
             // Establecer el valor directamente en el input
             await page.evaluate(() => {
                 const eastingInput = document.getElementById('0applicantCoordinateEastingTxtId');
-                eastingInput.value = '-75,5717'; // Usar el valor con punto decimal
+                eastingInput.value = '-75,61355'; // Usar el valor con punto decimal
                 eastingInput.dispatchEvent(new Event('input', { bubbles: true })); // Disparar eventos necesarios
 
                 const northingInput = document.getElementById('0applicantCoordinateNorthingTxtId');
-                northingInput.value = '5,51955';
+                northingInput.value = '5,49962';
                 northingInput.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             // Repetir para los otros inputs
             await page.evaluate(() => {
                 const eastingInput2 = document.getElementById('1applicantCoordinateEastingTxtId');
-                eastingInput2.value = '-75,5717';
+                eastingInput2.value = '-75,61355';
                 eastingInput2.dispatchEvent(new Event('input', { bubbles: true }));
 
                 const northingInput2 = document.getElementById('1applicantCoordinateNorthingTxtId');
-                northingInput2.value = '5,51955';
+                northingInput2.value = '5,49962';
                 northingInput2.dispatchEvent(new Event('input', { bubbles: true }));
             });
             MonitorearAreas("AreaDePrueba", ["18N05E04D03B"]);
