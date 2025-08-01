@@ -457,10 +457,10 @@ function Mineria(browser, Pin) {
       ComparacionCeldas = DetallesCompletos.ComparacionCeldas;
 
       const continCeldas = await page.$x('//span[contains(.,"Continuar")]');
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(500);
       await continCeldas[1].click();
       console.log(IdArea);
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(1000);
 
       const Todoslosparametros = await page.$$eval("span", (links) =>
         links.map((link) => link.textContent)
@@ -520,7 +520,7 @@ function Mineria(browser, Pin) {
           (celda) => !celdasNoDisponiblesLimpias.includes(celda)
         );
 
-        //Correo(1, Area, areaFiltrado);
+        ////Correo(1, Area, areaFiltrado);
 
         // Mostrar el nuevo arreglo que no contiene las celdas no disponibles
         // console.log('ÁREA MONTADA EXCLUYENDO LAS CELDAS QUE NO ESTÁN DISPONIBLES => ', areaFiltrado);
@@ -582,7 +582,7 @@ function Mineria(browser, Pin) {
           Reapertura = 1;
           contreapertura++;
           if (contreapertura < 2) {
-            Correo(3, IdArea, Celda);
+            //Correo(3, IdArea, Celda);
           }
 
           console.log(contreapertura);
@@ -651,7 +651,7 @@ function Mineria(browser, Pin) {
     await btnInfoTecnica[0].click();
 
     //CORREO LIBERADA
-    Correo(1, IdArea, Celda);
+    //Correo(1, IdArea, Celda);
 
     let RadiPrimero = setTimeout(() => {
       // console.log("ENTRO EN EL RadiPrimero");
@@ -1533,134 +1533,6 @@ function Mineria(browser, Pin) {
 }
 
 // FUNCIÓN PARA ENVÍO DE CORREO SEGÚN LA SITUACIÓN
-function Correo(Tipo, Area, Celda) {
-  // 1. Liberada 2. radicada 3. Fecha reapertura
-  var msg = "";
-  var Color = "";
-  var Texto = "";
-  //Area = "Tranquilos area de prueba";
-  if (Tipo == 1) {
-    msg =
-      "¡¡¡Posible Area Liberada!!! " +
-      EquipoActual +
-      " " +
-      Area +
-      " " +
-      Empresa;
-    Color = "#4CAF50";
-    Texto = "POSIBLE AREA LIBERADA";
-  } else if (Tipo == 2) {
-    msg =
-      "¡¡¡Posible Area Radicada!!! " +
-      EquipoActual +
-      " " +
-      Area +
-      " " +
-      Empresa;
-    Color = "#D4AF37";
-    Texto = "POSIBLE AREA RADICADA";
-  } else if (Tipo == 3) {
-    msg =
-      "¡¡¡Area Con fecha de Reapertura!!! " +
-      EquipoActual +
-      " " +
-      Area +
-      " " +
-      Empresa;
-    Color = "#2196F3";
-    Texto = "AREA CON REAPERTURA";
-  } else if (Tipo == 4) {
-    msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-  } else if (Tipo == 5) {
-    msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
-    Color = "#fe1426";
-    Texto = "Pestañas";
-  }
-
-  var nodemailer = require("nodemailer");
-
-  var transporter = nodemailer.createTransport({
-    host: "mail.ceere.net", // hostname
-    secureConnection: false,
-    port: 465,
-    tls: {
-      ciphers: "SSLv3",
-    },
-    auth: {
-      user: "correomineria2@ceere.net",
-      pass: "1998Ceere*",
-    },
-  });
-  var mensaje = msg;
-  var mailOptions = {
-    from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
-    to: "jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com",
-    //to: '  Soporte2ceere@gmail.com',
-    subject: "LA AREA ES-> " + Area,
-    text: "LA AREA ES->  " + Area + "  " + Celda,
-    html: `
-            <html>
-                <head>
-                    <style>
-                        .container {
-                            font-family: Arial, sans-serif;
-                            max-width: 600px;
-                            margin: auto;
-                            padding: 20px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                            background-color: #f9f9f9;
-                        }
-                        .header {
-                            background-color: ${Color};
-                            color: white;
-                            padding: 10px;
-                            text-align: center;
-                            border-radius: 5px 5px 0 0;
-                        }
-                        .content {
-                            margin: 20px 0;
-                        }
-                        .footer {
-                            text-align: center;
-                            padding: 10px;
-                            font-size: 12px;
-                            color: #777;
-                            border-top: 1px solid #ddd;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h3> ${Texto} </h3>
-                        </div>
-                        <div class="content">
-                            <p><strong>Detalles:</strong></p>
-                            <ul>
-                                <li><strong>Empresa: </strong><br>${Empresa}</li>
-                                <li><strong>Area:</strong><br>${Area}</li>
-                                <li><strong>Celda:</strong><br>${Celda}</li>
-                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
-                            </ul>
-                        </div>
-                        <div class="footer">
-                            <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
-                        </div>
-                    </div>
-                </body>
-            </html>
-        `,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      return console.log(error);
-    }
-
-    console.log("Message sent: " + info.response);
-  });
-}
 
 async function seleccionar_Profesional(profesionales, page, Tipo) {
   for (const profesional of profesionales) {
