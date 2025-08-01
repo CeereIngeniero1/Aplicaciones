@@ -26,7 +26,7 @@ var user1 = '76966';
 var pass1 = 'Collectivemining.2025.';
 var user2 = '99401';
 var pass2 = 'JU9*-2024&';
-var Agente = 1;
+var Agente = 0;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
 var ContadorVueltas = 0;
@@ -42,7 +42,7 @@ async function Pagina() {
         }
     });
     for (let i = 0; i < Pines.length; i++) {
-        if (Pines.substring(i + 1, i + 4) == 'Co:') {
+        if (Pines.substring(i + 1, i + 4) == 'C3:') {
             console.log(Pines.substring(i + 1, i + 4));
             Pin = Pines.substring(i + 4, i + 31);
             break
