@@ -163,176 +163,139 @@ function Mineria(browser, Pin) {
         }
 
 
+await page.waitForTimeout(2500);
+    page.setDefaultTimeout(0);
+    await page.waitForSelector('select[id="pinSlctId"]');
+    const selectPin = await page.$('select[id="pinSlctId"]');
+    await selectPin.type(Pin);
+    console.log(Pin);
 
-        await page.waitForTimeout(2500)
-        page.setDefaultTimeout(0);
-        await page.waitForSelector('select[id="pinSlctId"]');
-        const selectPin = await page.$('select[id="pinSlctId"]');
-        await selectPin.type(Pin);
-        console.log(Pin);
+    /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
+    // Capturar todas las opciones de un select
+    const allOptions = await page.evaluate((select) => {
+      const options = Array.from(select.options); // Convierte las opciones a un array
+      return options.map((option) => option.textContent); // Retorna un array con el texto de cada opción
+    }, selectPin);
 
-        /* VALIDAR SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
-        // Capturar todas las opciones de un select
-        const allOptions = await page.evaluate(select => {
-            const options = Array.from(select.options); // Convierte las opciones a un array
-            return options.map(option => option.textContent); // Retorna un array con el texto de cada opción
-        }, selectPin);
+    console.log("Todas las opciones:", allOptions);
 
-        console.log('Todas las opciones:', allOptions);
+    const closestDateOption = await page.evaluate(() => {
+      const select = document.querySelector("select");
 
-        const closestDateOption = await page.evaluate(() => {
-            const select = document.querySelector('select');
+      const monthMap = {
+        ENE: "01",
+        FEB: "02",
+        MAR: "03",
+        ABR: "04",
+        MAY: "05",
+        JUN: "06",
+        JUL: "07",
+        AGO: "08",
+        SEP: "09",
+        OCT: "10",
+        NOV: "11",
+        DIC: "12",
+      };
 
-            const monthMap = {
-                "ENE": "01",
-                "FEB": "02",
-                "MAR": "03",
-                "ABR": "04",
-                "MAY": "05",
-                "JUN": "06",
-                "JUL": "07",
-                "AGO": "08",
-                "SEP": "09",
-                "OCT": "10",
-                "NOV": "11",
-                "DIC": "12"
-            };
+      const options = Array.from(select.options).map((option) => {
+        const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
+        const dateText = text.split(", ")[1]; // Extraer la fecha: "08/DIC/2024"
 
-            const options = Array.from(select.options).map(option => {
-                const text = option.textContent; // Ejemplo: "20241108074024, 08/DIC/2024"
-                const dateText = text.split(', ')[1]; // Extraer la fecha: "08/DIC/2024"
+        const [day, monthName, year] = dateText.split("/");
+        const month = monthMap[monthName];
+        const formattedDate = new Date(`${year}-${month}-${day}`);
 
-                const [day, monthName, year] = dateText.split('/');
-                const month = monthMap[monthName];
-                const formattedDate = new Date(`${year}-${month}-${day}`);
+        return { text, date: formattedDate };
+      });
 
-                return { text, date: formattedDate };
-            });
+      const now = new Date();
 
-            const now = new Date();
+      const differences = options.map((option) => {
+        const diff = Math.abs(option.date - now);
+        return { text: option.text, diff }; // Retornar la diferencia y el texto
+      });
 
-            const differences = options.map(option => {
-                const diff = Math.abs(option.date - now);
-                return { text: option.text, diff }; // Retornar la diferencia y el texto
-            });
+      console.log("Diferencias calculadas:", differences);
 
-            console.log('Diferencias calculadas:', differences);
+      // Reducir para encontrar la fecha más cercana
+      const closest = options.reduce((prev, curr) => {
+        return Math.abs(curr.date - now) < Math.abs(prev.date - now)
+          ? curr
+          : prev;
+      });
 
-            // Reducir para encontrar la fecha más cercana
-            const closest = options.reduce((prev, curr) => {
-                return (Math.abs(curr.date - now) < Math.abs(prev.date - now)) ? curr : prev;
-            });
+      return closest.text;
+    });
 
-            return closest.text;
-        });
+    console.log("Opción más cercana a la fecha actual:", closestDateOption);
+    const input = closestDateOption;
+    /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
 
-        console.log('Opción más cercana a la fecha actual:', closestDateOption);
-        const input = closestDateOption;
-        /* FIN => VALIDACIÓN SI EL PIN ESTÁ PRÓXIMO A VENCERSE */
+    await page.waitForXPath('//span[contains(.,"Continuar")]');
+    const continPin = await page.$x('//span[contains(.,"Continuar")]');
+    // await continPin[1].click();
 
-        await page.waitForXPath('//span[contains(.,"Continuar")]');
-        const continPin = await page.$x('//span[contains(.,"Continuar")]');
-        await continPin[1].click();
-        await page.waitForTimeout(1000);
+    await page.waitForNavigation({
+      waitUntil: "networkidle0",
+    });
 
-        const Fallopin = await page.$$eval("span", links =>
+    await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
+    page.evaluate(() => {
+      /* SELECCIONAR MINERALES POR NOMBRE */
+      document.querySelector('[ng-class="settings.buttonClasses"]').click();
 
-            links.map(link => link.textContent)
-        );
-        console.log(Fallopin[44]);
-        var cont = 1;
-        for (let i = 0; i < Fallopin.length; i++) {
-            const elemento = Fallopin[i];
-            //console.log("Este es el " + i + " " + Fallopin[i]);
-            if (elemento == "Vea los errores a continuación:") {
-                cont = 0;
-            }
+      // SE OBTIENEN LOS ELEMENTOS QUE TIENEN LA CLASE 'ng-binding ng-scope'
+      var elementos = document.getElementsByClassName("ng-binding ng-scope");
 
+      let Minerales = [
+        "COBRE",
+        "cobre",
+        "MOLIBDENO",
+        "molibdeno",
+        "NIQUEL",
+        "niquel",
+        "ORO",
+        "oro",
+        "PLATA",
+        "plata",
+        "PLATINO",
+        "platino",
+        "WOLFRAMIO",
+        "wolframio",
+        "ZINC",
+        "zinc",
+      ];
+      let elementosConMinerales = [];
+
+      // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
+      for (let i = 0; i < elementos.length; i++) {
+        let elemento = elementos[i];
+        let agregarElemento = false;
+
+        // ITERA SOBRE TODOS LOS VALORES DE LA LISTA MINERALES
+        for (let c = 0; c < Minerales.length; c++) {
+          // VERIFICA SI EL TEXTO DEL ELEMENTO CONTIENE EXACTAMENTE EL MINERAL EN PROCESO DE LA LISTA DE MINERALES
+          if (
+            elemento.textContent.includes(Minerales[c]) &&
+            elemento.textContent.split(/\s+/).includes(Minerales[c])
+          ) {
+            agregarElemento = true;
+            break;
+          }
         }
-        console.log(cont);
-        if (cont == "0") {
-            page.setDefaultTimeout(0);
-            await page.waitForSelector('select[id="pinSlctId"]');
-            const selectPin = await page.$('select[id="pinSlctId"]');
-            await selectPin.type(Pin);
 
-            await page.waitForXPath('//span[contains(.,"Continuar")]');
-            const continPin = await page.$x('//span[contains(.,"Continuar")]');
-            await continPin[1].click();
-            /*
-                        //await page.waitForTimeout(1000)
-                        Primero();
-
-                        browser.close();*/
-
+        // SI SE CUMPLE AGREGARELEMENTO === TRUE, SE AGREGA EL ELEMENTO A LA LISTA ELEMENTOSCONMINERALES
+        if (agregarElemento) {
+          elementosConMinerales.push(elemento);
         }
+      }
 
-        /*await page.waitForNavigation({
-           waitUntil: 'networkidle0',
-       });*/
-
-        if (await page.$x('//span[contains(.,"Vea los errores a continuación:")]').lenght > 0) {
-            console.log('no pasó el pin');
-            await page.waitForSelector('select[id="pinSlctId"]');
-            const selectPin = await page.$('select[id="pinSlctId"]');
-            await selectPin.type(Pin);
-
-            const continPin = await page.$x('//span[contains(.,"Continuar")]');
-            await continPin[1].click();
-        }
-        else if (await page.$x('//span[contains(.,"Vea los errores a continuación:")]').lenght == 0) {
-            console.log('pasó el pin, hurra!');
-        }
-
-
-
-
-
-
-        await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
-        page.evaluate(() => {
-
-            /* SELECCIONAR MINERALES POR NOMBRE */
-            document.querySelector('[ng-class="settings.buttonClasses"]').click();
-
-            // SE OBTIENEN LOS ELEMENTOS QUE TIENEN LA CLASE 'ng-binding ng-scope'
-            var elementos = document.getElementsByClassName('ng-binding ng-scope');
-
-            let Minerales = ['COBRE', 'cobre', 'MOLIBDENO', 'molibdeno', 'NIQUEL', 'niquel', 'ORO', 'oro', 'PLATA', 'plata', 'PLATINO', 'platino', 'WOLFRAMIO', 'wolframio', 'ZINC', 'zinc'];
-            let elementosConMinerales = [];
-
-            // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
-            for (let i = 0; i < elementos.length; i++) {
-                let elemento = elementos[i];
-                let agregarElemento = false;
-
-                // ITERA SOBRE TODOS LOS VALORES DE LA LISTA MINERALES
-                for (let c = 0; c < Minerales.length; c++) {
-
-                    // VERIFICA SI EL TEXTO DEL ELEMENTO CONTIENE EXACTAMENTE EL MINERAL EN PROCESO DE LA LISTA DE MINERALES
-                    if (elemento.textContent.includes(Minerales[c]) && elemento.textContent.split(/\s+/).includes(Minerales[c])) {
-                        agregarElemento = true;
-                        break;
-                    }
-                }
-
-                // SI SE CUMPLE AGREGARELEMENTO === TRUE, SE AGREGA EL ELEMENTO A LA LISTA ELEMENTOSCONMINERALES
-                if (agregarElemento) {
-                    elementosConMinerales.push(elemento);
-                }
-            }
-
-            // SE HACE CLIC SOBRE TODOS LOS VALORES CONTENIEDOS EN LA LISTA ELEMENTOSCONMINERALES
-            for (let i = 0; i < elementosConMinerales.length; i++) {
-                elementosConMinerales[i].click();
-            }
-            /* FIN FIN FIN */
-        });
-
-        clearTimeout(Segundopaso);
-
-
-
+      // SE HACE CLIC SOBRE TODOS LOS VALORES CONTENIEDOS EN LA LISTA ELEMENTOSCONMINERALES
+      for (let i = 0; i < elementosConMinerales.length; i++) {
+        elementosConMinerales[i].click();
+      }
+      /* FIN FIN FIN */
+    });
 
         //console.log(Area10);
         var Aviso = 0;

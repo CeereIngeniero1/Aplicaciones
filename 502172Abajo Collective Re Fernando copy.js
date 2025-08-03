@@ -23,8 +23,8 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 var Empresa = "Collective";
 var user1 = "76966";
 var pass1 = "Collectivemining.2025.";
-var user2 = "98908";
-var pass2 = "Sebas2025?";
+var user2 = "83955";
+var pass2 = "wX2*dQ3*cS";
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;
@@ -44,7 +44,7 @@ async function Pagina() {
     })
   );
   for (let i = 0; i < Pines.length; i++) {
-    if (Pines.substring(i + 1, i + 4) == "C4:") {
+    if (Pines.substring(i + 1, i + 4) == "C1:") {
       console.log(Pines.substring(i + 1, i + 4));
       Pin = Pines.substring(i + 4, i + 31);
       break;
@@ -115,11 +115,6 @@ function Mineria(browser, Pin) {
     }
     validador = 0;
     clearTimeout(Primerpaso);
-    let Segundopaso = setTimeout(() => {
-      console.log("ENTRO EN EL Segundopaso");
-      page.close();
-      Mineria(browser, Pin);
-    }, 35000);
 
     const solicitudes = await page.$x('//span[contains(.,"Solicitudes")]');
     await solicitudes[1].click();
@@ -150,7 +145,8 @@ function Mineria(browser, Pin) {
 
       await page.waitForTimeout(550);
     }
-await page.waitForTimeout(2500);
+
+    await page.waitForTimeout(2500);
     page.setDefaultTimeout(0);
     await page.waitForSelector('select[id="pinSlctId"]');
     const selectPin = await page.$('select[id="pinSlctId"]');
@@ -376,9 +372,9 @@ await page.waitForTimeout(2500);
         MonitorearAreas(
           "502172", //Nombre del area
           1, // aviso
-          "18N05A24Q23V", // ceda de correo
+          "18N05E04D03F", // ceda de correo
           [
-            "18N05A24Q23V, 18N05A24Q23U, 18N05A24Q24R, 18N05A24Q23S, 18N05A24Q23T, 18N05A24Q23N, 18N05A24Q23Z, 18N05A24Q24L, 18N05A24Q23Q, 18N05A24Q23M, 18N05A24Q23P, 18N05A24Q24Q, 18N05A24Q22U, 18N05A24Q23K, 18N05A24Q24V, 18N05A24Q24W, 18N05A24Q23L, 18N05A24Q23X, 18N05A24Q24X, 18N05A24Q24K, 18N05A24Q24M, 18N05A24Q22Z, 18N05A24Q23W, 18N05A24Q23R, 18N05A24Q23Y, 18N05A24Q22P, 18N05A24Q24S",
+            " 18N05E04D03C, 18N05E04D02U, 18N05N14M12R, 18N05E04D03A, 18N05E04D02J, 18N05E04D02E, 18N05E04D03D, 18N05E04D03E, 18N05E04D04B, 18N05E04D03L, 18N05E04D04A, 18N05E04D04C, 18N05E04D03G, 18N05E04D02P, 18N05E04D03K, 18N05E04D03H ",
           ], // Celdas de area
           0 // comas
         );
@@ -1400,88 +1396,17 @@ await page.waitForTimeout(2500);
     }
 
     const continPag = await page.$x('//span[contains(.,"Continuar")]');
-    await continPag[1].click();
+
     await page.waitForNavigation({
       waitUntil: "networkidle0",
     });
     console.log(" si navego ");
 
     clearTimeout(Radisegundo);
-
-    let RadiTercero = setTimeout(() => {
-      console.log("ENTRO EN EL Radisegundo");
-      //page.close();
-      Mineria(browser, Pin);
-    }, 60000);
-
-    const HacerClicEnSpanDocumentacionDeSoporte = await page.$x(
-      '//a[contains(.,"Documentac")]'
-    );
-    await HacerClicEnSpanDocumentacionDeSoporte[0].click();
-    const AparecioCaptcha = await page.waitForSelector(
-      'iframe[title="reCAPTCHA"]'
-    );
-    if (AparecioCaptcha) {
-      console.log("EL CAPTCHA YA ESTÁ DISPONIBLE");
-      await page.waitForTimeout(500);
-    } else {
-      console.log("EL CAPTCHA NO ESTÁ DISPONIBLE");
-    }
-
-    for (let i = 0; i < 1; i += 1) {
-      // await page.keyboard.press('Tab');
-      await keyboard.pressKey(Key.Tab);
-      console.log(`PRESIONÉ LA TABULADORA EN ITERACIÓN ${i}`);
-    }
-
-    await keyboard.pressKey(Key.Enter);
-
-    // await page.waitForTimeout(1000000);
-
-    while (true) {
-      await page.waitForTimeout(1000);
-      console.log("Chequeando si el captcha está resuelto...");
-
-      const isCaptchaResolved = await page.evaluate(() => {
-        const responseField = document.querySelector("#g-recaptcha-response");
-        return responseField && responseField.value.length > 0;
-      });
-
-      if (isCaptchaResolved) {
-        console.log("El captcha ha sido resuelto.");
-        clearTimeout(RadiTercero);
-        break;
-      } else {
-        console.log("El captcha no ha sido resuelto aún.");
-      }
-    }
-
-    console.log("51. Bóton Radicar");
-
-    const btnRadicar1 = await page.$x('//span[contains(.,"Radicar")]');
-    console.log("Este es el boton radicar : " + btnRadicar1);
-
-    //await page.waitForTimeout(4000);
-    console.log("Le di click");
-
-    try {
-      await btnRadicar1[0].click();
-    } catch (exepcion) {
-      console.log("La pos 0 No fue ");
-    }
-    try {
-      await btnRadicar1[1].click();
-    } catch (exepcion) {
-      console.log("La 1 tampoco Y_Y");
-    }
-
-    clearTimeout(Radisegundo);
     await page.waitForTimeout(180000);
     Mineria(browser, Pin);
   })();
 }
-
-// FUNCIÓN PARA ENVÍO DE CORREO SEGÚN LA SITUACIÓN
 
 async function seleccionar_Profesional(profesionales, page, Tipo) {
   for (const profesional of profesionales) {
