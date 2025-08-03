@@ -423,15 +423,7 @@ function Mineria(browser, Pin) {
                     [' 18N05A24P08R, 18N05A24P07U, 18N05A24P08Q, 18N05A24P08S, 18N05A24P07T'], // Celdas de area
                     0 // comas
                 )
-            } else if (Band == 2) {
-                MonitorearAreas(
-                    "502172_1",//Nombre del area
-                    1, // aviso
-                    "18N05E04D03F", // ceda de correo
-                    ['18N05E04D03F, 18N05E04D02U, 18N05E04D02J, 18N05E04D03L, 18N05E04D03G, 18N05E04D02P, 18N05E04D03K, 18N05E04D03H'], // Celdas de area
-                    0 // comas
-                )
-            } 
+            }
 
 
 

@@ -552,16 +552,7 @@ function Mineria(browser,  Pin) {
                     [' 18N05A24P08R, 18N05A24P07U, 18N05A24P08Q, 18N05A24P08S, 18N05A24P07T'], // Celdas de area
                     0 // comas
                 )
-            } else if (Band == 16) {
-                MonitorearAreas(
-                    "502172",//Nombre del area
-                    1, // aviso
-                    "18N05E04D03F", // ceda de correo
-                    ['18N05E04D03F, 18N05A24Q23V, 18N05E04D03B, 18N05E04D03C, 18N05A24Q23U, 18N05A24Q24R, 18N05E04D02U, 18N05E04D03A, 18N05A24Q23S, 18N05A24Q23T, 18N05A24Q23N, 18N05A24Q23Z, 18N05A24Q24L, 18N05E04D02J, 18N05E04D02E, 18N05A24Q23Q, 18N05A24Q23M, 18N05A24Q23P, 18N05A24Q24Q, 18N05A24Q22U, 18N05A24Q23K, 18N05E04D03D, 18N05E04D03E, 18N05E04D04B, 18N05A24Q24V, 18N05A24Q24W, 18N05A24Q23L, 18N05A24Q23X, 18N05A24Q24X, 18N05E04D03L, 18N05E04D04A, 18N05A24Q24K, 18N05E04D04C, 18N05A24Q24M, 18N05A24Q22Z, 18N05E04D03G, 18N05A24Q23W, 18N05A24Q23R, 18N05A24Q23Y, 18N05E04D02P, 18N05A24Q22P, 18N05E04D03K, 18N05E04D03H, 18N05A24Q24S'], // Celdas de area
-                     0 // comas
-                )
-            }
-            else  if (Band == 17) {
+            } else if (Band == 16){
                 MonitorearAreas(
                     "509188",
                     1,
