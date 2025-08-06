@@ -25,7 +25,7 @@ var Empresa = 'Collective';
 var user1 = '76966';
 var pass1 = 'Provenzam2025.';
 var user2 = '74025';
-var pass2 = 'Provenzam2025.';
+var pass2 = 'Legalprovenza2025.';
 
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;

@@ -22,7 +22,7 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 const Globales = {
     Empresa: 'Collective',
     Usuario: '76966',
-    Contraseña: 'Collectivemining.2025.',
+    Contraseña: 'Titulacion2025.',
     Agente: '83955',
     ContraAgente: 'wX2*dQ3*cS',
     Operador: 0, // 0 Principal / 1 Agente

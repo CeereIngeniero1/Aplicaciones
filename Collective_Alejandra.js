@@ -23,9 +23,9 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 var Empresa = 'Collective';
 var user1 = '76966';
-var pass1 = 'Collectivemining.2025.';
+var pass1 = 'Titulacion2025.';
 var user2 = '76467';
-var pass2 = 'Simon1998.2022.';
+var pass2 = 'Maxamaga2025.';
 var Agente = 1;
 var EnviarCorreosParaPestanas = 0;
 var contreapertura = 0;

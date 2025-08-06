@@ -1,6 +1,6 @@
 <!-- Collective -->
 var user1 = '76966';
-var pass1 = 'Collectivemining.2025.';
+var pass1 = 'Titulacion2025.';
 
 <!-- Santiago -->
 var user2 = '96233';
@@ -20,7 +20,7 @@ var pass2 = 'Camilo$0307';
 
 <!-- Jorge  -->
 var user2 = '83949';
-var pass2 = 'Jorgec2025.';
+var pass2 = 'JorgeC2025.';
 
 <!-- Jonathan -->
 var user2 = '85127';
@@ -40,8 +40,11 @@ var pass2 = 'Sebas2025?';
 
 <!-- Alejandra -->
 var user2 = '76467';
-var pass2 = 'Simon1998.2022.';
+var pass2 = 'Maxamaga2025.';
 
+<!-- Provenza -->
+74025 
+Legalprovenza2025.
 
 <!-- nuevos -->
 70164

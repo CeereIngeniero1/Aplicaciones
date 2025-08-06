@@ -23,7 +23,7 @@ const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 var Empresa = 'NegoYMetales';
 var user1 = '98725';
-var pass1 = 'Negocios2025.';
+var pass1 = 'Riosucio2025.';
 var user2 = '';
 var pass2 = '';
 var Agente = 0;
