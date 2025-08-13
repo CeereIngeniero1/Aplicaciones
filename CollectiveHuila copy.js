@@ -1190,7 +1190,7 @@ function Mineria(browser,  Pin) {
 
 
         //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
+        
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
         
         await page.waitForNavigation({
@@ -1203,7 +1203,7 @@ function Mineria(browser,  Pin) {
         
 
         //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
+        
         //CORREO RADICACION
         Correo(2, IdArea, Celda);
         clearTimeout(Radisegundo);

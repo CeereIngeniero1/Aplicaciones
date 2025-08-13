@@ -1184,7 +1184,7 @@ function Mineria(browser,  Pin) {
 
 
         //CAPTURA DE PANTALLA
-        await CapturaPantalla(page);
+        
         const continPag = await page.$x('//span[contains(.,"Continuar")]');
       
         await page.waitForNavigation({
