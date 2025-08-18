@@ -214,39 +214,88 @@ async function seleccionar_Pin(page, Pin, Veces) {
   await page.waitForXPath('//span[contains(.,"Continuar")]');
   const continPin = await page.$x('//span[contains(.,"Continuar")]');
   //if(Veces == 1){
-   await continPin[1].click();
+  await continPin[1].click();
   //}
 
   await page.waitForTimeout(1000);
 
-  
-    try {
-      // Intentar esperar el botón 5 segundos
-      await page.waitForSelector('button[ng-class="settings.buttonClasses"]', {
-        timeout: 10000,
-      });
-      console.log("✅ Botón encontrado, ejecutando acción principal...");
-      await page.click('button[ng-class="settings.buttonClasses"]');
-    } catch (error) {
-      console.log(
-        "⏱ No apareció el botón en 5 segundos, ejecutando lógica del PIN..."
-      );
+  try {
+    // Intentar esperar el botón 5 segundos
+    await page.waitForSelector('button[ng-class="settings.buttonClasses"]', {
+      timeout: 3000,
+    });
+    console.log("✅ Botón encontrado, ejecutando acción principal...");
+    // await page.click('button[ng-class="settings.buttonClasses"]');
+    await Minerales(page);
+  } catch (error) {
+    console.log(
+      "⏱ No apareció el botón en 5 segundos, ejecutando lógica del PIN..."
+    );
 
-      // 👉 Aquí va tu bloque PIN acomodado
-      if(Veces == 0){
-        await seleccionar_Pin(page, Pin, 1);
-      }
-     
-
-      
-
-      
+    // 👉 Aquí va tu bloque PIN acomodado
+    if (Veces == 0) {
+      await seleccionar_Pin(page, Pin, 1);
     }
-
+  }
 
   return { closestDateOption, input };
 }
 
+async function Minerales(page) {
+  // await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
+  page.evaluate(() => {
+    document.querySelector('[ng-class="settings.buttonClasses"]').click();
+    var elementos = document.getElementsByClassName("ng-binding ng-scope");
+    let Minerales = [
+      "COBRE",
+      "cobre",
+      "MOLIBDENO",
+      "molibdeno",
+      "NIQUEL",
+      "niquel",
+      "ORO",
+      "oro",
+      "PLATA",
+      "plata",
+      "PLATINO",
+      "platino",
+      "WOLFRAMIO",
+      "wolframio",
+      "ZINC",
+      "zinc",
+    ];
+    let elementosConMinerales = [];
+
+    // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
+    for (let i = 0; i < elementos.length; i++) {
+      let elemento = elementos[i];
+      let agregarElemento = false;
+
+      // ITERA SOBRE TODOS LOS VALORES DE LA LISTA MINERALES
+      for (let c = 0; c < Minerales.length; c++) {
+        // VERIFICA SI EL TEXTO DEL ELEMENTO CONTIENE EXACTAMENTE EL MINERAL EN PROCESO DE LA LISTA DE MINERALES
+        if (
+          elemento.textContent.includes(Minerales[c]) &&
+          elemento.textContent.split(/\s+/).includes(Minerales[c])
+        ) {
+          agregarElemento = true;
+          break;
+        }
+      }
+
+      // SI SE CUMPLE AGREGARELEMENTO === TRUE, SE AGREGA EL ELEMENTO A LA LISTA ELEMENTOSCONMINERALES
+      if (agregarElemento) {
+        elementosConMinerales.push(elemento);
+      }
+    }
+
+    // SE HACE CLIC SOBRE TODOS LOS VALORES CONTENIEDOS EN LA LISTA ELEMENTOSCONMINERALES
+    for (let i = 0; i < elementosConMinerales.length; i++) {
+      elementosConMinerales[i].click();
+    }
+    /* FIN FIN FIN */
+  });
+}
 function Mineria(browser, Pin) {
   (async () => {
     console.log("Esta es la vuelta " + ContadorVueltas);
@@ -277,122 +326,15 @@ function Mineria(browser, Pin) {
 
     const { closestDateOption, input } = await seleccionar_Pin(page, Pin, 0);
 
-    // const Fallopin = await page.$$eval("span", (links) =>
-    //   links.map((link) => link.textContent)
-    // );
-    // console.log(Fallopin[44]);
-    // var cont = 1;
-    // for (let i = 0; i < Fallopin.length; i++) {
-    //   const elemento = Fallopin[i];
-    //   //console.log("Este es el " + i + " " + Fallopin[i]);
-    //   if (elemento == "Vea los errores a continuación:") {
-    //     cont = 0;
-    //   }
-    // }
-    // console.log(cont);
-    // if (cont == "0") {
-    //   page.setDefaultTimeout(0);
-    //   await page.waitForSelector('select[id="pinSlctId"]');
-    //   const selectPin = await page.$('select[id="pinSlctId"]');
-    //   await selectPin.type(Pin);
-
-    //   await page.waitForXPath('//span[contains(.,"Continuar")]');
-    //   const continPin = await page.$x('//span[contains(.,"Continuar")]');
-    //   await continPin[1].click();
-
-    // }
-
-    // if (
-    //   (await page.$x('//span[contains(.,"Vea los errores a continuación:")]')
-    //     .lenght) > 0
-    // ) {
-    //   console.log("no pasó el pin");
-    //   await page.waitForSelector('select[id="pinSlctId"]');
-    //   const selectPin = await page.$('select[id="pinSlctId"]');
-    //   await selectPin.type(Pin);
-
-    //   const continPin = await page.$x('//span[contains(.,"Continuar")]');
-    //   await continPin[1].click();
-    // } else if (
-    //   (await page.$x('//span[contains(.,"Vea los errores a continuación:")]')
-    //     .lenght) == 0
-    // ) {
-    //   console.log("pasó el pin, hurra!");
-    // }
-
-    // await page.waitForSelector('button[ng-class="settings.buttonClasses"]');
-    page.evaluate(() => {
-      /* SELECCIONAR MINERALES POR NOMBRE */
-      document.querySelector('[ng-class="settings.buttonClasses"]').click();
-
-      // SE OBTIENEN LOS ELEMENTOS QUE TIENEN LA CLASE 'ng-binding ng-scope'
-      var elementos = document.getElementsByClassName("ng-binding ng-scope");
-
-      let Minerales = [
-        "COBRE",
-        "cobre",
-        "MOLIBDENO",
-        "molibdeno",
-        "NIQUEL",
-        "niquel",
-        "ORO",
-        "oro",
-        "PLATA",
-        "plata",
-        "PLATINO",
-        "platino",
-        "WOLFRAMIO",
-        "wolframio",
-        "ZINC",
-        "zinc",
-      ];
-      let elementosConMinerales = [];
-
-      // ITERA SOBRE TODOS LOS ELEMENTOS CON CLASE (ng-binding ng-scope)
-      for (let i = 0; i < elementos.length; i++) {
-        let elemento = elementos[i];
-        let agregarElemento = false;
-
-        // ITERA SOBRE TODOS LOS VALORES DE LA LISTA MINERALES
-        for (let c = 0; c < Minerales.length; c++) {
-          // VERIFICA SI EL TEXTO DEL ELEMENTO CONTIENE EXACTAMENTE EL MINERAL EN PROCESO DE LA LISTA DE MINERALES
-          if (
-            elemento.textContent.includes(Minerales[c]) &&
-            elemento.textContent.split(/\s+/).includes(Minerales[c])
-          ) {
-            agregarElemento = true;
-            break;
-          }
-        }
-
-        // SI SE CUMPLE AGREGARELEMENTO === TRUE, SE AGREGA EL ELEMENTO A LA LISTA ELEMENTOSCONMINERALES
-        if (agregarElemento) {
-          elementosConMinerales.push(elemento);
-        }
-      }
-
-      // SE HACE CLIC SOBRE TODOS LOS VALORES CONTENIEDOS EN LA LISTA ELEMENTOSCONMINERALES
-      for (let i = 0; i < elementosConMinerales.length; i++) {
-        elementosConMinerales[i].click();
-      }
-      /* FIN FIN FIN */
-    });
+    // await Minerales(page);
 
     clearTimeout(Segundopaso);
-
-    //console.log(Area10);
-    var Aviso = 0;
+   
     var contador = 0;
     var Band = 1;
     var IdArea = "";
-    var SoloAviso = 0;
     ContadorVueltas++;
-    var Comas = 0;
-    var Texto = "";
-    var liberadas = 0;
     var Celda = 0;
-
-    let ComasTotalesPorArea = {};
 
     while (Band != 99) {
       const Pestanas = await browser.pages();
