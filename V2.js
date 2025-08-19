@@ -138,12 +138,13 @@ async function Agente_Selecion_Empresa(page) {
     },
     { timeout: 5000 }
   ); // espera máximo 10s
+  await page.waitForTimeout(900);
 
   await page.keyboard.press("Enter");
 }
 
 async function seleccionar_Pin(page, Pin, Veces) {
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(900);
   page.setDefaultTimeout(0);
   await page.waitForSelector('select[id="pinSlctId"]');
   const selectPin = await page.$('select[id="pinSlctId"]');
@@ -296,6 +297,7 @@ async function Minerales(page) {
     /* FIN FIN FIN */
   });
 }
+
 function Mineria(browser, Pin) {
   (async () => {
     console.log("Esta es la vuelta " + ContadorVueltas);
