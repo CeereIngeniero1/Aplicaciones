@@ -1480,7 +1480,7 @@ function Mineria(browser, Pin) {
     try {
       await page.waitForFunction(
         url => window.location.href === url,
-        { timeout: 6000 },
+        { timeout: 4000 },
         "https://annamineria.anm.gov.co/sigm/index.html#/p_CaaIataAttachDocuments"
       );
 
@@ -1493,7 +1493,7 @@ function Mineria(browser, Pin) {
         await page.waitForFunction(() => {
           return Array.from(document.querySelectorAll("span"))
             .some(el => el.textContent.trim() === "Vea los errores a continuación (dentro de las pestañas):");
-        }, { timeout: 4000 });
+        }, { timeout: 2000 });
 
         console.log("Se encontraron errores en la página");
         const btnInfoTecnica = await page.$x('//a[contains(.,"Información t")]');
