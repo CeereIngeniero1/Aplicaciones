@@ -1049,6 +1049,93 @@ async function Certificado_Shapefile(page, Empresa, IdArea) {
 
 }
 
+
+async function Documentos(page, Empresa) {
+  
+    try {
+
+
+      // await page.waitForTimeout(300);
+      await page.click("#acceptanceOfTermsId");
+      // await page.waitForTimeout(300);
+
+      const btnDocuSopor = await page.$x('//a[contains(.,"Documentac")]');
+      await btnDocuSopor[0].click();
+      console.log("si llego");
+      await page.waitForTimeout(300);
+
+      console.log("INICIA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
+      console.log(
+        "================================================================"
+      );
+
+      let Documentos = [
+        "1. Aceptacion Del Profesional Para Refrendar Documentos Tecnicos.pdf", //1
+        "2. Fotocopia Tarjeta Profesional.pdf", //2
+        "4. Declaracion De Renta Proponente 1 Anio 1.pdf", //3
+        "5. Declaracion De Renta Proponente 1 Anio 2.pdf", //4
+        "6. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 1.pdf", //5
+        "7. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 2.pdf", //6
+        "8. Extractos Bancarios Proponente 1.pdf", //7
+        "9. RUT.pdf", //8
+        "10. Fotocopia Documento De Identificacion.pdf", //9
+        "11. Certificado De Composicion Accionaria De La Sociedad.pdf", //10
+        "12. Certificado De Existencia Y Representacion Legal.pdf", //11
+        "13. Certificado Vigente De Antecedentes Disciplinarios.pdf", //12
+        "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf", //13
+      ];
+
+      let ElementosFile = [
+        "p_CaaCataMandatoryDocumentToAttachId0", //1
+        "p_CaaCataMandatoryDocumentToAttachId1", //2
+        "p_CaaCataMandatoryDocumentToAttachId3", //3
+        "p_CaaCataMandatoryDocumentToAttachId4", //4
+        "p_CaaCataMandatoryDocumentToAttachId5", //5
+        "p_CaaCataMandatoryDocumentToAttachId6", //6
+        "p_CaaCataMandatoryDocumentToAttachId7", //7
+        "p_CaaCataMandatoryDocumentToAttachId8", //8
+        "p_CaaCataMandatoryDocumentToAttachId9", //9
+        "p_CaaCataMandatoryDocumentToAttachId10", //10
+        "p_CaaCataMandatoryDocumentToAttachId11", //11
+        "p_CaaCataMandatoryDocumentToAttachId12", //12
+        "p_CaaCataMandatoryDocumentToAttachId13", //13
+        // "p_CaaCataMandatoryDocumentToAttachId14"//14
+      ];
+      console.log(ElementosFile.length);
+      try {
+        for (let i = 0; i < ElementosFile.length; i++) {
+          try {
+            await page.waitForSelector(`#${ElementosFile[i]}`);
+            const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
+            const ElementoControladorDeCarga = await page.$(
+              `#${ElementosFile[i]}`
+            );
+            await ElementoControladorDeCarga.uploadFile(RutaDelArchivo);
+
+            // Verificar si el archivo se cargó correctamente
+            console.log(`Archivo ${Documentos[i]} adjuntado correctamente.`);
+          } catch (error) {
+            console.log(`Error al cargar el archivo ${Documentos[i]}:`, error);
+
+            // Detener el bucle o manejar el error como sea necesario
+            throw new Error(`Error al cargar el archivo ${Documentos[i]}`);
+          }
+        }
+        console.log("sadas");
+      } catch (error) {
+        console.error("Error general al adjuntar archivos:", error);
+      }
+
+      console.log(
+        "================================================================"
+      );
+      console.log("FINALIZA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
+
+ 
+    } catch (error) {
+      console.log("BOTO ERROR");
+    }
+}
 function Mineria(browser, Pin) {
   (async () => {
     console.log("Esta es la vuelta " + ContadorVueltas);
@@ -1288,97 +1375,12 @@ function Mineria(browser, Pin) {
 
     await Certificado_Shapefile(page, Empresa, Areas[Band].NombreArea);
 
-    await page.waitForTimeout(1000000);
+  
 
 
+    await Documentos(page, Empresa);
 
-
-    try {
-
-
-      // await page.waitForTimeout(300);
-      await page.click("#acceptanceOfTermsId");
-      console.log("Ahora Vamos aca 3333333");
-      // await page.waitForTimeout(300);
-
-      const btnDocuSopor = await page.$x('//a[contains(.,"Documentac")]');
-      await btnDocuSopor[0].click();
-      console.log("si llego");
-      await page.waitForTimeout(300);
-
-      console.log("INICIA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
-      console.log(
-        "================================================================"
-      );
-
-      let Documentos = [
-        "1. Aceptacion Del Profesional Para Refrendar Documentos Tecnicos.pdf", //1
-        "2. Fotocopia Tarjeta Profesional.pdf", //2
-        "4. Declaracion De Renta Proponente 1 Anio 1.pdf", //3
-        "5. Declaracion De Renta Proponente 1 Anio 2.pdf", //4
-        "6. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 1.pdf", //5
-        "7. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 2.pdf", //6
-        "8. Extractos Bancarios Proponente 1.pdf", //7
-        "9. RUT.pdf", //8
-        "10. Fotocopia Documento De Identificacion.pdf", //9
-        "11. Certificado De Composicion Accionaria De La Sociedad.pdf", //10
-        "12. Certificado De Existencia Y Representacion Legal.pdf", //11
-        "13. Certificado Vigente De Antecedentes Disciplinarios.pdf", //12
-        "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf", //13
-      ];
-
-      let ElementosFile = [
-        "p_CaaCataMandatoryDocumentToAttachId0", //1
-        "p_CaaCataMandatoryDocumentToAttachId1", //2
-        "p_CaaCataMandatoryDocumentToAttachId3", //3
-        "p_CaaCataMandatoryDocumentToAttachId4", //4
-        "p_CaaCataMandatoryDocumentToAttachId5", //5
-        "p_CaaCataMandatoryDocumentToAttachId6", //6
-        "p_CaaCataMandatoryDocumentToAttachId7", //7
-        "p_CaaCataMandatoryDocumentToAttachId8", //8
-        "p_CaaCataMandatoryDocumentToAttachId9", //9
-        "p_CaaCataMandatoryDocumentToAttachId10", //10
-        "p_CaaCataMandatoryDocumentToAttachId11", //11
-        "p_CaaCataMandatoryDocumentToAttachId12", //12
-        "p_CaaCataMandatoryDocumentToAttachId13", //13
-        // "p_CaaCataMandatoryDocumentToAttachId14"//14
-      ];
-      console.log(ElementosFile.length);
-      try {
-        for (let i = 0; i < ElementosFile.length; i++) {
-          try {
-            await page.waitForSelector(`#${ElementosFile[i]}`);
-            const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
-            const ElementoControladorDeCarga = await page.$(
-              `#${ElementosFile[i]}`
-            );
-            await ElementoControladorDeCarga.uploadFile(RutaDelArchivo);
-
-            // Verificar si el archivo se cargó correctamente
-            console.log(`Archivo ${Documentos[i]} adjuntado correctamente.`);
-          } catch (error) {
-            console.log(`Error al cargar el archivo ${Documentos[i]}:`, error);
-
-            // Detener el bucle o manejar el error como sea necesario
-            throw new Error(`Error al cargar el archivo ${Documentos[i]}`);
-          }
-        }
-        console.log("sadas");
-      } catch (error) {
-        console.error("Error general al adjuntar archivos:", error);
-      }
-
-      console.log(
-        "================================================================"
-      );
-      console.log("FINALIZA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
-
-      // await page.waitForTimeout(2000);
-    } catch (error) {
-      console.log("BOTO ERROR");
-    }
-
-    //CAPTURA DE PANTALLA
+  await page.waitForTimeout(1000000);
 
     const continPag = await page.$x('//span[contains(.,"Continuar")]');
     // await continPag[1].click();
