@@ -1136,6 +1136,8 @@ async function Documentos(page, Empresa) {
     console.log("BOTO ERROR");
   }
 }
+
+
 function Mineria(browser, Pin) {
   (async () => {
     console.log("Esta es la vuelta " + ContadorVueltas);
