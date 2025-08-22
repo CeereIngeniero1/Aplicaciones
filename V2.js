@@ -1051,90 +1051,90 @@ async function Certificado_Shapefile(page, Empresa, IdArea) {
 
 
 async function Documentos(page, Empresa) {
-  
+
+  try {
+
+
+    // await page.waitForTimeout(300);
+    await page.click("#acceptanceOfTermsId");
+    // await page.waitForTimeout(300);
+
+    const btnDocuSopor = await page.$x('//a[contains(.,"Documentac")]');
+    await btnDocuSopor[0].click();
+    console.log("si llego");
+    await page.waitForTimeout(300);
+
+    console.log("INICIA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
+    console.log(
+      "================================================================"
+    );
+
+    let Documentos = [
+      "1. Aceptacion Del Profesional Para Refrendar Documentos Tecnicos.pdf", //1
+      "2. Fotocopia Tarjeta Profesional.pdf", //2
+      "4. Declaracion De Renta Proponente 1 Anio 1.pdf", //3
+      "5. Declaracion De Renta Proponente 1 Anio 2.pdf", //4
+      "6. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 1.pdf", //5
+      "7. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 2.pdf", //6
+      "8. Extractos Bancarios Proponente 1.pdf", //7
+      "9. RUT.pdf", //8
+      "10. Fotocopia Documento De Identificacion.pdf", //9
+      "11. Certificado De Composicion Accionaria De La Sociedad.pdf", //10
+      "12. Certificado De Existencia Y Representacion Legal.pdf", //11
+      "13. Certificado Vigente De Antecedentes Disciplinarios.pdf", //12
+      "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf", //13
+    ];
+
+    let ElementosFile = [
+      "p_CaaCataMandatoryDocumentToAttachId0", //1
+      "p_CaaCataMandatoryDocumentToAttachId1", //2
+      "p_CaaCataMandatoryDocumentToAttachId3", //3
+      "p_CaaCataMandatoryDocumentToAttachId4", //4
+      "p_CaaCataMandatoryDocumentToAttachId5", //5
+      "p_CaaCataMandatoryDocumentToAttachId6", //6
+      "p_CaaCataMandatoryDocumentToAttachId7", //7
+      "p_CaaCataMandatoryDocumentToAttachId8", //8
+      "p_CaaCataMandatoryDocumentToAttachId9", //9
+      "p_CaaCataMandatoryDocumentToAttachId10", //10
+      "p_CaaCataMandatoryDocumentToAttachId11", //11
+      "p_CaaCataMandatoryDocumentToAttachId12", //12
+      "p_CaaCataMandatoryDocumentToAttachId13", //13
+      // "p_CaaCataMandatoryDocumentToAttachId14"//14
+    ];
+    console.log(ElementosFile.length);
     try {
+      for (let i = 0; i < ElementosFile.length; i++) {
+        try {
+          await page.waitForSelector(`#${ElementosFile[i]}`);
+          const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
+          const ElementoControladorDeCarga = await page.$(
+            `#${ElementosFile[i]}`
+          );
+          await ElementoControladorDeCarga.uploadFile(RutaDelArchivo);
 
+          // Verificar si el archivo se cargó correctamente
+          console.log(`Archivo ${Documentos[i]} adjuntado correctamente.`);
+        } catch (error) {
+          console.log(`Error al cargar el archivo ${Documentos[i]}:`, error);
 
-      // await page.waitForTimeout(300);
-      await page.click("#acceptanceOfTermsId");
-      // await page.waitForTimeout(300);
-
-      const btnDocuSopor = await page.$x('//a[contains(.,"Documentac")]');
-      await btnDocuSopor[0].click();
-      console.log("si llego");
-      await page.waitForTimeout(300);
-
-      console.log("INICIA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
-      console.log(
-        "================================================================"
-      );
-
-      let Documentos = [
-        "1. Aceptacion Del Profesional Para Refrendar Documentos Tecnicos.pdf", //1
-        "2. Fotocopia Tarjeta Profesional.pdf", //2
-        "4. Declaracion De Renta Proponente 1 Anio 1.pdf", //3
-        "5. Declaracion De Renta Proponente 1 Anio 2.pdf", //4
-        "6. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 1.pdf", //5
-        "7. Estados Financieros Propios Certificados Y O Dictaminados Proponente 1 Anio 2.pdf", //6
-        "8. Extractos Bancarios Proponente 1.pdf", //7
-        "9. RUT.pdf", //8
-        "10. Fotocopia Documento De Identificacion.pdf", //9
-        "11. Certificado De Composicion Accionaria De La Sociedad.pdf", //10
-        "12. Certificado De Existencia Y Representacion Legal.pdf", //11
-        "13. Certificado Vigente De Antecedentes Disciplinarios.pdf", //12
-        "14. Fotocopia Tarjeta Profesional Del Contador Revisor Fiscal.pdf", //13
-      ];
-
-      let ElementosFile = [
-        "p_CaaCataMandatoryDocumentToAttachId0", //1
-        "p_CaaCataMandatoryDocumentToAttachId1", //2
-        "p_CaaCataMandatoryDocumentToAttachId3", //3
-        "p_CaaCataMandatoryDocumentToAttachId4", //4
-        "p_CaaCataMandatoryDocumentToAttachId5", //5
-        "p_CaaCataMandatoryDocumentToAttachId6", //6
-        "p_CaaCataMandatoryDocumentToAttachId7", //7
-        "p_CaaCataMandatoryDocumentToAttachId8", //8
-        "p_CaaCataMandatoryDocumentToAttachId9", //9
-        "p_CaaCataMandatoryDocumentToAttachId10", //10
-        "p_CaaCataMandatoryDocumentToAttachId11", //11
-        "p_CaaCataMandatoryDocumentToAttachId12", //12
-        "p_CaaCataMandatoryDocumentToAttachId13", //13
-        // "p_CaaCataMandatoryDocumentToAttachId14"//14
-      ];
-      console.log(ElementosFile.length);
-      try {
-        for (let i = 0; i < ElementosFile.length; i++) {
-          try {
-            await page.waitForSelector(`#${ElementosFile[i]}`);
-            const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
-            const ElementoControladorDeCarga = await page.$(
-              `#${ElementosFile[i]}`
-            );
-            await ElementoControladorDeCarga.uploadFile(RutaDelArchivo);
-
-            // Verificar si el archivo se cargó correctamente
-            console.log(`Archivo ${Documentos[i]} adjuntado correctamente.`);
-          } catch (error) {
-            console.log(`Error al cargar el archivo ${Documentos[i]}:`, error);
-
-            // Detener el bucle o manejar el error como sea necesario
-            throw new Error(`Error al cargar el archivo ${Documentos[i]}`);
-          }
+          // Detener el bucle o manejar el error como sea necesario
+          throw new Error(`Error al cargar el archivo ${Documentos[i]}`);
         }
-        console.log("sadas");
-      } catch (error) {
-        console.error("Error general al adjuntar archivos:", error);
       }
-
-      console.log(
-        "================================================================"
-      );
-      console.log("FINALIZA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
-
- 
+      console.log("sadas");
     } catch (error) {
-      console.log("BOTO ERROR");
+      console.error("Error general al adjuntar archivos:", error);
     }
+
+    console.log(
+      "================================================================"
+    );
+    console.log("FINALIZA PROCESO DE ADJUNTAR DOCUMENTOS REGLAMENTARIOS");
+
+
+  } catch (error) {
+    console.log("BOTO ERROR");
+  }
 }
 function Mineria(browser, Pin) {
   (async () => {
@@ -1230,28 +1230,32 @@ function Mineria(browser, Pin) {
         console.log("Se encontraron errores o reapertura");
 
         const spans = await page.$$eval("span", (els) => els.map(el => el.textContent.trim()));
+         const mensajes = await page.$$eval('.errorMsg a', enlaces =>
+          enlaces.map(el => el.textContent.trim())
+        );
         if (spans.includes("Vea los errores a continuación (dentro de las pestañas):")) {
-
           console.log("Hay errores");
-
           page.evaluate(() => {
             document.querySelector('[id="cellIdsTxtId"]').value = "";
           });
-
-        } else if (spans.includes("CELL_REOPENING_DATE")) {
-          console.log("Hay reapertura de celda");
+        }    
+        if (mensajes.some(msg => msg.includes('CELL_REOPENING_DATE'))) {
+          console.log('Mensaje que contiene CELL_REOPENING_DATE encontrado');
           if (contreapertura < 2) {
             Correo(3, Areas[Band].NombreArea, Areas[Band].Referencia);
           }
           contreapertura++;
+          await page.evaluate(() => {
+            document.querySelector('#cellIdsTxtId').value = '';
+          });
         }
+
 
         console.log("Limpio El campo del area");
         page.evaluate(() => {
           document.querySelector('[id="cellIdsTxtId"]').value = "";
         });
         Band++;
-
         if (Areas.length == Band) {
           Band = 0;
         }
@@ -1370,22 +1374,23 @@ function Mineria(browser, Pin) {
       console.log("ENTRO EN EL Radisegundo");
       //page.close();
       Mineria(browser, Pin);
-    }, 30000);
+    }, 10000);
 
 
     await Certificado_Shapefile(page, Empresa, Areas[Band].NombreArea);
 
-  
+
 
 
     await Documentos(page, Empresa);
 
-  await page.waitForTimeout(1000000);
+
 
     const continPag = await page.$x('//span[contains(.,"Continuar")]');
-    // await continPag[1].click();
-    clearTimeout(Radisegundo);
+    await continPag[1].click();
 
+    clearTimeout(Radisegundo);
+    await page.waitForTimeout(1000000);
     await page.waitForNavigation({
       waitUntil: "networkidle0",
     });
@@ -1472,132 +1477,132 @@ function Mineria(browser, Pin) {
 
 // FUNCIÓN PARA ENVÍO DE CORREO SEGÚN LA SITUACIÓN
 function Correo(Tipo, Area, Celda) {
-  // // 1. Liberada 2. radicada 3. Fecha reapertura
-  // var msg = "";
-  // var Color = "";
-  // var Texto = "";
-  // //Area = "Tranquilos area de prueba";
-  // if (Tipo == 1) {
-  //   msg =
-  //     "¡¡¡Posible Area Liberada!!! " +
-  //     EquipoActual +
-  //     " " +
-  //     Area +
-  //     " " +
-  //     Empresa;
-  //   Color = "#4CAF50";
-  //   Texto = "POSIBLE AREA LIBERADA";
-  // } else if (Tipo == 2) {
-  //   msg =
-  //     "¡¡¡Posible Area Radicada!!! " +
-  //     EquipoActual +
-  //     " " +
-  //     Area +
-  //     " " +
-  //     Empresa;
-  //   Color = "#D4AF37";
-  //   Texto = "POSIBLE AREA RADICADA";
-  // } else if (Tipo == 3) {
-  //   msg =
-  //     "¡¡¡Area Con fecha de Reapertura!!! " +
-  //     EquipoActual +
-  //     " " +
-  //     Area +
-  //     " " +
-  //     Empresa;
-  //   Color = "#2196F3";
-  //   Texto = "AREA CON REAPERTURA";
-  // } else if (Tipo == 4) {
-  //   msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
-  // } else if (Tipo == 5) {
-  //   msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
-  //   Color = "#fe1426";
-  //   Texto = "Pestañas";
-  // }
+  // 1. Liberada 2. radicada 3. Fecha reapertura
+  var msg = "";
+  var Color = "";
+  var Texto = "";
+  //Area = "Tranquilos area de prueba";
+  if (Tipo == 1) {
+    msg =
+      "¡¡¡Posible Area Liberada!!! " +
+      EquipoActual +
+      " " +
+      Area +
+      " " +
+      Empresa;
+    Color = "#4CAF50";
+    Texto = "POSIBLE AREA LIBERADA";
+  } else if (Tipo == 2) {
+    msg =
+      "¡¡¡Posible Area Radicada!!! " +
+      EquipoActual +
+      " " +
+      Area +
+      " " +
+      Empresa;
+    Color = "#D4AF37";
+    Texto = "POSIBLE AREA RADICADA";
+  } else if (Tipo == 3) {
+    msg =
+      "¡¡¡Area Con fecha de Reapertura!!! " +
+      EquipoActual +
+      " " +
+      Area +
+      " " +
+      Empresa;
+    Color = "#2196F3";
+    Texto = "AREA CON REAPERTURA";
+  } else if (Tipo == 4) {
+    msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
+  } else if (Tipo == 5) {
+    msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
+    Color = "#fe1426";
+    Texto = "Pestañas";
+  }
 
-  // var nodemailer = require("nodemailer");
+  var nodemailer = require("nodemailer");
 
-  // var transporter = nodemailer.createTransport({
-  //   host: "mail.ceere.net", // hostname
-  //   secureConnection: false,
-  //   port: 465,
-  //   tls: {
-  //     ciphers: "SSLv3",
-  //   },
-  //   auth: {
-  //     user: "correomineria2@ceere.net",
-  //     pass: "1998Ceere*",
-  //   },
-  // });
-  // var mensaje = msg;
-  // var mailOptions = {
-  //   from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
-  //   to: "jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com",
-  //   //to: '  Soporte2ceere@gmail.com',
-  //   subject: "LA AREA ES-> " + Area,
-  //   text: "LA AREA ES->  " + Area + "  " + Celda,
-  //   html: `
-  //           <html>
-  //               <head>
-  //                   <style>
-  //                       .container {
-  //                           font-family: Arial, sans-serif;
-  //                           max-width: 600px;
-  //                           margin: auto;
-  //                           padding: 20px;
-  //                           border: 1px solid #ddd;
-  //                           border-radius: 5px;
-  //                           background-color: #f9f9f9;
-  //                       }
-  //                       .header {
-  //                           background-color: ${Color};
-  //                           color: white;
-  //                           padding: 10px;
-  //                           text-align: center;
-  //                           border-radius: 5px 5px 0 0;
-  //                       }
-  //                       .content {
-  //                           margin: 20px 0;
-  //                       }
-  //                       .footer {
-  //                           text-align: center;
-  //                           padding: 10px;
-  //                           font-size: 12px;
-  //                           color: #777;
-  //                           border-top: 1px solid #ddd;
-  //                       }
-  //                   </style>
-  //               </head>
-  //               <body>
-  //                   <div class="container">
-  //                       <div class="header">
-  //                           <h3> ${Texto} </h3>
-  //                       </div>
-  //                       <div class="content">
-  //                           <p><strong>Detalles:</strong></p>
-  //                           <ul>
-  //                               <li><strong>Empresa: </strong><br>${Empresa}</li>
-  //                               <li><strong>Area:</strong><br>${Area}</li>
-  //                               <li><strong>Celda:</strong><br>${Celda}</li>
-  //                           <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
-  //                           </ul>
-  //                       </div>
-  //                       <div class="footer">
-  //                           <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
-  //                       </div>
-  //                   </div>
-  //               </body>
-  //           </html>
-  //       `,
-  // };
+  var transporter = nodemailer.createTransport({
+    host: "mail.ceere.net", // hostname
+    secureConnection: false,
+    port: 465,
+    tls: {
+      ciphers: "SSLv3",
+    },
+    auth: {
+      user: "correomineria2@ceere.net",
+      pass: "1998Ceere*",
+    },
+  });
+  var mensaje = msg;
+  var mailOptions = {
+    from: msg + '"Ceere" <correomineria2@ceere.net>', //Deje eso quieto Outlook porne demasiados problemas
+    //to: "jorgecalle@hotmail.com, jorgecaller@gmail.com, alexisaza@hotmail.com,  ceereweb@gmail.com, Soporte2ceere@gmail.com, soportee4@gmail.com, soporte.ceere06068@gmail.com",
+    to: '  Soporte2ceere@gmail.com',
+    subject: "LA AREA ES-> " + Area,
+    text: "LA AREA ES->  " + Area + "  " + Celda,
+    html: `
+            <html>
+                <head>
+                    <style>
+                        .container {
+                            font-family: Arial, sans-serif;
+                            max-width: 600px;
+                            margin: auto;
+                            padding: 20px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            background-color: #f9f9f9;
+                        }
+                        .header {
+                            background-color: ${Color};
+                            color: white;
+                            padding: 10px;
+                            text-align: center;
+                            border-radius: 5px 5px 0 0;
+                        }
+                        .content {
+                            margin: 20px 0;
+                        }
+                        .footer {
+                            text-align: center;
+                            padding: 10px;
+                            font-size: 12px;
+                            color: #777;
+                            border-top: 1px solid #ddd;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h3> ${Texto} </h3>
+                        </div>
+                        <div class="content">
+                            <p><strong>Detalles:</strong></p>
+                            <ul>
+                                <li><strong>Empresa: </strong><br>${Empresa}</li>
+                                <li><strong>Area:</strong><br>${Area}</li>
+                                <li><strong>Celda:</strong><br>${Celda}</li>
+                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
+                            </ul>
+                        </div>
+                        <div class="footer">
+                            <p>Creado por Ceere Software - © 2024 Todos los derechos reservados</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `,
+  };
 
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     return console.log(error);
-  //   }
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      return console.log(error);
+    }
 
-  //   console.log("Message sent: " + info.response);
-  // });
+    console.log("Message sent: " + info.response);
+  });
 }
 
 // FUNCIÓN PARA LA CAPTURA DE PANTALLA AL MOMENTO DE LA RADICACIÓN
@@ -1949,11 +1954,13 @@ function VerificarVencimientoPin(
 
 const Areas =
   [
-    {
-      NombreArea: "prueba",
-      Referencia: "18N05N14M12R",
-      Celdas: ["18N05N14M12R"]
-    }, {
+    
+    // ,{
+    //   NombreArea: "prueba",
+    //   Referencia: "18N05N14M12R",
+    //   Celdas: ["18N05N14M12R"]
+    // }
+    /*,*/ {
       NombreArea: "Area14",
       Referencia: "18N05A25G21R",
       Celdas: ["18N05A25G21R, 18N05A25G16L, 18N05A25G21S, 18N05A25G21T, 18N05A25G21J, 18N05A25G16U, 18N05A25G22Q, 18N05A25G22A, 18N05A25G17W, 18N05A25G17S, 18N05A25G22T, 18N05A25G23F, 18N05A25G23A, 18N05A25G16P, 18N05A25G22K, 18N05A25G17V, 18N05A25G22H, 18N05A25G22C, 18N05A25G17H, 18N05A25G17Y, 18N05A25G22J, 18N05A25G22E, 18N05A25G17Z, 18N05A25G17P, 18N05A25G16X, 18N05A25G16M, 18N05A25G16Y, 18N05A25G22F, 18N05A25G22N, 18N05A25G22P, 18N05A25G23K, 18N05A25G21L, 18N05A25G16W, 18N05A25G21C, 18N05A25G16S, 18N05A25G21I, 18N05A25G16T, 18N05A25G16I, 18N05A25G21U, 18N05A25G21E, 18N05A25G17X, 18N05A25G17G, 18N05A25G17T, 18N05A25G17U, 18N05A25G18V, 18N05A25G18Q, 18N05A25G21M, 18N05A25G21P, 18N05A25G16J, 18N05A25G17K, 18N05A25G17J, 18N05A25G21H, 18N05A25G16N, 18N05A25G22R, 18N05A25G22S, 18N05A25G22B, 18N05A25G17N, 18N05A25G18K, 18N05A25G21N, 18N05A25G21D, 18N05A25G16Z, 18N05A25G17F, 18N05A25G17R, 18N05A25G17M, 18N05A25G22I, 18N05A25G22D, 18N05A25G22U, 18N05A25G18F, 18N05A25G21G, 18N05A25G21B, 18N05A25G16H, 18N05A25G17Q, 18N05A25G22L, 18N05A25G22M, 18N05A25G22G, 18N05A25G17L, 18N05A25G17I, 18N05A25G23Q"]
