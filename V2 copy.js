@@ -7,19 +7,7 @@ const colors = require("colors");
 const os = require("os");
 const { url } = require("inspector");
 const NombreEquipo = os.hostname();
-const EquiposGenerales = {
-  HPGRIS: "EQUIPO CREADOR",
-  "DESKTOP-6JICI9S": "ASUS OLD",
-  "DESKTOP-SNSPTLM": "DELLC3",
-  "LAPTOP-2VU2EBUO": "EQUIPO VALEN",
-  HPRED240: "FER EQUIPO",
-  "LAPTOP-JL0BL28F": "JORGE EQUIPO",
-  MERCADEO: "MERCADEO",
-  "DESKTOP-RF3NUO3": "PIXEL",
-  HPRED241: "FERCHO ingeniero en sistemas best",
-};
 
-const EquipoActual = EquiposGenerales[NombreEquipo];
 // Actualizado
 const Empresa = "Collective";
 const user1 = "76966";
@@ -32,7 +20,10 @@ var contreapertura = 0;
 var ContadorVueltas = 0;
 var Band = 0;
 
-Pagina();
+
+console.log("Vamor a corre con el nombre equipo => ", NombreEquipo);
+
+Correo(3, "Area", "Celda") ;
 async function Pagina() {
   var Pines = fs.readFileSync(
     "Pin.txt",
@@ -53,7 +44,7 @@ async function Pagina() {
     }
   }
 
-  // const pathToExtension = "C:\\Aplicaciones\\Exte\\0.2.1_0";
+  const pathToExtension = "C:\\Aplicaciones\\Exte\\0.2.1_0";
 
   const browser = await puppeteer.launch({
     //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -63,8 +54,8 @@ async function Pagina() {
     headless: false,
     args: [
       "--start-maximized",
-      // `--disable-extensions-except=${pathToExtension}`,
-      // `--load-extension=${pathToExtension}`,
+      `--disable-extensions-except=${pathToExtension}`,
+      `--load-extension=${pathToExtension}`,
     ],
     devtools: false,
   });
@@ -1487,7 +1478,7 @@ function Correo(Tipo, Area, Celda) {
   if (Tipo == 1) {
     msg =
       "¡¡¡Posible Area Liberada!!! " +
-      EquipoActual +
+      NombreEquipo +
       " " +
       Area +
       " " +
@@ -1497,7 +1488,7 @@ function Correo(Tipo, Area, Celda) {
   } else if (Tipo == 2) {
     msg =
       "¡¡¡Posible Area Radicada!!! " +
-      EquipoActual +
+      NombreEquipo +
       " " +
       Area +
       " " +
@@ -1507,7 +1498,7 @@ function Correo(Tipo, Area, Celda) {
   } else if (Tipo == 3) {
     msg =
       "¡¡¡Area Con fecha de Reapertura!!! " +
-      EquipoActual +
+      NombreEquipo +
       " " +
       Area +
       " " +
@@ -1517,7 +1508,7 @@ function Correo(Tipo, Area, Celda) {
   } else if (Tipo == 4) {
     msg = Area + " " + Empresa + " ¡¡¡Verificar!!!!.";
   } else if (Tipo == 5) {
-    msg = "¡¡¡Ojo Pestañas!!! " + EquipoActual;
+    msg = "¡¡¡Ojo Pestañas!!! " + NombreEquipo;
     Color = "#fe1426";
     Texto = "Pestañas";
   }
@@ -1586,7 +1577,7 @@ function Correo(Tipo, Area, Celda) {
                                 <li><strong>Empresa: </strong><br>${Empresa}</li>
                                 <li><strong>Area:</strong><br>${Area}</li>
                                 <li><strong>Celda:</strong><br>${Celda}</li>
-                            <li><strong>Equipo Actual:</strong><br>${EquipoActual}</li>
+                            <li><strong>Equipo Actual:</strong><br>${NombreEquipo}</li>
                             </ul>
                         </div>
                         <div class="footer">
@@ -1607,7 +1598,52 @@ function Correo(Tipo, Area, Celda) {
   });
 }
 
+// FUNCIÓN PARA LA CAPTURA DE PANTALLA AL MOMENTO DE LA RADICACIÓN
+async function CapturaPantalla(page) {
+  const FechaGeneral = new Date();
 
+  let Dia = FechaGeneral.getDate();
+  let Mes = FechaGeneral.getMonth();
+  let Anio = FechaGeneral.getFullYear();
+  let Hora = FechaGeneral.getHours();
+  let Minuto = FechaGeneral.getMinutes();
+  let Segundo = FechaGeneral.getSeconds();
+  let DiaFinal, MesFinal, HoraFinal, MinutoFinal, SegundoFinal;
+
+  Mes = Mes + 1; // PORQUE COMIENZA EN 0 Y TERMNA EN 11, POR ESTA REZÓN SE LE SUMA 1, PARA QUE QUEDE EN EL MES ACTUAL
+  DiaFinal = Dia < 10 ? "0" + Dia : Dia;
+  MesFinal = Mes < 10 ? "0" + Mes : Mes;
+  HoraFinal = Hora < 10 ? "0" + Hora : Hora;
+  MinutoFinal = Minuto < 10 ? "0" + Minuto : Minuto;
+  SegundoFinal = Segundo < 10 ? "0" + Segundo : Segundo;
+
+  let Fecha = `${DiaFinal}-${MesFinal}-${Anio} --- ${HoraFinal}-${MinutoFinal}-${SegundoFinal}`;
+
+  const { mkdir, access } = require("fs/promises");
+
+  let NombreCarpeta = "ScreenShots";
+  let pathProduccion = `C:\\Aplicaciones\\${NombreCarpeta}`;
+
+  try {
+    // Verificar si la carpeta ya existe
+    await access(pathProduccion);
+    console.log(
+      `La carpeta ${NombreCarpeta} ya existe en la dirección ${pathProduccion}`
+    );
+  } catch (error) {
+    // Si no existe, crearla
+    await mkdir(pathProduccion);
+    console.log(
+      `La carpeta fue creada en la dirección ${pathProduccion} con el nombre ${NombreCarpeta}`
+    );
+  }
+
+  await page.screenshot({
+    path: `C:\\Aplicaciones\\ScreenShots\\Imagen Tomada El ${Fecha}.png`,
+    type: "png",
+  });
+  console.log("El ScreenShot fue guardado");
+}
 
 async function seleccionar_Profesional(profesionales, page, Tipo, Eventos) {
   if (Eventos == 1) {
@@ -1743,87 +1779,6 @@ async function seleccionar_Profesional(profesionales, page, Tipo, Eventos) {
   }
 }
 
-async function seleccionar_ProfesionalOLD(profesionales, page, Tipo) {
-  for (const profesional of profesionales) {
-    const tipoProfesional = profesional.tipo;
-    const nombres = profesional.nombres;
-    let selectTipoProfesion;
-    let addProfesional;
-    // Seleccionar el tipo de profesional en el primer select
-    if (Tipo == 1) {
-      selectTipoProfesion = await page.$(
-        'select[id="techProfessionalDesignationId"]'
-      );
-    } else {
-      selectTipoProfesion = await page.$(
-        'select[id="ecoProfessionalDesignationId"]'
-      );
-    }
-
-    await selectTipoProfesion.type(tipoProfesional);
-
-    // Iterar sobre los nombres y seleccionar cada uno en el segundo select
-    for (const nombre of nombres) {
-      console.log(
-        "Tipo Profesional: " +
-        tipoProfesional +
-        " - " +
-        "Nombres: " +
-        "(" +
-        nombre +
-        ")"
-      );
-      let selectProfesional;
-      if (Tipo == 1) {
-        selectProfesional = await page.$('select[id="techApplicantNameId"]');
-      } else {
-        selectProfesional = await page.$('select[id="ecoApplicantNameId"]');
-      }
-
-      await page.waitForTimeout(300);
-      await selectProfesional.type(nombre);
-      // Hacer clic en el botón "Agregar"
-
-      await page.waitForTimeout(100); // Esperar 100 milisegundos
-
-      addProfesional = await page.$x('//span[contains(.,"Agregar")]');
-      if (Tipo == 1) {
-        await addProfesional[0].click();
-      } else {
-        try {
-          await addProfesional[0].click();
-        } catch (error) {
-          console.log("ERR 0");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[1].click();
-        } catch (error) {
-          console.log("ERR 1");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[2].click();
-        } catch (error) {
-          console.log("ERR 2");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[3].click();
-        } catch (error) {
-          console.log("ERR 3");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[4].click();
-        } catch (error) {
-          console.log("ERR 4");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-      }
-    }
-  }
-}
 
 var CorreoEnviado = false;
 var PrimerCorreoEnviado = false;
