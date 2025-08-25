@@ -53,7 +53,7 @@ async function Pagina() {
     }
   }
 
-  // const pathToExtension = "C:\\Aplicaciones\\Exte\\0.2.1_0";
+
 
   const browser = await puppeteer.launch({
     //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -62,9 +62,7 @@ async function Pagina() {
     // Reemplaza con la ruta real a tu Google Chrome
     headless: false,
     args: [
-      "--start-maximized",
-      // `--disable-extensions-except=${pathToExtension}`,
-      // `--load-extension=${pathToExtension}`,
+      "--start-maximized", 
     ],
     devtools: false,
   });
@@ -1006,7 +1004,7 @@ async function Certificado_Shapefile(page, Empresa, IdArea) {
     await btncenti[0].click();
 
     await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId0`);
-    const RutadeShapefile = `C:\\Aplicaciones\\Documentos\\${Empresa}\\Sheips\\${IdArea}.zip`;
+    const RutadeShapefile = `./Documentos/${Empresa}/Sheips/${IdArea}.zip`;
     const ControladorDeCargaShapefile = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId0`);
     await ControladorDeCargaShapefile.uploadFile(RutadeShapefile);
 
@@ -1017,7 +1015,7 @@ async function Certificado_Shapefile(page, Empresa, IdArea) {
     await btncenti[0].click();
 
     await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId0`);
-    const RutadeShapefile = `C:\\Aplicaciones\\Documentos\\${Empresa}\\Sheips\\Sector_Collective.zip`;
+    const RutadeShapefile = `./Documentos/${Empresa}/Sheips/Sector_Collective.zip`;
     const ControladorDeCargaShapefile = await page.$(`#p_CaaCataEnvMandatoryDocumentToAttachId0`);
     await ControladorDeCargaShapefile.uploadFile(RutadeShapefile);
 
@@ -1027,7 +1025,7 @@ async function Certificado_Shapefile(page, Empresa, IdArea) {
 
     // Subir certificado
     let ArchivoAmbiental;
-    ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\${IdArea}.pdf`;
+    ArchivoAmbiental = `./Documentos/${Empresa}/CertificadoAmbiental/${IdArea}.pdf`;
 
 
     await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1037,7 +1035,7 @@ async function Certificado_Shapefile(page, Empresa, IdArea) {
   } catch (error) {
     console.log("No se encontró el certificado ambiental");
     let ArchivoAmbiental;
-    ArchivoAmbiental = `C:\\Aplicaciones\\Documentos\\${Empresa}\\CertificadoAmbiental\\Certificado_Ambiental.pdf`;
+    ArchivoAmbiental = `./Documentos/${Empresa}/CertificadoAmbiental/Certificado_Ambiental.pdf`;
 
 
     await page.waitForSelector(`#p_CaaCataEnvMandatoryDocumentToAttachId1`);
@@ -1106,7 +1104,7 @@ async function Documentos(page, Empresa) {
       for (let i = 0; i < ElementosFile.length; i++) {
         try {
           await page.waitForSelector(`#${ElementosFile[i]}`);
-          const RutaDelArchivo = `C:\\Aplicaciones\\Documentos\\${Empresa}\\DocumentosReglamentarios\\${Documentos[i]}`;
+          const RutaDelArchivo = `./Documentos/${Empresa}/DocumentosReglamentarios/${Documentos[i]}`;
           const ElementoControladorDeCarga = await page.$(
             `#${ElementosFile[i]}`
           );
@@ -1743,87 +1741,7 @@ async function seleccionar_Profesional(profesionales, page, Tipo, Eventos) {
   }
 }
 
-async function seleccionar_ProfesionalOLD(profesionales, page, Tipo) {
-  for (const profesional of profesionales) {
-    const tipoProfesional = profesional.tipo;
-    const nombres = profesional.nombres;
-    let selectTipoProfesion;
-    let addProfesional;
-    // Seleccionar el tipo de profesional en el primer select
-    if (Tipo == 1) {
-      selectTipoProfesion = await page.$(
-        'select[id="techProfessionalDesignationId"]'
-      );
-    } else {
-      selectTipoProfesion = await page.$(
-        'select[id="ecoProfessionalDesignationId"]'
-      );
-    }
 
-    await selectTipoProfesion.type(tipoProfesional);
-
-    // Iterar sobre los nombres y seleccionar cada uno en el segundo select
-    for (const nombre of nombres) {
-      console.log(
-        "Tipo Profesional: " +
-        tipoProfesional +
-        " - " +
-        "Nombres: " +
-        "(" +
-        nombre +
-        ")"
-      );
-      let selectProfesional;
-      if (Tipo == 1) {
-        selectProfesional = await page.$('select[id="techApplicantNameId"]');
-      } else {
-        selectProfesional = await page.$('select[id="ecoApplicantNameId"]');
-      }
-
-      await page.waitForTimeout(300);
-      await selectProfesional.type(nombre);
-      // Hacer clic en el botón "Agregar"
-
-      await page.waitForTimeout(100); // Esperar 100 milisegundos
-
-      addProfesional = await page.$x('//span[contains(.,"Agregar")]');
-      if (Tipo == 1) {
-        await addProfesional[0].click();
-      } else {
-        try {
-          await addProfesional[0].click();
-        } catch (error) {
-          console.log("ERR 0");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[1].click();
-        } catch (error) {
-          console.log("ERR 1");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[2].click();
-        } catch (error) {
-          console.log("ERR 2");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[3].click();
-        } catch (error) {
-          console.log("ERR 3");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-        try {
-          await addProfesional[4].click();
-        } catch (error) {
-          console.log("ERR 4");
-          console.log(`Bro manito sabe que  pilke -> ${error}`);
-        }
-      }
-    }
-  }
-}
 
 var CorreoEnviado = false;
 var PrimerCorreoEnviado = false;
@@ -1912,12 +1830,12 @@ function VerificarVencimientoPin(
 const Areas =
   [
     
-    // ,{
-    //   NombreArea: "prueba",
-    //   Referencia: "18N05N14M12R",
-    //   Celdas: ["18N05N14M12R"]
-    // }
-    /*,*/ {
+    {
+      NombreArea: "prueba",
+      Referencia: "18N05N14M12R",
+      Celdas: ["18N05N14M12R"]
+    }
+    , {
       NombreArea: "Area14",
       Referencia: "18N05A25G21R",
       Celdas: ["18N05A25G21R, 18N05A25G16L, 18N05A25G21S, 18N05A25G21T, 18N05A25G21J, 18N05A25G16U, 18N05A25G22Q, 18N05A25G22A, 18N05A25G17W, 18N05A25G17S, 18N05A25G22T, 18N05A25G23F, 18N05A25G23A, 18N05A25G16P, 18N05A25G22K, 18N05A25G17V, 18N05A25G22H, 18N05A25G22C, 18N05A25G17H, 18N05A25G17Y, 18N05A25G22J, 18N05A25G22E, 18N05A25G17Z, 18N05A25G17P, 18N05A25G16X, 18N05A25G16M, 18N05A25G16Y, 18N05A25G22F, 18N05A25G22N, 18N05A25G22P, 18N05A25G23K, 18N05A25G21L, 18N05A25G16W, 18N05A25G21C, 18N05A25G16S, 18N05A25G21I, 18N05A25G16T, 18N05A25G16I, 18N05A25G21U, 18N05A25G21E, 18N05A25G17X, 18N05A25G17G, 18N05A25G17T, 18N05A25G17U, 18N05A25G18V, 18N05A25G18Q, 18N05A25G21M, 18N05A25G21P, 18N05A25G16J, 18N05A25G17K, 18N05A25G17J, 18N05A25G21H, 18N05A25G16N, 18N05A25G22R, 18N05A25G22S, 18N05A25G22B, 18N05A25G17N, 18N05A25G18K, 18N05A25G21N, 18N05A25G21D, 18N05A25G16Z, 18N05A25G17F, 18N05A25G17R, 18N05A25G17M, 18N05A25G22I, 18N05A25G22D, 18N05A25G22U, 18N05A25G18F, 18N05A25G21G, 18N05A25G21B, 18N05A25G16H, 18N05A25G17Q, 18N05A25G22L, 18N05A25G22M, 18N05A25G22G, 18N05A25G17L, 18N05A25G17I, 18N05A25G23Q"]
